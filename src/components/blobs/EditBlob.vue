@@ -4,10 +4,10 @@
       <v-container>
         <v-row no-gutters>
           <v-col cols="12" class="mod">
-            {{ mod }}
+            {{ value }}
           </v-col>
           <v-col cols="12">
-            {{ label }}
+            <div v-html="label" />
           </v-col>
         </v-row>
       </v-container>
@@ -15,7 +15,6 @@
     <v-text-field
       v-else
       height="70"
-      type="number"
       v-model="value"
       :label="label"
       outlined
@@ -25,9 +24,9 @@
       class="centered-input"
     >
       <template v-slot:append>
-        <v-icon @click="save" style="font-size: 2em" class="mt-2"
-          >mdi-check</v-icon
-        >
+        <v-icon @click="save" style="font-size: 2em" class="mt-2">
+          mdi-check
+        </v-icon>
       </template>
     </v-text-field>
   </span>
@@ -35,15 +34,14 @@
 
 <script>
 import { db } from "../../db.js";
-import { scoreToMod } from "../../funcs.js";
 
 export default {
-  props: ["label", "ability"],
+  props: ["label", "id"],
   data() {
     return {
       char: {},
       edit: false,
-      value: "8",
+      value: 8,
     };
   },
   firestore() {
@@ -53,23 +51,18 @@ export default {
   },
   methods: {
     save() {
-      this.char[this.ability] = this.value;
+      this.char[this.id] = this.value;
       this.$firestoreRefs.char.update(this.char);
       this.edit = false;
     },
   },
   created: async function () {
     let data = (await this.$firestoreRefs.char.get()).data();
-    if (data[this.ability] == "") {
-      data[this.ability] = "8";
+    if (!data[this.id]) {
+      data[this.id] = "N/A";
       this.$firestoreRefs.char.update(data);
     }
-    this.value = data[this.ability];
-  },
-  computed: {
-    mod() {
-      return `${scoreToMod(this.value)}`;
-    },
+    this.value = data[this.id];
   },
 };
 </script>

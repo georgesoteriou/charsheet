@@ -1,5 +1,5 @@
 export const scoreToMod = (score) => {
-    switch (score) {
+    switch (score.toString()) {
         case "1":
             return "-5"
         case "2":

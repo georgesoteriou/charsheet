@@ -6,6 +6,8 @@
       outlined
       :hide-details="true"
       dense
+      readonly
+      rounded
       @click="dialog = true"
     >
     </v-text-field>
@@ -81,3 +83,4 @@ export default {
   },
 };
 </script>
+

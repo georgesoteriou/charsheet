@@ -6,8 +6,9 @@
     :hide-details="true"
     dense
     rounded
-    @input="debouncedSave"
+    type="number"
     :success="saved"
+    @input="debouncedSave"
   ></v-text-field>
 </template>
 
@@ -20,7 +21,7 @@ export default {
   data() {
     return {
       char: {},
-      value: "",
+      value: 0,
       saved: false,
     };
   },
@@ -52,3 +53,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.centered-input >>> input {
+  text-align: center;
+}
+</style>
