@@ -7,6 +7,7 @@
     dense
     :success="saved"
     prepend-inner-icon="mdi-minus"
+    type="number"
     @click:prepend-inner="
       value--;
       debouncedSave();
