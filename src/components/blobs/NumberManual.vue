@@ -5,7 +5,6 @@
     outlined
     :hide-details="true"
     dense
-    rounded
     type="number"
     :success="saved"
     @input="debouncedSave"
@@ -13,7 +12,7 @@
 </template>
 
 <script>
-import { db } from "../../db.js";
+import { db } from "../../firebase.js";
 import { debounce } from "debounce";
 
 export default {
@@ -33,15 +32,15 @@ export default {
   created: async function () {
     let data = (await this.$firestoreRefs.char.get()).data();
     if (!data[this.id]) {
-      data[this.id] = "";
-      this.$firestoreRefs.char.update(data);
+      this.value = "";
+      this.$firestoreRefs.char.set({ [this.id]: "" }, { merge: true });
+    } else {
+      this.value = data[this.id];
     }
-    this.value = data[this.id];
   },
   methods: {
     save() {
-      this.char[this.id] = this.value;
-      this.$firestoreRefs.char.update(this.char);
+      this.$firestoreRefs.char.update({ [this.id]: this.value });
       this.saved = true;
       setTimeout(() => {
         this.saved = false;

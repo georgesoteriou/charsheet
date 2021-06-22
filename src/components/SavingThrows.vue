@@ -2,25 +2,55 @@
   <v-card>
     <v-card-title class="text-h5"> Saving Throws </v-card-title>
     <v-divider></v-divider>
-    <v-card-text>
-      <v-row class="text-center">
+    <v-card-text class="pa-1">
+      <v-row class="text-center" dense>
         <v-col cols="4">
-          <Ability label="Strength" ability="str-st" />
+          <Ability
+            :number="true"
+            label="Strength"
+            ability="str-st"
+            :mod_func="mod_func"
+          />
         </v-col>
         <v-col cols="4">
-          <Ability label="Dexterity" ability="dex-st" />
+          <Ability
+            :number="true"
+            label="Dexterity"
+            ability="dex-st"
+            :mod_func="mod_func"
+          />
         </v-col>
         <v-col cols="4">
-          <Ability label="Constitution" ability="con-st" />
+          <Ability
+            :number="true"
+            label="Constitution"
+            ability="con-st"
+            :mod_func="mod_func"
+          />
         </v-col>
         <v-col cols="4">
-          <Ability label="Intelligence" ability="intel-st" />
+          <Ability
+            :number="true"
+            label="Intelligence"
+            ability="intel-st"
+            :mod_func="mod_func"
+          />
         </v-col>
         <v-col cols="4">
-          <Ability label="Wizdom" ability="wiz-st" />
+          <Ability
+            :number="true"
+            label="Wizdom"
+            ability="wiz-st"
+            :mod_func="mod_func"
+          />
         </v-col>
         <v-col cols="4">
-          <Ability label="Charisma" ability="cha-st" />
+          <Ability
+            :number="true"
+            label="Charisma"
+            ability="cha-st"
+            :mod_func="mod_func"
+          />
         </v-col>
       </v-row>
     </v-card-text>
@@ -29,7 +59,14 @@
 
 <script>
 import Ability from "./blobs/Ability.vue";
+import { scoreToMod } from "../funcs.js";
+
 export default {
   components: { Ability },
+  data() {
+    return {
+      mod_func: scoreToMod,
+    };
+  },
 };
 </script>

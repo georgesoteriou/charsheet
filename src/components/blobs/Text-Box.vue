@@ -5,14 +5,13 @@
     outlined
     :hide-details="true"
     dense
-    rounded
     @input="debouncedSave"
     :success="saved"
   ></v-text-field>
 </template>
 
 <script>
-import { db } from "../../db.js";
+import { db } from "../../firebase.js";
 import { debounce } from "debounce";
 
 export default {
@@ -32,8 +31,8 @@ export default {
   created: async function () {
     let data = (await this.$firestoreRefs.char.get()).data();
     if (!data[this.id]) {
-      data[this.id] = "";
-      this.$firestoreRefs.char.update(data);
+      this.$firestoreRefs.char.set({ [this.id]: "" }, { merge: true });
+      this.value = "";
     }
     this.value = data[this.id];
   },

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
+import store from "../store/index";
+
 
 Vue.use(VueRouter)
 
@@ -30,3 +32,15 @@ const router = new VueRouter({
 })
 
 export default router
+
+router.beforeEach((to, from, next) => {
+  if (store.state.loggedIn && to.name != "Character Sheet" && to.name != "User") {
+    // Logged in and not at User and not at Character Sheet
+    next("/user");
+  } else if (!store.state.loggedIn && to.name != "Login") {
+    // Not logged in and not at the login page
+    next("/");
+  } else {
+    next();
+  }
+});

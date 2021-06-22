@@ -1,11 +1,11 @@
 <template>
   <v-expansion-panels flat>
     <v-expansion-panel>
-      <v-expansion-panel-header class="text-h6">
+      <v-expansion-panel-header class="text-h6 px-1 py-0">
         Background
       </v-expansion-panel-header>
       <v-expansion-panel-content>
-        <v-row class="text-center">
+        <v-row class="text-center" dense>
           <v-col cols="12">
             <TextArea id="trates" label="Personality Traits" />
           </v-col>
@@ -37,3 +37,9 @@ export default {
   props: [],
 };
 </script>
+
+<style>
+.v-expansion-panel-content__wrap {
+  padding: 0 !important;
+}
+</style>

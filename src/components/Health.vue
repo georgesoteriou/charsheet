@@ -4,17 +4,17 @@
     <v-divider></v-divider>
     <v-card-text>
       <v-row class="text-center justify-center">
-        <v-col cols="4">
+        <v-col cols="5">
           <Number label="HP" id="hp" />
         </v-col>
-        <v-col cols="auto" class="text-h4"> / </v-col>
-        <v-col cols="4">
+        <v-col cols="1" class="text-h4"> / </v-col>
+        <v-col cols="6">
           <Number label="Max HP" id="max-hp" />
         </v-col>
       </v-row>
       <v-row>
         <v-col>
-          <v-progress-linear color="red" v-model="percent" height="25">
+          <v-progress-linear color="red" v-model="percent" height="60">
             <strong> {{ Math.ceil(percent) }}% </strong>
           </v-progress-linear>
         </v-col>
@@ -25,7 +25,7 @@
 
 <script>
 import Number from "./blobs/Number.vue";
-import { db } from "../db.js";
+import { db } from "../firebase.js";
 
 export default {
   components: { Number },

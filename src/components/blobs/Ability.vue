@@ -1,44 +1,60 @@
 <template>
   <span>
-    <v-btn v-if="!edit" block height="70" outlined rounded @click="edit = true">
-      <v-container>
-        <v-row no-gutters>
-          <v-col cols="12" class="mod">
-            {{ mod }}
-          </v-col>
-          <v-col cols="12">
-            {{ label }}
-          </v-col>
-        </v-row>
-      </v-container>
+    <v-btn
+      v-if="!edit"
+      block
+      height="70"
+      @click="edit = true"
+      outlined
+      text
+      class="px-0"
+    >
+      <v-row no-gutters>
+        <v-col cols="12" class="mod">
+          {{ mod }}
+        </v-col>
+        <v-col cols="12" class="text-caption" v-html="label"></v-col>
+      </v-row>
     </v-btn>
     <v-text-field
       v-else
       height="70"
-      type="number"
+      :type="number ? 'number' : ''"
       v-model="value"
-      :label="label"
-      outlined
+      :label="label.substring(0, 3).toUpperCase()"
       :hide-details="true"
       dense
-      rounded
+      outlined
       class="centered-input"
     >
       <template v-slot:append>
-        <v-icon @click="save" style="font-size: 2em" class="mt-2"
-          >mdi-check</v-icon
-        >
+        <v-icon @click="save" style="font-size: 1.6em" class="mt-3">
+          mdi-check
+        </v-icon>
       </template>
     </v-text-field>
   </span>
 </template>
 
 <script>
-import { db } from "../../db.js";
-import { scoreToMod } from "../../funcs.js";
+import { db } from "../../firebase.js";
 
 export default {
-  props: ["label", "ability"],
+  props: {
+    label: {
+      type: String,
+    },
+    ability: {
+      type: String,
+    },
+    mod_func: {
+      type: Function,
+    },
+    number: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       char: {},
@@ -60,15 +76,16 @@ export default {
   },
   created: async function () {
     let data = (await this.$firestoreRefs.char.get()).data();
-    if (data[this.ability] == "") {
-      data[this.ability] = "8";
-      this.$firestoreRefs.char.update(data);
+    if (!data[this.ability]) {
+      this.$firestoreRefs.char.set({ [this.ability]: "8" }, { merge: true });
+      this.value = "8";
+    } else {
+      this.value = data[this.ability];
     }
-    this.value = data[this.ability];
   },
   computed: {
     mod() {
-      return `${scoreToMod(this.value)}`;
+      return `${this.mod_func(this.value)}`;
     },
   },
 };
@@ -77,7 +94,7 @@ export default {
 <style lang="css">
 .mod {
   font-weight: bold;
-  font-size: 2em;
+  font-size: 1.8em;
 }
 </style>
 

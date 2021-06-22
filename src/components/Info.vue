@@ -2,33 +2,33 @@
   <v-card>
     <v-card-title class="text-h5"> Character </v-card-title>
     <v-divider></v-divider>
-    <v-card-text>
-      <v-row class="text-center">
-        <v-col lg="3" cols="6">
+    <v-card-text class="pa-1">
+      <v-row class="text-center" dense>
+        <v-col cols="12" md="6" xl="3">
           <TextBox label="Name" id="name" />
         </v-col>
-        <v-col lg="2" cols="3">
+        <v-col cols="6" md="3" xl="2">
           <TextBox label="Race" id="race" />
         </v-col>
-        <v-col lg="2" cols="3">
+        <v-col cols="6" md="3" xl="2">
           <TextBox label="Class" id="class" />
         </v-col>
-        <v-col lg="2" cols="4">
+        <v-col cols="6" md="3" xl="2">
           <TextBox label="Background" id="background" />
         </v-col>
-        <v-col lg="1" cols="2">
+        <v-col cols="6" md="3" xl="1">
           <Alignment />
         </v-col>
-        <v-col lg="1" cols="3">
+        <v-col cols="6" md="3" xl="1">
           <Number label="Level" id="level" />
         </v-col>
-        <v-col lg="1" cols="3">
+        <v-col cols="6" md="3" xl="1">
           <NumberManual label="Exp" id="exp" />
         </v-col>
       </v-row>
     </v-card-text>
     <v-divider></v-divider>
-    <v-card-actions>
+    <v-card-actions class="py-1">
       <Personality />
     </v-card-actions>
   </v-card>

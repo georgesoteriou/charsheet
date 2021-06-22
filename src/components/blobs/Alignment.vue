@@ -7,17 +7,14 @@
       :hide-details="true"
       dense
       readonly
-      rounded
       @click="dialog = true"
     >
     </v-text-field>
     <v-dialog v-model="dialog" width="500">
       <v-card>
-        <v-card-title class="text-h5 grey lighten-2">
-          Choose Allignment
-        </v-card-title>
+        <v-card-title class="text-h5"> Choose Allignment </v-card-title>
 
-        <v-card-text>
+        <v-card-text class="pa-0">
           <v-container>
             <v-row no-gutters>
               <v-col
@@ -27,6 +24,7 @@
                 v-for="option in options"
               >
                 <v-btn
+                  class="pa-0"
                   block
                   height="100"
                   :color="(char['alignment'] == option.id && 'success') || ''"
@@ -46,7 +44,7 @@
 </template>
 
 <script>
-import { db } from "../../db.js";
+import { db } from "../../firebase.js";
 
 export default {
   data() {
