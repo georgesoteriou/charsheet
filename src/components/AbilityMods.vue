@@ -8,7 +8,7 @@
           <Ability
             :number="true"
             label="Strength"
-            ability="str"
+            id="str"
             :mod_func="mod_func"
           />
         </v-col>
@@ -16,7 +16,7 @@
           <Ability
             :number="true"
             label="Dexterity"
-            ability="dex"
+            id="dex"
             :mod_func="mod_func"
           />
         </v-col>
@@ -24,7 +24,7 @@
           <Ability
             :number="true"
             label="Constitution"
-            ability="con"
+            id="con"
             :mod_func="mod_func"
           />
         </v-col>
@@ -32,7 +32,7 @@
           <Ability
             :number="true"
             label="Intelligence"
-            ability="intel"
+            id="intel"
             :mod_func="mod_func"
           />
         </v-col>
@@ -40,7 +40,7 @@
           <Ability
             :number="true"
             label="Wizdom"
-            ability="wiz"
+            id="wiz"
             :mod_func="mod_func"
           />
         </v-col>
@@ -48,7 +48,7 @@
           <Ability
             :number="true"
             label="Charisma"
-            ability="cha"
+            id="cha"
             :mod_func="mod_func"
           />
         </v-col>

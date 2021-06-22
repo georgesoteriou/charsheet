@@ -5,51 +5,47 @@
     <v-card-text class="pa-1">
       <v-row class="text-center" dense>
         <v-col cols="4">
-          <Ability
-            :number="true"
+          <AbilityProfficient
             label="Strength"
-            ability="str-st"
-            :mod_func="mod_func"
+            id="str"
+            :mod_func="scoreToMod"
           />
         </v-col>
         <v-col cols="4">
-          <Ability
-            :number="true"
+          <AbilityProfficient
             label="Dexterity"
-            ability="dex-st"
-            :mod_func="mod_func"
+            id="dex"
+            :mod_func="scoreToMod"
           />
         </v-col>
         <v-col cols="4">
-          <Ability
-            :number="true"
+          <AbilityProfficient
             label="Constitution"
-            ability="con-st"
-            :mod_func="mod_func"
+            id="con"
+            :mod_func="scoreToMod"
           />
         </v-col>
         <v-col cols="4">
-          <Ability
+          <AbilityProfficient
             :number="true"
             label="Intelligence"
-            ability="intel-st"
-            :mod_func="mod_func"
+            id="intel"
+            :mod_func="scoreToMod"
           />
         </v-col>
         <v-col cols="4">
-          <Ability
+          <AbilityProfficient
             :number="true"
             label="Wizdom"
-            ability="wiz-st"
-            :mod_func="mod_func"
+            id="wiz"
+            :mod_func="scoreToMod"
           />
         </v-col>
         <v-col cols="4">
-          <Ability
-            :number="true"
+          <AbilityProfficient
             label="Charisma"
-            ability="cha-st"
-            :mod_func="mod_func"
+            id="cha"
+            :mod_func="scoreToMod"
           />
         </v-col>
       </v-row>
@@ -58,14 +54,14 @@
 </template>
 
 <script>
-import Ability from "./blobs/Ability.vue";
+import AbilityProfficient from "./blobs/AbilityProfficient.vue";
 import { scoreToMod } from "../funcs.js";
 
 export default {
-  components: { Ability },
+  components: { AbilityProfficient },
   data() {
     return {
-      mod_func: scoreToMod,
+      scoreToMod: scoreToMod,
     };
   },
 };

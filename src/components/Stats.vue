@@ -5,34 +5,43 @@
     <v-card-text class="pa-1">
       <v-row class="text-center" dense>
         <v-col cols="4">
-          <Ability :mod_func="(val) => val" label="Armor Class" id="ac" />
+          <Ability starting="3" :mod_func="same" label="Armor Class" id="ac" />
         </v-col>
         <v-col cols="4">
           <Ability
-            :mod_func="(val) => val"
+            starting="3"
+            :mod_func="withPlus"
             label="Initiative"
             id="initiative"
           />
         </v-col>
         <v-col cols="4">
-          <Ability :mod_func="(val) => val" label="Speed" id="speed" />
+          <Ability starting="3" :mod_func="same" label="Speed" id="speed" />
         </v-col>
         <v-col cols="4">
           <Ability
-            :mod_func="(val) => val"
+            starting="3"
+            :mod_func="same"
             label="Passive</br>Perception"
             id="passive-perception"
           />
         </v-col>
         <v-col cols="4">
           <Ability
-            :mod_func="(val) => val"
+            starting="3"
+            :mod_func="withPlus"
             label="Proficiency</br>Bonus"
             id="proficiency"
           />
         </v-col>
         <v-col cols="4">
-          <Ability :mod_func="(val) => val" label="Hit Dice" id="Dice" />
+          <Ability
+            starting="3"
+            :number="false"
+            :mod_func="same"
+            label="Hit Dice"
+            id="dice"
+          />
         </v-col>
       </v-row>
     </v-card-text>
@@ -41,8 +50,15 @@
 
 <script>
 import Ability from "./blobs/Ability.vue";
+import { withPlus, same } from "../funcs.js";
 
 export default {
   components: { Ability },
+  data() {
+    return {
+      withPlus: withPlus,
+      same: same,
+    };
+  },
 };
 </script>

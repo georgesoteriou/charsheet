@@ -50,3 +50,8 @@ export const scoreToMod = (score) => {
             return "NA"
     }
 }
+
+
+export const same = (value) => { return value }
+export const withPlus = (score) => {return `+${score}`}
+
