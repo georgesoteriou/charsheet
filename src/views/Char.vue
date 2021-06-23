@@ -8,6 +8,7 @@
       <v-col cols="12" lg="6" xl="3"><SavingThrows /></v-col>
       <v-col cols="12" lg="6" xl="3"><Skills /></v-col>
     </v-row>
+    <Dice />
   </v-container>
 </template>
 
@@ -18,6 +19,7 @@ import Stats from "../components/Stats.vue";
 import AbilityMods from "../components/AbilityMods.vue";
 import SavingThrows from "../components/SavingThrows.vue";
 import Skills from "../components/Skills.vue";
+import Dice from "../components/Dice.vue";
 
 export default {
   name: "Char",
@@ -28,6 +30,7 @@ export default {
     AbilityMods,
     SavingThrows,
     Skills,
+    Dice,
   },
 };
 </script>
