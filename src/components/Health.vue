@@ -1,8 +1,12 @@
 <template>
   <v-card>
-    <v-card-title class="text-h5"> HP </v-card-title>
+    <v-card-title class="text-h5">
+      HP
+      <v-spacer></v-spacer>
+      <v-icon v-if="drag">mdi-drag</v-icon>
+    </v-card-title>
     <v-divider></v-divider>
-    <v-card-text>
+    <v-card-text v-if="!drag">
       <v-row class="text-center justify-center">
         <v-col cols="5">
           <Number label="HP" id="hp" />
@@ -28,6 +32,7 @@ import Number from "./blobs/Number.vue";
 import { db } from "../firebase.js";
 
 export default {
+  props: ["drag"],
   components: { Number },
   data() {
     return {

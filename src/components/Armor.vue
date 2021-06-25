@@ -9,15 +9,17 @@
         dark
         color="green"
         icon
+        v-if="!drag"
         @click="$refs.new_picker.show()"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
+      <v-icon v-if="drag">mdi-drag</v-icon>
       <!-- ADD NEW ARMOR -->
       <ArmorPicker ref="new_picker" />
     </v-card-title>
     <v-divider></v-divider>
-    <v-card-text class="pa-0">
+    <v-card-text class="pa-0" v-if="!drag">
       <v-expansion-panels multiple>
         <v-expansion-panel :key="a.id" v-for="a in myArmor">
           <v-expansion-panel-header>
@@ -116,6 +118,7 @@ import ArmorDialog from "./blobs/Armor/ArmorDialog.vue";
 import ArmorPicker from "./blobs/Armor/ArmorPicker.vue";
 
 export default {
+  props: ["drag"],
   components: { ArmorDialog, ArmorPicker },
   data() {
     return {
@@ -132,7 +135,6 @@ export default {
         .orderBy("equip", "desc"),
     };
   },
-  computed: {},
   methods: {
     save_edit_dialog(id, newArmor) {
       db.collection("armor").doc(id).update(newArmor);

@@ -1,8 +1,12 @@
 <template>
   <v-card>
-    <v-card-title class="text-h5"> Ability Modifiers </v-card-title>
+    <v-card-title class="text-h5">
+      Ability Modifiers
+      <v-spacer></v-spacer>
+      <v-icon v-if="drag">mdi-drag</v-icon>
+    </v-card-title>
     <v-divider></v-divider>
-    <v-card-text class="pa-1">
+    <v-card-text class="pa-1" v-if="!drag">
       <v-row class="text-center" dense>
         <v-col cols="4">
           <Ability
@@ -62,6 +66,7 @@ import Ability from "./blobs/Ability.vue";
 import { scoreToMod } from "../funcs.js";
 
 export default {
+  props: ["drag"],
   components: { Ability },
   data() {
     return {

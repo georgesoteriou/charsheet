@@ -1,8 +1,12 @@
 <template>
   <v-card>
-    <v-card-title class="text-h5"> Quick Info </v-card-title>
+    <v-card-title class="text-h5">
+      Quick Info
+      <v-spacer></v-spacer>
+      <v-icon v-if="drag">mdi-drag</v-icon>
+    </v-card-title>
     <v-divider></v-divider>
-    <v-card-text class="pa-1">
+    <v-card-text class="pa-1" v-if="!drag">
       <v-row class="text-center" dense>
         <v-col cols="4">
           <Ability starting="3" :mod_func="same" label="Armor Class" id="ac" />
@@ -53,6 +57,7 @@ import Ability from "./blobs/Ability.vue";
 import { withPlus, same } from "../funcs.js";
 
 export default {
+  props: ["drag"],
   components: { Ability },
   data() {
     return {

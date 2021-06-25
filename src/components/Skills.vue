@@ -1,9 +1,13 @@
 <template>
   <v-card>
-    <v-card-title class="text-h5"> Skills </v-card-title>
+    <v-card-title class="text-h5">
+      Skills
+      <v-spacer></v-spacer>
+      <v-icon v-if="drag">mdi-drag</v-icon>
+    </v-card-title>
     <v-divider></v-divider>
-    <v-card-text>
-      <v-row class="text-center" dense>
+    <v-card-text v-if="!drag">
+      <v-row class="text-center" no-gutters>
         <v-col cols="6" :key="i" v-for="(skill, i) in skills">
           <SkillProfficient
             :label="skill.name"
@@ -21,6 +25,7 @@ import SkillProfficient from "./blobs/SkillProfficient.vue";
 import { scoreToMod } from "../funcs.js";
 
 export default {
+  props: ["drag"],
   components: { SkillProfficient },
   data() {
     return {

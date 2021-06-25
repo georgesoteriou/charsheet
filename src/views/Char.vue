@@ -1,17 +1,44 @@
 <template>
-  <draggable v-model="order" class="container container--fluid">
-    <transition-group class="row mb-10">
-      <v-col draggable :key="1" cols="12" lg="12" xl="12"><Info /></v-col>
-      <v-col draggable :key="2" cols="12" lg="6" xl="3"><Stats /></v-col>
-      <v-col draggable :key="3" cols="12" lg="6" xl="3"><Health /></v-col>
-      <v-col draggable :key="4" cols="12" lg="6" xl="3"><AbilityMods /></v-col>
-      <v-col draggable :key="5" cols="12" lg="6" xl="3"><SavingThrows /></v-col>
-      <v-col draggable :key="6" cols="12" lg="6" xl="3"><Skills /></v-col>
-      <v-col draggable :key="7" cols="12" lg="6" xl="3"><Armor /></v-col>
-      <v-col draggable :key="8" cols="12" lg="6" xl="3"><Equipment /></v-col>
-      <v-col draggable :key="9" cols="12" lg="6" xl="3"><Weapons /></v-col>
-    </transition-group>
-  </draggable>
+  <span>
+    <v-container fluid>
+      <v-row>
+        <v-col cols="12">
+          <Info />
+        </v-col>
+      </v-row>
+    </v-container>
+    <draggable
+      :list="items"
+      :move="debouncedSave"
+      :disabled="!drag"
+      class="container container--fluid mb-10"
+    >
+      <transition-group class="row">
+        <v-col
+          draggable
+          v-for="item in items"
+          :key="item.id"
+          :cols="item.cols"
+          :lg="item.lg"
+          :xl="item.xl"
+        >
+          <div :is="idToItem[item.id]" :drag="drag" />
+        </v-col>
+      </transition-group>
+    </draggable>
+    <v-btn
+      :x-large="$vuetify.breakpoint.mdAndUp"
+      :small="$vuetify.breakpoint.xs"
+      fab
+      bottom
+      right
+      fixed
+      @click="toggleDrag()"
+      :color="drag ? 'success' : ''"
+    >
+      <v-icon>mdi-drag-variant</v-icon>
+    </v-btn>
+  </span>
 </template>
 
 <script>
@@ -27,11 +54,34 @@ import Weapons from "../components/Weapons.vue";
 
 import draggable from "vuedraggable";
 
+import { db } from "../firebase.js";
+import { debounce } from "debounce";
+
 export default {
   name: "Char",
   data: function () {
     return {
-      order: null,
+      drag: false,
+      items: [
+        { cols: "12", lg: "6", xl: "3", id: "Stats" },
+        { cols: "12", lg: "6", xl: "3", id: "Health" },
+        { cols: "12", lg: "6", xl: "3", id: "AbilityMods" },
+        { cols: "12", lg: "6", xl: "3", id: "SavingThrows" },
+        { cols: "12", lg: "6", xl: "3", id: "Skills" },
+        { cols: "12", lg: "6", xl: "3", id: "Armor" },
+        { cols: "12", lg: "6", xl: "3", id: "Equipment" },
+        { cols: "12", lg: "6", xl: "3", id: "Weapons" },
+      ],
+      idToItem: {
+        Stats: Stats,
+        Health: Health,
+        AbilityMods: AbilityMods,
+        SavingThrows: SavingThrows,
+        Skills: Skills,
+        Armor: Armor,
+        Equipment: Equipment,
+        Weapons: Weapons,
+      },
     };
   },
   components: {
@@ -45,6 +95,31 @@ export default {
     Armor,
     Equipment,
     Weapons,
+  },
+  created: async function () {
+    let data = (
+      await db.collection("characters").doc(this.$route.params.id).get()
+    ).data();
+    if (!data.items || data.items.length != this.items.length) {
+      db.collection("characters")
+        .doc(this.$route.params.id)
+        .set({ items: this.items }, { merge: true });
+    } else {
+      this.items = data.items;
+    }
+  },
+  methods: {
+    save() {
+      db.collection("characters")
+        .doc(this.$route.params.id)
+        .update({ items: this.items });
+    },
+    debouncedSave: debounce(function () {
+      this.save();
+    }, 1000),
+    toggleDrag() {
+      this.drag = !this.drag;
+    },
   },
 };
 </script>

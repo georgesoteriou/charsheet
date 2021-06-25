@@ -9,15 +9,17 @@
         dark
         color="green"
         icon
+        v-if="!drag"
         @click="$refs.new_picker.show()"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
+      <v-icon v-if="drag">mdi-drag</v-icon>
       <!-- ADD NEW ARMOR -->
       <WeaponsPicker ref="new_picker" />
     </v-card-title>
     <v-divider></v-divider>
-    <v-card-text class="pa-0">
+    <v-card-text class="pa-0" v-if="!drag">
       <v-expansion-panels multiple>
         <v-expansion-panel :key="a.id" v-for="a in myWeapons">
           <v-expansion-panel-header>
@@ -153,6 +155,9 @@ export default {
   props: {
     collection: {
       default: "weapons",
+    },
+    drag: {
+      default: false,
     },
   },
   components: { WeaponsDialog, WeaponsPicker },
