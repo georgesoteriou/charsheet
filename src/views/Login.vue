@@ -52,7 +52,7 @@
                           Reset<br />password
                         </v-btn>
                       </v-col>
-                      <v-col cols="5">
+                      <v-col cols="8" xl="5">
                         <v-btn block color="primary" large @click="submit">
                           Login with Email
                         </v-btn>
@@ -84,10 +84,9 @@
             <v-card class="my-2">
               <v-card-text>
                 <v-row class="justify-center">
-                  <v-col cols="5">
+                  <v-col cols="12" xl="5">
                     <v-btn
                       block
-                      class="px-10"
                       color="#0F9D58"
                       large
                       dark
@@ -186,8 +185,7 @@ export default {
           .signInWithEmailAndPassword(this.user, this.pass)
           .then(() => {
             store.commit("loginUser", auth.currentUser);
-            store.dispatch("bindChars");
-            this.$router.push("/char");
+            this.$router.push("/user");
           })
           .catch(() => {
             // is sponsor with wrong pass
@@ -201,8 +199,7 @@ export default {
     submitGoogle() {
       auth.signInWithPopup(googleProvider).then(() => {
         store.commit("loginUser", auth.currentUser);
-        store.dispatch("bindChars");
-        this.$router.push("/char");
+        this.$router.push("/user");
       });
     },
   },

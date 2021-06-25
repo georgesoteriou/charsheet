@@ -1,16 +1,23 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col cols="12"> User </v-col>
-      <v-col cols="12" :key="i" v-for="(char, i) in chars">
-        <v-btn :href="`char/${char.id}`">
+    <v-row class="text-center text-h2" justify="center">
+      <v-col cols="12"> Character Sellection </v-col>
+      <v-col cols="10" :key="i" v-for="(char, i) in chars">
+        <v-btn color="blue" block x-large :href="`char/${char.id}`">
           {{ char.name }}
         </v-btn>
       </v-col>
-      <v-col>
-        <v-btn fab @click="newChar"><v-icon>mdi-plus</v-icon></v-btn>
+      <v-col cols="10">
+        <v-btn color="success" block @click="newChar" x-large>
+          <v-icon>mdi-plus</v-icon>Add New Character
+        </v-btn>
       </v-col>
     </v-row>
+    <v-footer absolute color="primary" padless>
+      <v-row justify="center" no-gutters>
+        <v-btn text block dark x-large @click="logout"> Logout </v-btn>
+      </v-row>
+    </v-footer>
   </v-container>
 </template>
 
@@ -38,6 +45,10 @@ export default {
         name: "New Character",
         owner: this.$store.getters.user.uid,
       });
+    },
+    logout() {
+      this.$store.commit("logout");
+      this.$router.push("/");
     },
   },
 };

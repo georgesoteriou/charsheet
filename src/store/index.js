@@ -33,7 +33,6 @@ export default new Vuex.Store({
   },
   actions: {
     bindChars: firestoreAction(({ state, bindFirestoreRef }) => {
-      console.log(state.user)
       return bindFirestoreRef('chars', db.collection('characters').where("owner", "==", state.user.uid))
     }),
     unbindChars: firestoreAction(({ unbindFirestoreRef }) => {
