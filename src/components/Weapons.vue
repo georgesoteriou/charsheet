@@ -19,7 +19,11 @@
       <WeaponsPicker ref="new_picker" />
     </v-card-title>
     <v-divider></v-divider>
-    <v-card-text class="pa-0" v-if="!drag">
+    <v-card-text
+      class="pa-0 scroll"
+      :style="$vuetify.breakpoint.lgAndUp ? 'height: 420px' : ''"
+      v-if="!drag"
+    >
       <v-expansion-panels multiple>
         <v-expansion-panel :key="a.id" v-for="a in myWeapons">
           <v-expansion-panel-header>

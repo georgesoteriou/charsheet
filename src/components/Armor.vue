@@ -19,7 +19,11 @@
       <ArmorPicker ref="new_picker" />
     </v-card-title>
     <v-divider></v-divider>
-    <v-card-text class="pa-0" v-if="!drag">
+    <v-card-text
+      class="pa-0 scroll"
+      v-if="!drag"
+      :style="$vuetify.breakpoint.lgAndUp ? 'height: 420px' : ''"
+    >
       <v-expansion-panels multiple>
         <v-expansion-panel :key="a.id" v-for="a in myArmor">
           <v-expansion-panel-header>
@@ -166,3 +170,4 @@ export default {
   },
 };
 </script>
+

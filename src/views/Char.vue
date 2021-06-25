@@ -123,3 +123,12 @@ export default {
   },
 };
 </script>
+
+<style >
+.scroll {
+  overflow-y: scroll;
+}
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+</style>

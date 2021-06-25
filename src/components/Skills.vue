@@ -7,7 +7,7 @@
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text v-if="!drag">
-      <v-row class="text-center" no-gutters>
+      <v-row class="text-center" dense>
         <v-col cols="6" :key="i" v-for="(skill, i) in skills">
           <SkillProfficient
             :label="skill.name"
