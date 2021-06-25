@@ -31,18 +31,37 @@
                       {{ a.name }}
                     </v-col>
                     <v-col cols="12" class="text--secondary">
-                      {{ a.type }}
+                      Attack Bonus: +{{ a.extra_attack }}
                     </v-col>
                     <v-col cols="12" class="text--secondary">
-                      {{ a.stealth_dis ? "Dis. on Stealth, " : "" }}
-                      {{ a.base_ac }} + {{ a.modifier }}
+                      Damage: {{ a.dmg }} + {{ a.extra_dmg }}
                     </v-col>
                   </v-row>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
                   <v-container>
                     <v-row no-gutters class="pl-4">
-                      <v-col cols="9"> Discription: {{ a.description }} </v-col>
+                      <v-col cols="9">
+                        <v-row no-gutters>
+                          <v-col cols="12">
+                            <span v-if="a.tags">
+                              <b>Tags: </b> {{ a.tags.join(", ") }}
+                            </span>
+                          </v-col>
+                          <v-col cols="12">
+                            <b>Damage Type: </b>
+                            <span>{{ a.dmg_type }}</span>
+                          </v-col>
+                          <v-col cols="12">
+                            <b>Weapon Type: </b>
+                            <span>{{ a.type }}, {{ a.rarity }}</span>
+                          </v-col>
+                          <v-col cols="12">
+                            <b>Discription: </b>
+                            <span v-html="a.description"> </span
+                          ></v-col>
+                        </v-row>
+                      </v-col>
                       <v-col cols="3">
                         <v-btn
                           class="px-0"
@@ -73,11 +92,10 @@
                       {{ a.name }}
                     </v-col>
                     <v-col cols="12" class="text--secondary">
-                      {{ a.type }}
+                      Attack Bonus: +{{ a.extra_attack }}
                     </v-col>
                     <v-col cols="12" class="text--secondary">
-                      {{ a.stealth_dis ? "Dis. on Stealth, " : "" }}
-                      {{ a.base_ac }} + {{ a.modifier }}
+                      Damage: {{ a.dmg }} + {{ a.extra_dmg }}
                     </v-col>
                   </v-row>
                 </v-expansion-panel-header>
@@ -85,13 +103,29 @@
                   <v-container>
                     <v-row no-gutters class="pl-4">
                       <v-col cols="9">
-                        Discription: {{ a.description }}<br />
-                        Owner:
-                        {{
-                          a.owner === $store.getters.user.uid
-                            ? "You"
-                            : "Not you"
-                        }}
+                        <v-row no-gutters>
+                          <v-col cols="12">
+                            <span v-if="a.tags">
+                              <b>Tags: </b> {{ a.tags.join(", ") }}
+                            </span>
+                          </v-col>
+                          <v-col cols="12">
+                            <b>Damage Type: </b>
+                            <span>{{ a.dmg_type }}</span>
+                          </v-col>
+                          <v-col cols="12">
+                            <b>Weapon Type: </b>
+                            <span>{{ a.type }}, {{ a.rarity }}</span>
+                          </v-col>
+                          <v-col cols="12">
+                            <b>Discription: </b>
+                            <span v-html="a.description"> </span
+                          ></v-col>
+                          <v-col cols="12">
+                            <b>Item shared with: </b>
+                            {{ a.public ? "Public" : "Just You" }}
+                          </v-col>
+                        </v-row>
                       </v-col>
                       <v-col cols="3">
                         <v-btn

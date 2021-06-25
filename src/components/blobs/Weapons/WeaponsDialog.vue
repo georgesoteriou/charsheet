@@ -101,6 +101,7 @@
                 :hide-details="true"
                 chips
                 small-chips
+                :menu-props="{ bottom: true, offsetY: true }"
                 label="Other Tags"
                 multiple
                 outlined

@@ -3,7 +3,14 @@
     <v-card-title class="text-h5">
       Weapons
       <v-spacer></v-spacer>
-      <v-btn fab dark color="green" icon @click="$refs.new_picker.show()">
+      <v-btn
+        fab
+        x-small
+        dark
+        color="green"
+        icon
+        @click="$refs.new_picker.show()"
+      >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
       <!-- ADD NEW ARMOR -->
@@ -63,7 +70,7 @@
                   {{ a.ref.public ? "Public" : "Just You" }}
                 </v-col>
               </v-row>
-              <v-row dense justify="end" v-if="a.ref">
+              <v-row dense justify="center" v-if="a.ref">
                 <v-col cols="6">
                   <v-btn
                     class="px-0"
@@ -162,7 +169,7 @@ export default {
         .collection("characters")
         .doc(this.$route.params.id)
         .collection(this.collection)
-        .orderBy("equip"),
+        .orderBy("equip", "desc"),
       char: db.collection("characters").doc(this.$route.params.id),
     };
   },

@@ -3,7 +3,14 @@
     <v-card-title class="text-h5">
       Equipment
       <v-spacer></v-spacer>
-      <v-btn fab dark color="green" icon @click="$refs.new_picker.show()">
+      <v-btn
+        fab
+        x-small
+        dark
+        color="green"
+        icon
+        @click="$refs.new_picker.show()"
+      >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
       <!-- ADD NEW ARMOR -->
