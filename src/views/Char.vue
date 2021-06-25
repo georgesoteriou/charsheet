@@ -8,6 +8,8 @@
       <v-col cols="12" lg="6" xl="3"><SavingThrows /></v-col>
       <v-col cols="12" lg="6" xl="3"><Skills /></v-col>
       <v-col cols="12" lg="6" xl="3"><Armor /></v-col>
+      <v-col cols="12" lg="6" xl="3"><Equipment /></v-col>
+      <v-col cols="12" lg="6" xl="3"><Weapons /></v-col>
     </v-row>
   </v-container>
 </template>
@@ -20,6 +22,8 @@ import AbilityMods from "../components/AbilityMods.vue";
 import SavingThrows from "../components/SavingThrows.vue";
 import Skills from "../components/Skills.vue";
 import Armor from "../components/Armor.vue";
+import Equipment from "../components/Equipment.vue";
+import Weapons from "../components/Weapons.vue";
 
 export default {
   name: "Char",
@@ -31,6 +35,8 @@ export default {
     SavingThrows,
     Skills,
     Armor,
+    Equipment,
+    Weapons,
   },
 };
 </script>

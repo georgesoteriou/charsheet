@@ -1,10 +1,11 @@
 <template>
   <span>
     <v-text-field
-      v-model="char['alignment']"
+      v-model="value"
       label="Alignment"
       outlined
       :hide-details="true"
+      :success="saved"
       dense
       readonly
       @click="dialog = true"
@@ -28,10 +29,7 @@
                   block
                   height="100"
                   :color="(char['alignment'] == option.id && 'success') || ''"
-                  @click="
-                    char['alignment'] = option.id;
-                    dialog = false;
-                  "
+                  @click="save(option.id)"
                   v-html="option.text"
                 ></v-btn>
               </v-col>
@@ -51,32 +49,49 @@ export default {
     return {
       char: {},
       dialog: false,
+      saved: false,
+      value: "",
+      id: "alignment",
+      starting: "",
       options: [
-        { text: `Lawful</br>Good`, id: "LG" },
-        { text: `Neutral</br>Good`, id: "NG" },
-        { text: `Chaotic</br>Good`, id: "CG" },
-        { text: `Lawful</br>Neutral`, id: "LN" },
-        { text: `Neutral</br>Neutral`, id: "NN" },
-        { text: `Chaotic</br>Neutral`, id: "CN" },
-        { text: `Lawful</br>Evil`, id: "LE" },
-        { text: `Neutral</br>Evil`, id: "NE" },
-        { text: `Chaotic</br>Evil`, id: "CE" },
+        { text: `Lawful</br>Good`, id: "Lawful Good" },
+        { text: `Neutral</br>Good`, id: "Neutral Good" },
+        { text: `Chaotic</br>Good`, id: "Chaotic Good" },
+        { text: `Lawful</br>Neutral`, id: "Lawful Neutral" },
+        { text: `Neutral</br>Neutral`, id: "Neutral Neutral" },
+        { text: `Chaotic</br>Neutral`, id: "Chaotic Neutral" },
+        { text: `Lawful</br>Evil`, id: "Lawful Evil" },
+        { text: `Neutral</br>Evil`, id: "Neutral Evil" },
+        { text: `Chaotic</br>Evil`, id: "Chaotic Evil" },
       ],
     };
+  },
+  created: async function () {
+    let data = (await this.$firestoreRefs.char.get()).data();
+    if (!data[this.id]) {
+      this.$firestoreRefs.char.set(
+        { [this.id]: this.starting },
+        { merge: true }
+      );
+      this.value = this.starting;
+    } else {
+      this.value = data[this.id];
+    }
   },
   firestore() {
     return {
       char: db.collection("characters").doc(this.$route.params.id),
     };
   },
-  watch: {
-    value() {
-      this.$firestoreRefs.char.update(this.char);
-    },
-  },
-  computed: {
-    value() {
-      return this.char["alignment"];
+  methods: {
+    save(id) {
+      this.$firestoreRefs.char.update({ [this.id]: id });
+      this.value = id;
+      this.dialog = false;
+      this.saved = true;
+      setTimeout(() => {
+        this.saved = false;
+      }, 500);
     },
   },
 };

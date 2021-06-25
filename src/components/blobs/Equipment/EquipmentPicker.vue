@@ -7,20 +7,20 @@
   >
     <v-card>
       <v-card-title class="text-h5">
-        <span> Pick Armor </span>
+        <span> Pick Equipment </span>
         <v-spacer />
-        <v-btn fab dark color="green" icon @click="$refs.new_armor.show()">
+        <v-btn fab dark color="green" icon @click="$refs.new_item.show()">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
-        <ArmorDialog
-          ref="new_armor"
+        <EquipmentDialog
+          ref="new_item"
           @save="(a) => save_create_dialog(null, a)"
         />
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="pa-3">
         <v-card v-if="privateArmor.length > 0">
-          <v-card-title class="text-h6"> Your Private Armor </v-card-title>
+          <v-card-title class="text-h6"> Your Private Equipment </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="pa-0">
             <v-expansion-panels accordion>
@@ -29,13 +29,6 @@
                   <v-row dense>
                     <v-col cols="12" class="text-h6">
                       {{ a.name }}
-                    </v-col>
-                    <v-col cols="12" class="text--secondary">
-                      {{ a.type }}
-                    </v-col>
-                    <v-col cols="12" class="text--secondary">
-                      {{ a.stealth_dis ? "Dis. on Stealth, " : "" }}
-                      {{ a.base_ac }} + {{ a.modifier }}
                     </v-col>
                   </v-row>
                 </v-expansion-panel-header>
@@ -62,7 +55,7 @@
           </v-card-text>
         </v-card>
         <v-card>
-          <v-card-title class="text-h6"> Public Armor </v-card-title>
+          <v-card-title class="text-h6"> Public Equipment </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="pa-0">
             <v-expansion-panels accordion>
@@ -71,13 +64,6 @@
                   <v-row dense>
                     <v-col cols="12" class="text-h6">
                       {{ a.name }}
-                    </v-col>
-                    <v-col cols="12" class="text--secondary">
-                      {{ a.type }}
-                    </v-col>
-                    <v-col cols="12" class="text--secondary">
-                      {{ a.stealth_dis ? "Dis. on Stealth, " : "" }}
-                      {{ a.base_ac }} + {{ a.modifier }}
                     </v-col>
                   </v-row>
                 </v-expansion-panel-header>
@@ -127,12 +113,16 @@
 </template>
 
 <script>
-import { db } from "../../firebase.js";
-import ArmorDialog from "./ArmorDialog.vue";
+import { db } from "../../../firebase.js";
+import EquipmentDialog from "./EquipmentDialog.vue";
 
 export default {
-  components: { ArmorDialog },
-  props: {},
+  props: {
+    collection: {
+      default: "equipment",
+    },
+  },
+  components: { EquipmentDialog },
   data() {
     return {
       dialog: false,
@@ -144,15 +134,13 @@ export default {
   firestore() {
     return {
       publicArmor: db
-        .collection("armor")
+        .collection(this.collection)
         .where("public", "==", true)
-        .orderBy("type")
         .orderBy("name"),
       privateArmor: db
-        .collection("armor")
+        .collection(this.collection)
         .where("public", "==", false)
         .where("owner", "==", this.$store.getters.user.uid)
-        .orderBy("type")
         .orderBy("name"),
     };
   },
@@ -161,24 +149,24 @@ export default {
       this.dialog = true;
     },
     add(id) {
-      const docRef = db.collection("armor").doc(id);
+      const docRef = db.collection(this.collection).doc(id);
       db.collection("characters")
         .doc(this.$route.params.id)
-        .collection("armor")
-        .add({ ref: docRef });
+        .collection(this.collection)
+        .add({ ref: docRef, equip: false, ammount: 1 });
       this.dialog = false;
     },
     close() {
       this.dialog = false;
     },
     save_create_dialog(id, newArmor) {
-      db.collection("armor")
+      db.collection(this.collection)
         .add(newArmor)
         .then((docRef) => {
           db.collection("characters")
             .doc(this.$route.params.id)
-            .collection("armor")
-            .add({ ref: docRef });
+            .collection(this.collection)
+            .add({ ref: docRef, equip: false, ammount: 1 });
           this.dialog = false;
         });
     },

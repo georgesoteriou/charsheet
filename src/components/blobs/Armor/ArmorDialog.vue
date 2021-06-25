@@ -37,13 +37,13 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field
+              <v-textarea
                 v-model="newArmor.description"
                 label="Description"
                 outlined
                 :hide-details="true"
                 dense
-              ></v-text-field>
+              ></v-textarea>
             </v-col>
             <v-col cols="12">
               <v-select
@@ -62,7 +62,12 @@
                 outlined
                 :hide-details="true"
                 dense
+                prepend-inner-icon="mdi-minus"
                 type="number"
+                @click:prepend-inner="newArmor.base_ac--"
+                @click:append="newArmor.base_ac++"
+                append-icon="mdi-plus"
+                class="centered-input"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -92,7 +97,12 @@
                 outlined
                 :hide-details="true"
                 dense
+                prepend-inner-icon="mdi-minus"
                 type="number"
+                @click:prepend-inner="newArmor.req_strength--"
+                @click:append="newArmor.req_strength++"
+                append-icon="mdi-plus"
+                class="centered-input"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -190,3 +200,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.centered-input >>> input {
+  text-align: center;
+}
+</style>

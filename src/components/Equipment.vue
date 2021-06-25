@@ -1,47 +1,52 @@
 <template>
   <v-card>
     <v-card-title class="text-h5">
-      Armor
+      Equipment
       <v-spacer></v-spacer>
       <v-btn fab dark color="green" icon @click="$refs.new_picker.show()">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
       <!-- ADD NEW ARMOR -->
-      <ArmorPicker ref="new_picker" />
+      <EquipmentPicker ref="new_picker" />
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text class="pa-0">
       <v-expansion-panels multiple>
-        <v-expansion-panel :key="a.id" v-for="a in myArmor">
+        <v-expansion-panel :key="a.id" v-for="a in myEquipment">
           <v-expansion-panel-header>
             <v-row no-gutters v-if="a.ref">
               <v-col cols="12" class="text-h6">
                 <v-icon color="green" v-if="a.equip">mdi-fencing</v-icon>
                 {{ a.ref.name }}
+                <span v-if="a.ref.multiple"> x {{ a.ammount }}</span>
               </v-col>
               <v-col cols="12" class="text--secondary">
-                <span v-if="a.equip" class="green--text">Equipped,</span>
-                <span>
-                  {{ a.ref.stealth_dis ? "Dis. on Stealth, " : "" }}
-                </span>
-                <span>{{ a.ref.base_ac }} + {{ a.ref.modifier }}</span>
+                <span v-if="a.equip" class="green--text">Holding</span>
               </v-col>
             </v-row>
             <span dense v-else>Item deleted. Please remove</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-container>
-              <v-row v-if="a.ref" no-gutters class="pl-4">
-                <v-col cols="10"><b>Type:</b> {{ a.ref.type }}</v-col>
+              <v-row v-if="a.ref" no-gutters class="px-4">
                 <v-col cols="10">
-                  <b>Discription:</b> {{ a.ref.description }}
-                </v-col>
+                  <b>Discription:</b> <span v-html="a.ref.description"> </span
+                ></v-col>
                 <v-col cols="10">
                   <b>Item shared with:</b>
                   {{ a.ref.public ? "Public" : "Just You" }}
                 </v-col>
               </v-row>
-              <v-row dense justify="end" v-if="a.ref">
+              <v-row dense class="px-4" justify="start" v-if="a.ref.multiple">
+                <v-col cols="6">
+                  <Number
+                    label="Ammount"
+                    :document_ref="get_id(a.id)"
+                    id="ammount"
+                  />
+                </v-col>
+              </v-row>
+              <v-row dense v-if="a.ref">
                 <v-col cols="4">
                   <v-btn
                     class="px-0"
@@ -51,7 +56,7 @@
                     @click.prevent="equip(a.id, !a.equip)"
                   >
                     <v-icon>mdi-fencing</v-icon>
-                    <div>Equip</div>
+                    <div>Hold</div>
                   </v-btn>
                 </v-col>
                 <v-col cols="4">
@@ -73,15 +78,15 @@
                     class="px-0"
                     color="purple"
                     block
-                    @click.prevent="$refs[`armor-${a.id}`][0].show()"
+                    @click.prevent="$refs[`item-${a.id}`][0].show()"
                   >
                     <v-icon>mdi-pencil</v-icon>
                     <div>Edit</div>
                   </v-btn>
-                  <ArmorDialog
-                    :ref="`armor-${a.id}`"
-                    :armor="{ ...a.ref }"
-                    @save="(armor) => save_edit_dialog(a.ref.id, armor)"
+                  <EquipmentDialog
+                    :ref="`item-${a.id}`"
+                    :item="{ ...a.ref }"
+                    @save="(item) => save_edit_dialog(a.ref.id, item)"
                     :show_del="true"
                     @del="() => del(a.id, a.ref.id)"
                   />
@@ -105,54 +110,67 @@
 
 <script>
 import { db } from "../firebase.js";
-import ArmorDialog from "./blobs/Armor/ArmorDialog.vue";
-import ArmorPicker from "./blobs/Armor/ArmorPicker.vue";
+import EquipmentDialog from "./blobs/Equipment/EquipmentDialog.vue";
+import EquipmentPicker from "./blobs/Equipment/EquipmentPicker.vue";
+import Number from "./blobs/Number.vue";
 
 export default {
-  components: { ArmorDialog, ArmorPicker },
+  props: {
+    collection: {
+      default: "equipment",
+    },
+  },
+  components: { EquipmentDialog, EquipmentPicker, Number },
   data() {
     return {
-      myArmor: [],
+      myEquipment: [],
       create_dialog: false,
     };
   },
   firestore() {
     return {
-      myArmor: db
+      myEquipment: db
         .collection("characters")
         .doc(this.$route.params.id)
-        .collection("armor")
+        .collection(this.collection)
         .orderBy("equip", "desc"),
     };
   },
   computed: {},
   methods: {
-    save_edit_dialog(id, newArmor) {
-      db.collection("armor").doc(id).update(newArmor);
+    save_edit_dialog(id, newItem) {
+      db.collection(this.collection).doc(id).update(newItem);
     },
     del(my_ref, global_ref) {
       // Delete from my list and globally
       db.collection("characters")
         .doc(this.$route.params.id)
-        .collection("armor")
+        .collection(this.collection)
         .doc(my_ref)
         .delete();
-      db.collection("armor").doc(global_ref).delete();
+      db.collection(this.collection).doc(global_ref).delete();
     },
     remove(my_ref) {
       // Remove from my list
       db.collection("characters")
         .doc(this.$route.params.id)
-        .collection("armor")
+        .collection(this.collection)
         .doc(my_ref)
         .delete();
     },
     equip(id, equipt) {
       db.collection("characters")
         .doc(this.$route.params.id)
-        .collection("armor")
+        .collection(this.collection)
         .doc(id)
         .update({ equip: equipt });
+    },
+    get_id(id) {
+      return db
+        .collection("characters")
+        .doc(this.$route.params.id)
+        .collection(this.collection)
+        .doc(id);
     },
   },
 };
