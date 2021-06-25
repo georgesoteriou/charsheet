@@ -16,6 +16,5 @@ var firebaseConfig = {
 // Get a Firestore instance
 const app = firebase.initializeApp(firebaseConfig);
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
-googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 export const db = firebase.firestore(app);
 export const auth = firebase.auth(app);
