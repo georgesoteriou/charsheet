@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="dialog" width="600" persistent>
+  <v-dialog
+    :fullscreen="$vuetify.breakpoint.xs"
+    v-model="dialog"
+    width="600"
+    persistent
+  >
     <v-card>
       <v-card-title class="text-h5">
         <span> Pick Armor </span>
@@ -14,16 +19,19 @@
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="pa-3">
-        <v-card>
+        <v-card v-if="privateArmor.length > 0">
           <v-card-title class="text-h6"> Your Private Armor </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="pa-0">
-            <v-expansion-panels multiple>
+            <v-expansion-panels accordion>
               <v-expansion-panel :key="i" v-for="(a, i) in privateArmor">
                 <v-expansion-panel-header>
-                  <v-row no-gutters>
+                  <v-row dense>
                     <v-col cols="12" class="text-h6">
                       {{ a.name }}
+                    </v-col>
+                    <v-col cols="12" class="text--secondary">
+                      {{ a.type }}
                     </v-col>
                     <v-col cols="12" class="text--secondary">
                       {{ a.stealth_dis ? "Dis. on Stealth, " : "" }}
@@ -34,10 +42,7 @@
                 <v-expansion-panel-content>
                   <v-container>
                     <v-row no-gutters class="pl-4">
-                      <v-col cols="9">
-                        Type: {{ a.type }}<br />
-                        Discription: {{ a.description }}
-                      </v-col>
+                      <v-col cols="9"> Discription: {{ a.description }} </v-col>
                       <v-col cols="3">
                         <v-btn
                           class="px-0"
@@ -60,12 +65,15 @@
           <v-card-title class="text-h6"> Public Armor </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="pa-0">
-            <v-expansion-panels multiple>
+            <v-expansion-panels accordion>
               <v-expansion-panel :key="i" v-for="(a, i) in publicArmor">
                 <v-expansion-panel-header>
-                  <v-row no-gutters>
+                  <v-row dense>
                     <v-col cols="12" class="text-h6">
                       {{ a.name }}
+                    </v-col>
+                    <v-col cols="12" class="text--secondary">
+                      {{ a.type }}
                     </v-col>
                     <v-col cols="12" class="text--secondary">
                       {{ a.stealth_dis ? "Dis. on Stealth, " : "" }}
@@ -77,7 +85,6 @@
                   <v-container>
                     <v-row no-gutters class="pl-4">
                       <v-col cols="9">
-                        Type: {{ a.type }}<br />
                         Discription: {{ a.description }}<br />
                         Owner:
                         {{
@@ -107,7 +114,7 @@
       </v-card-text>
       <v-card-actions>
         <v-row justify="center" class="my-2">
-          <v-col cols="3">
+          <v-col cols="5">
             <v-btn block color="#607D8B" @click="close">
               <v-icon>mdi-close</v-icon>
               <div>Cancel</div>

@@ -39,7 +39,7 @@
                 </v-col>
               </v-row>
               <v-row dense justify="end" v-if="a.ref">
-                <v-col cols="2">
+                <v-col cols="4">
                   <v-btn
                     class="px-0"
                     text
@@ -51,7 +51,7 @@
                     <div>Equip</div>
                   </v-btn>
                 </v-col>
-                <v-col cols="2">
+                <v-col cols="4">
                   <v-btn
                     class="px-0"
                     text
@@ -64,7 +64,7 @@
                   </v-btn>
                 </v-col>
                 <!-- Edit Button -->
-                <v-col cols="2" v-if="a.ref.owner === $store.getters.user.uid">
+                <v-col cols="4" v-if="a.ref.owner === $store.getters.user.uid">
                   <v-btn
                     text
                     class="px-0"
@@ -88,7 +88,7 @@
                 <v-col cols="3">
                   <v-btn color="red" block @click.prevent="remove(a.id)">
                     <v-icon>mdi-close</v-icon>
-                    <span>Remove</span>
+                    <div>Remove</div>
                   </v-btn>
                 </v-col>
               </v-row>

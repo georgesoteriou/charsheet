@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="dialog" width="600" persistent>
+  <v-dialog
+    :fullscreen="$vuetify.breakpoint.xs"
+    v-model="dialog"
+    width="600"
+    persistent
+  >
     <v-card>
       <v-card-title class="text-h5">
         <span v-if="show_del"> Edit Armor </span>
@@ -102,23 +107,23 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-row justify="center" class="my-2">
-          <v-col cols="3">
+        <v-row dense justify="center" class="my-2">
+          <v-col cols="4">
             <v-btn block color="success" @click="save">
               <v-icon>mdi-content-save</v-icon>
-              <div>Save</div>
+              <div v-if="!$vuetify.breakpoint.xs">Save</div>
             </v-btn>
           </v-col>
-          <v-col cols="3">
+          <v-col cols="4">
             <v-btn block color="#607D8B" @click="close">
               <v-icon>mdi-close</v-icon>
-              <div>Cancel</div>
+              <div v-if="!$vuetify.breakpoint.xs">Cancel</div>
             </v-btn>
           </v-col>
-          <v-col offset="3" cols="3" v-if="show_del">
+          <v-col cols="4" v-if="show_del">
             <v-btn color="error" block @click.prevent="del">
               <v-icon>mdi-delete</v-icon>
-              <div>Remove</div>
+              <div v-if="!$vuetify.breakpoint.xs">Delete</div>
             </v-btn>
           </v-col>
         </v-row>
@@ -177,6 +182,7 @@ export default {
     },
     del() {
       this.$emit("del");
+      this.dialog = false;
     },
     close() {
       this.dialog = false;
