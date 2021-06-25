@@ -234,7 +234,7 @@ export default {
         "Dexterity",
         "Constitution",
         "Intelligence",
-        "Wizdom",
+        "Wisdom",
         "Charisma",
       ],
       rarities: [

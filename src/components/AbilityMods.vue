@@ -39,7 +39,7 @@
         <v-col cols="4">
           <Ability
             :number="true"
-            label="Wizdom"
+            label="Wisdom"
             id="wiz"
             :mod_func="mod_func"
           />

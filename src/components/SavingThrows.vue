@@ -36,7 +36,7 @@
         <v-col cols="4">
           <AbilityProfficient
             :number="true"
-            label="Wizdom"
+            label="Wisdom"
             id="wiz"
             :mod_func="scoreToMod"
           />
