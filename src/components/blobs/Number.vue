@@ -51,13 +51,17 @@ export default {
   created: async function () {
     let data = (await this.$firestoreRefs.char.get()).data();
     if (!data[this.id]) {
-      this.value = "";
-      this.$firestoreRefs.char.set({ [this.id]: "" }, { merge: true });
+      this.value = 0;
+      this.$firestoreRefs.char.set({ [this.id]: 0 }, { merge: true });
     } else {
       this.value = data[this.id];
     }
   },
   methods: {
+    decrease() {
+      this.value--;
+      this.save();
+    },
     save() {
       this.$firestoreRefs.char.update({ [this.id]: this.value });
       this.saved = true;

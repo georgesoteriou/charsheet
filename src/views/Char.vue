@@ -17,12 +17,12 @@
         <v-col
           draggable
           v-for="item in items"
-          :key="item.id"
+          :key="`${item.id}${item.level}`"
           :cols="item.cols"
           :lg="item.lg"
           :xl="item.xl"
         >
-          <div :is="idToItem[item.id]" :drag="drag" />
+          <div :is="idToItem[item.id]" :drag="drag" :level="item.level" />
         </v-col>
       </transition-group>
     </draggable>
@@ -51,6 +51,7 @@ import Skills from "../components/Skills.vue";
 import Armor from "../components/Armor.vue";
 import Equipment from "../components/Equipment.vue";
 import Weapons from "../components/Weapons.vue";
+import Spells from "../components/Spells.vue";
 
 import draggable from "vuedraggable";
 
@@ -71,6 +72,16 @@ export default {
         { cols: "12", lg: "6", xl: "3", id: "Armor" },
         { cols: "12", lg: "6", xl: "3", id: "Equipment" },
         { cols: "12", lg: "6", xl: "3", id: "Weapons" },
+        { cols: "12", lg: "6", xl: "3", level: 0, id: "Spells" },
+        { cols: "12", lg: "6", xl: "3", level: 1, id: "Spells" },
+        { cols: "12", lg: "6", xl: "3", level: 2, id: "Spells" },
+        { cols: "12", lg: "6", xl: "3", level: 3, id: "Spells" },
+        { cols: "12", lg: "6", xl: "3", level: 4, id: "Spells" },
+        { cols: "12", lg: "6", xl: "3", level: 5, id: "Spells" },
+        { cols: "12", lg: "6", xl: "3", level: 6, id: "Spells" },
+        { cols: "12", lg: "6", xl: "3", level: 7, id: "Spells" },
+        { cols: "12", lg: "6", xl: "3", level: 8, id: "Spells" },
+        { cols: "12", lg: "6", xl: "3", level: 9, id: "Spells" },
       ],
       idToItem: {
         Stats: Stats,
@@ -81,6 +92,7 @@ export default {
         Armor: Armor,
         Equipment: Equipment,
         Weapons: Weapons,
+        Spells: Spells,
       },
     };
   },
@@ -95,6 +107,7 @@ export default {
     Armor,
     Equipment,
     Weapons,
+    Spells,
   },
   created: async function () {
     let data = (
