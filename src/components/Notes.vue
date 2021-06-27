@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="text-h5">
-      Equipment
+      {{ name }}
       <v-spacer></v-spacer>
       <v-btn
         fab
@@ -16,7 +16,12 @@
       </v-btn>
       <v-icon v-if="drag">mdi-drag</v-icon>
       <!-- ADD NEW ARMOR -->
-      <EquipmentPicker ref="new_picker" />
+      <NotesPicker
+        :name="name"
+        :no_public="no_public"
+        :collection="collection"
+        ref="new_picker"
+      />
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text
@@ -25,16 +30,16 @@
       v-if="!drag"
     >
       <v-expansion-panels multiple>
-        <v-expansion-panel :key="a.id" v-for="a in myEquipment">
+        <v-expansion-panel :key="a.id" v-for="a in myNotes">
           <v-expansion-panel-header class="py-2 px-3">
             <v-row no-gutters v-if="a.ref">
               <v-col cols="12" class="text-h6">
-                <v-icon color="green" v-if="a.equip">mdi-fencing</v-icon>
+                <v-icon color="green" v-if="a.equip">mdi-priority-high</v-icon>
                 {{ a.ref.name }}
                 <span v-if="a.ref.multiple"> x {{ a.ammount }}</span>
               </v-col>
               <v-col cols="12" class="text--secondary">
-                <span v-if="a.equip" class="green--text">Holding</span>
+                <span v-if="a.equip" class="green--text">Priority</span>
               </v-col>
             </v-row>
             <span dense v-else>Item deleted. Please remove</span>
@@ -45,7 +50,7 @@
                 <v-col cols="10">
                   <b>Discription:</b> <span v-html="a.ref.description"> </span
                 ></v-col>
-                <v-col cols="10">
+                <v-col cols="10" v-if="!no_public">
                   <b>Item shared with:</b>
                   {{ a.ref.public ? "Public" : "Just You" }}
                 </v-col>
@@ -68,8 +73,8 @@
                     block
                     @click.prevent="equip(a.id, !a.equip)"
                   >
-                    <v-icon>mdi-fencing</v-icon>
-                    <div>Hold</div>
+                    <v-icon>mdi-priority-high</v-icon>
+                    <div>Priority</div>
                   </v-btn>
                 </v-col>
                 <v-col cols="4">
@@ -96,7 +101,8 @@
                     <v-icon>mdi-pencil</v-icon>
                     <div>Edit</div>
                   </v-btn>
-                  <EquipmentDialog
+                  <NotesDialog
+                    :no_public="no_public"
                     :ref="`item-${a.id}`"
                     :item="{ ...a.ref }"
                     @save="(item) => save_edit_dialog(a.ref.id, item)"
@@ -123,29 +129,35 @@
 
 <script>
 import { db } from "../firebase.js";
-import EquipmentDialog from "./blobs/Equipment/EquipmentDialog.vue";
-import EquipmentPicker from "./blobs/Equipment/EquipmentPicker.vue";
+import NotesDialog from "./blobs/Notes/NotesDialog.vue";
+import NotesPicker from "./blobs/Notes/NotesPicker.vue";
 import Number from "./blobs/Number.vue";
 
 export default {
   props: {
+    name: {
+      default: "Notes",
+    },
     collection: {
-      default: "equipment",
+      default: "notes",
     },
     drag: {
       default: false,
     },
+    no_public: {
+      default: false,
+    },
   },
-  components: { EquipmentDialog, EquipmentPicker, Number },
+  components: { NotesDialog, NotesPicker, Number },
   data() {
     return {
-      myEquipment: [],
+      myNotes: [],
       create_dialog: false,
     };
   },
   firestore() {
     return {
-      myEquipment: db
+      myNotes: db
         .collection("characters")
         .doc(this.$route.params.id)
         .collection(this.collection)

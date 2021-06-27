@@ -7,21 +7,23 @@
   >
     <v-card>
       <v-card-title class="text-h5">
-        <span v-if="show_del"> Edit Equipment </span>
-        <span v-else> Add New Equipment </span>
+        <span v-if="show_del"> Edit </span>
+        <span v-else> Add New </span>
         <v-spacer></v-spacer>
-        <v-btn
-          v-if="newItem.public"
-          fab
-          dark
-          :icon="true"
-          @click="newItem.public = false"
-        >
-          <v-icon>mdi-earth</v-icon>
-        </v-btn>
-        <v-btn v-else fab dark :icon="true" @click="newItem.public = true">
-          <v-icon>mdi-eye-off</v-icon>
-        </v-btn>
+        <span v-if="!no_public">
+          <v-btn
+            v-if="newItem.public"
+            fab
+            dark
+            :icon="true"
+            @click="newItem.public = false"
+          >
+            <v-icon>mdi-earth</v-icon>
+          </v-btn>
+          <v-btn v-else fab dark :icon="true" @click="newItem.public = true">
+            <v-icon>mdi-eye-off</v-icon>
+          </v-btn>
+        </span>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="pa-1">
@@ -30,7 +32,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="newItem.name"
-                label="Equipment Name"
+                label="Name"
                 outlined
                 :hide-details="true"
                 dense
@@ -85,6 +87,9 @@
 <script>
 export default {
   props: {
+    no_public: {
+      default: false,
+    },
     show_del: {
       type: Boolean,
       default: false,

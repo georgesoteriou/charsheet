@@ -7,12 +7,13 @@
   >
     <v-card>
       <v-card-title class="text-h5">
-        <span> Pick Equipment </span>
+        <span> Pick {{ name }} </span>
         <v-spacer />
         <v-btn fab dark color="green" icon @click="$refs.new_item.show()">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
-        <EquipmentDialog
+        <NotesDialog
+          :no_public="no_public"
           ref="new_item"
           @save="(a) => save_create_dialog(null, a)"
         />
@@ -20,7 +21,7 @@
       <v-divider></v-divider>
       <v-card-text class="pa-3">
         <v-card v-if="privateArmor.length > 0">
-          <v-card-title class="text-h6"> Your Private Equipment </v-card-title>
+          <v-card-title class="text-h6"> Your Private {{ name }} </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="pa-0">
             <v-expansion-panels accordion>
@@ -54,8 +55,8 @@
             </v-expansion-panels>
           </v-card-text>
         </v-card>
-        <v-card>
-          <v-card-title class="text-h6"> Public Equipment </v-card-title>
+        <v-card v-if="!no_public">
+          <v-card-title class="text-h6"> Public {{ name }} </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="pa-0">
             <v-expansion-panels accordion>
@@ -114,15 +115,21 @@
 
 <script>
 import { db } from "../../../firebase.js";
-import EquipmentDialog from "./EquipmentDialog.vue";
+import NotesDialog from "./NotesDialog.vue";
 
 export default {
   props: {
     collection: {
       default: "equipment",
     },
+    name: {
+      default: "Notes",
+    },
+    no_public: {
+      default: false,
+    },
   },
-  components: { EquipmentDialog },
+  components: { NotesDialog },
   data() {
     return {
       dialog: false,

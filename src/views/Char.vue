@@ -17,12 +17,19 @@
         <v-col
           draggable
           v-for="item in items"
-          :key="`${item.id}${item.level}`"
+          :key="`${item.id}${item.level}${item.collection}`"
           :cols="item.cols"
           :lg="item.lg"
           :xl="item.xl"
         >
-          <div :is="idToItem[item.id]" :drag="drag" :level="item.level" />
+          <div
+            :is="idToItem[item.id]"
+            :drag="drag"
+            :level="item.level"
+            :name="item.name"
+            :collection="item.collection"
+            :no_public="item.no_public"
+          />
         </v-col>
       </transition-group>
     </draggable>
@@ -47,7 +54,7 @@ import Character from "../components/Character.vue";
 import Ability_Saving from "../components/Ability_Saving.vue";
 import Skills from "../components/Skills.vue";
 import Armor from "../components/Armor.vue";
-import Equipment from "../components/Equipment.vue";
+import Notes from "../components/Notes.vue";
 import Weapons from "../components/Weapons.vue";
 import Spells from "../components/Spells.vue";
 
@@ -65,8 +72,32 @@ export default {
         { cols: "12", lg: "6", xl: "3", id: "Info_Health" },
         { cols: "12", lg: "6", xl: "3", id: "Ability_Saving" },
         { cols: "12", lg: "6", xl: "3", id: "Skills" },
+        {
+          cols: "12",
+          lg: "6",
+          xl: "3",
+          id: "Notes",
+          name: "Features & Traits",
+          collection: "featsTraits",
+        },
+        {
+          cols: "12",
+          lg: "6",
+          xl: "3",
+          id: "Notes",
+          name: "Notes",
+          collection: "notes",
+          no_public: true,
+        },
+        {
+          cols: "12",
+          lg: "6",
+          xl: "3",
+          id: "Notes",
+          name: "Equipment",
+          collection: "equipment",
+        },
         { cols: "12", lg: "6", xl: "3", id: "Armor" },
-        { cols: "12", lg: "6", xl: "3", id: "Equipment" },
         { cols: "12", lg: "6", xl: "3", id: "Weapons" },
         { cols: "12", lg: "6", xl: "3", level: 0, id: "Spells" },
         { cols: "12", lg: "6", xl: "3", level: 1, id: "Spells" },
@@ -84,7 +115,7 @@ export default {
         Ability_Saving: Ability_Saving,
         Skills: Skills,
         Armor: Armor,
-        Equipment: Equipment,
+        Notes: Notes,
         Weapons: Weapons,
         Spells: Spells,
       },
@@ -97,7 +128,7 @@ export default {
     Ability_Saving,
     Skills,
     Armor,
-    Equipment,
+    Notes,
     Weapons,
     Spells,
   },
