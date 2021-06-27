@@ -3,7 +3,7 @@
     <v-container fluid class="pa-0">
       <v-row no-gutters>
         <v-col cols="12">
-          <Character />
+          <Character :charId="charId" />
         </v-col>
       </v-row>
     </v-container>
@@ -18,9 +18,9 @@
           draggable
           v-for="item in items"
           :key="`${item.id}${item.level}${item.collection}`"
-          :cols="item.cols"
-          :lg="item.lg"
-          :xl="item.xl"
+          cols="12"
+          lg="6"
+          xl="3"
         >
           <div
             :is="idToItem[item.id]"
@@ -29,6 +29,7 @@
             :name="item.name"
             :collection="item.collection"
             :no_public="item.no_public"
+            :charId="charId"
           />
         </v-col>
       </transition-group>
@@ -67,48 +68,27 @@ export default {
   name: "Char",
   data: function () {
     return {
+      charId: this.$route.params.id,
       drag: false,
       items: [
-        { cols: "12", lg: "6", xl: "3", id: "Info_Health" },
-        { cols: "12", lg: "6", xl: "3", id: "Ability_Saving" },
-        { cols: "12", lg: "6", xl: "3", id: "Skills" },
-        {
-          cols: "12",
-          lg: "6",
-          xl: "3",
-          id: "Notes",
-          name: "Features & Traits",
-          collection: "featsTraits",
-        },
-        {
-          cols: "12",
-          lg: "6",
-          xl: "3",
-          id: "Notes",
-          name: "Notes",
-          collection: "notes",
-          no_public: true,
-        },
-        {
-          cols: "12",
-          lg: "6",
-          xl: "3",
-          id: "Notes",
-          name: "Equipment",
-          collection: "equipment",
-        },
-        { cols: "12", lg: "6", xl: "3", id: "Armor" },
-        { cols: "12", lg: "6", xl: "3", id: "Weapons" },
-        { cols: "12", lg: "6", xl: "3", level: 0, id: "Spells" },
-        { cols: "12", lg: "6", xl: "3", level: 1, id: "Spells" },
-        { cols: "12", lg: "6", xl: "3", level: 2, id: "Spells" },
-        { cols: "12", lg: "6", xl: "3", level: 3, id: "Spells" },
-        { cols: "12", lg: "6", xl: "3", level: 4, id: "Spells" },
-        { cols: "12", lg: "6", xl: "3", level: 5, id: "Spells" },
-        { cols: "12", lg: "6", xl: "3", level: 6, id: "Spells" },
-        { cols: "12", lg: "6", xl: "3", level: 7, id: "Spells" },
-        { cols: "12", lg: "6", xl: "3", level: 8, id: "Spells" },
-        { cols: "12", lg: "6", xl: "3", level: 9, id: "Spells" },
+        { id: "Info_Health" },
+        { id: "Ability_Saving" },
+        { id: "Skills" },
+        { id: "Notes", name: "Features & Traits", collection: "featsTraits" },
+        { id: "Notes", name: "Notes", collection: "notes", no_public: true },
+        { id: "Notes", name: "Equipment", collection: "equipment" },
+        { id: "Armor" },
+        { id: "Weapons" },
+        { level: 0, id: "Spells" },
+        { level: 1, id: "Spells" },
+        { level: 2, id: "Spells" },
+        { level: 3, id: "Spells" },
+        { level: 4, id: "Spells" },
+        { level: 5, id: "Spells" },
+        { level: 6, id: "Spells" },
+        { level: 7, id: "Spells" },
+        { level: 8, id: "Spells" },
+        { level: 9, id: "Spells" },
       ],
       idToItem: {
         Info_Health: Info_Health,
@@ -134,11 +114,11 @@ export default {
   },
   created: async function () {
     let data = (
-      await db.collection("characters").doc(this.$route.params.id).get()
+      await db.collection("characters").doc(this.charId).get()
     ).data();
     if (!data.items || data.items.length != this.items.length) {
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .set({ items: this.items }, { merge: true });
     } else {
       this.items = data.items;
@@ -147,7 +127,7 @@ export default {
   methods: {
     save() {
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .update({ items: this.items });
     },
     debouncedSave: debounce(function () {

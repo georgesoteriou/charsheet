@@ -132,7 +132,7 @@ import ArmorDialog from "./ArmorDialog.vue";
 
 export default {
   components: { ArmorDialog },
-  props: {},
+  props: ["charId"],
   data() {
     return {
       dialog: false,
@@ -163,7 +163,7 @@ export default {
     add(id) {
       const docRef = db.collection("armor").doc(id);
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection("armor")
         .add({ ref: docRef, equip: false });
       this.dialog = false;
@@ -176,7 +176,7 @@ export default {
         .add(newArmor)
         .then((docRef) => {
           db.collection("characters")
-            .doc(this.$route.params.id)
+            .doc(this.charId)
             .collection("armor")
             .add({ ref: docRef, equip: false });
           this.dialog = false;

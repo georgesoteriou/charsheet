@@ -45,6 +45,7 @@
 import { db } from "../../firebase.js";
 
 export default {
+  props: ["charId"],
   data() {
     return {
       char: {},
@@ -80,7 +81,7 @@ export default {
   },
   firestore() {
     return {
-      char: db.collection("characters").doc(this.$route.params.id),
+      char: db.collection("characters").doc(this.charId),
     };
   },
   methods: {

@@ -17,6 +17,7 @@
       <v-icon v-if="drag">mdi-drag</v-icon>
       <!-- ADD NEW ARMOR -->
       <NotesPicker
+        :charId="charId"
         :name="name"
         :no_public="no_public"
         :collection="collection"
@@ -147,6 +148,7 @@ export default {
     no_public: {
       default: false,
     },
+    charId: {},
   },
   components: { NotesDialog, NotesPicker, Number },
   data() {
@@ -159,7 +161,7 @@ export default {
     return {
       myNotes: db
         .collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .orderBy("equip", "desc"),
     };
@@ -171,7 +173,7 @@ export default {
     del(my_ref, global_ref) {
       // Delete from my list and globally
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .doc(my_ref)
         .delete();
@@ -180,14 +182,14 @@ export default {
     remove(my_ref) {
       // Remove from my list
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .doc(my_ref)
         .delete();
     },
     equip(id, equipt) {
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .doc(id)
         .update({ equip: equipt });
@@ -195,7 +197,7 @@ export default {
     get_id(id) {
       return db
         .collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .doc(id);
     },

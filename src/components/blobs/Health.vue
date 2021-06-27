@@ -5,11 +5,19 @@
     <v-card-text>
       <v-row class="text-center justify-center">
         <v-col cols="5">
-          <Number label="HP" id="hp" />
+          <Number
+            :document_ref="db.collection('characters').doc(charId)"
+            label="HP"
+            id="hp"
+          />
         </v-col>
         <v-col cols="1" class="text-h4"> / </v-col>
         <v-col cols="6">
-          <Number label="Max HP" id="max-hp" />
+          <Number
+            :document_ref="db.collection('characters').doc(charId)"
+            label="Max HP"
+            id="max-hp"
+          />
         </v-col>
       </v-row>
       <v-row class="mt-5">
@@ -29,14 +37,16 @@ import { db } from "../../firebase.js";
 
 export default {
   components: { Number },
+  props: ["charId"],
   data() {
     return {
+      db: db,
       char: {},
     };
   },
   firestore() {
     return {
-      char: db.collection("characters").doc(this.$route.params.id),
+      char: db.collection("characters").doc(this.charId),
     };
   },
   computed: {

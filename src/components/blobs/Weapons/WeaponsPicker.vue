@@ -169,6 +169,7 @@ export default {
     collection: {
       default: "weapons",
     },
+    charId: {},
   },
   components: { WeaponsDialog },
   data() {
@@ -199,7 +200,7 @@ export default {
     add(id) {
       const docRef = db.collection(this.collection).doc(id);
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .add({ ref: docRef, equip: false, proficient: false });
       this.dialog = false;
@@ -212,7 +213,7 @@ export default {
         .add(newArmor)
         .then((docRef) => {
           db.collection("characters")
-            .doc(this.$route.params.id)
+            .doc(this.charId)
             .collection(this.collection)
             .add({ ref: docRef, equip: false, proficient: false });
           this.dialog = false;

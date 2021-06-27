@@ -5,10 +5,17 @@
     <v-card-text class="pa-2">
       <v-row class="text-center" dense>
         <v-col cols="4">
-          <Ability starting="3" :mod_func="same" label="Armor Class" id="ac" />
+          <Ability
+            :charId="charId"
+            starting="3"
+            :mod_func="same"
+            label="Armor Class"
+            id="ac"
+          />
         </v-col>
         <v-col cols="4">
           <Ability
+            :charId="charId"
             starting="3"
             :mod_func="withPlus"
             label="Initiative"
@@ -16,10 +23,17 @@
           />
         </v-col>
         <v-col cols="4">
-          <Ability starting="3" :mod_func="same" label="Speed" id="speed" />
+          <Ability
+            :charId="charId"
+            starting="3"
+            :mod_func="same"
+            label="Speed"
+            id="speed"
+          />
         </v-col>
         <v-col cols="4">
           <Ability
+            :charId="charId"
             starting="3"
             :mod_func="same"
             label="Passive</br>Perception"
@@ -28,6 +42,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :charId="charId"
             starting="3"
             :mod_func="withPlus"
             label="Proficiency</br>Bonus"
@@ -36,6 +51,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :charId="charId"
             starting="3"
             :number="false"
             :mod_func="same"
@@ -54,6 +70,7 @@ import { withPlus, same } from "../../funcs.js";
 
 export default {
   components: { Ability },
+  props: ["charId"],
   data() {
     return {
       withPlus: withPlus,

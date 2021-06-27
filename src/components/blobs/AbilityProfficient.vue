@@ -33,6 +33,7 @@ export default {
     mod_func: {
       type: Function,
     },
+    charId: {},
   },
   data() {
     return {
@@ -41,7 +42,7 @@ export default {
   },
   firestore() {
     return {
-      char: db.collection("characters").doc(this.$route.params.id),
+      char: db.collection("characters").doc(this.charId),
     };
   },
   methods: {

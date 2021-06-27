@@ -17,7 +17,7 @@
       </v-btn>
       <v-icon v-if="drag">mdi-drag</v-icon>
       <!-- ADD NEW SPELLS -->
-      <SpellsPicker :level="level" ref="new_picker" />
+      <SpellsPicker :charId="charId" :level="level" ref="new_picker" />
     </v-card-title>
     <v-divider></v-divider>
     <v-container class="py-2" v-if="level > 0 && !drag">
@@ -43,11 +43,20 @@
       <v-container class="py-1" v-if="level > 0 && !drag">
         <v-row class="text-center justify-center" no-gutters>
           <v-col cols="5">
-            <Number ref="slots" label="Slots" :id="`slots_${this.level}`" />
+            <Number
+              :document_ref="db.collection('characters').doc(charId)"
+              ref="slots"
+              label="Slots"
+              :id="`slots_${this.level}`"
+            />
           </v-col>
           <v-col cols="1" class="text-h4"> / </v-col>
           <v-col cols="6">
-            <Number label="Max Slots" :id="`slots_max_${this.level}`" />
+            <Number
+              :document_ref="db.collection('characters').doc(charId)"
+              label="Max Slots"
+              :id="`slots_max_${this.level}`"
+            />
           </v-col>
         </v-row>
       </v-container>
@@ -180,7 +189,7 @@ export default {
     level: {
       default: 0,
     },
-    char_id: {
+    charId: {
       default: function () {
         return this.$route.params.id;
       },
@@ -189,6 +198,7 @@ export default {
   components: { SpellsDialog, SpellsPicker, Number },
   data() {
     return {
+      db: db,
       mySpells: [],
       create_dialog: false,
       char: {},
@@ -200,11 +210,11 @@ export default {
     return {
       mySpells: db
         .collection("characters")
-        .doc(this.char_id)
+        .doc(this.charId)
         .collection("spells")
         .where("level", "==", this.level)
         .orderBy("equip", "desc"),
-      char: db.collection("characters").doc(this.char_id),
+      char: db.collection("characters").doc(this.charId),
     };
   },
   computed: {
@@ -227,7 +237,7 @@ export default {
     del(my_ref, global_ref) {
       // Delete from my list and globally
       db.collection("characters")
-        .doc(this.char_id)
+        .doc(this.charId)
         .collection("spells")
         .doc(my_ref)
         .delete();
@@ -236,14 +246,14 @@ export default {
     remove(id) {
       // Remove from my list
       db.collection("characters")
-        .doc(this.char_id)
+        .doc(this.charId)
         .collection("spells")
         .doc(id)
         .delete();
     },
     equip(id, equipt) {
       db.collection("characters")
-        .doc(this.char_id)
+        .doc(this.charId)
         .collection("spells")
         .doc(id)
         .update({ equip: equipt });

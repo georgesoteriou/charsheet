@@ -6,6 +6,7 @@
       <v-row class="text-center" dense>
         <v-col cols="4">
           <AbilityProfficient
+            :charId="charId"
             label="Strength"
             id="str"
             :mod_func="scoreToMod"
@@ -13,6 +14,7 @@
         </v-col>
         <v-col cols="4">
           <AbilityProfficient
+            :charId="charId"
             label="Dexterity"
             id="dex"
             :mod_func="scoreToMod"
@@ -20,6 +22,7 @@
         </v-col>
         <v-col cols="4">
           <AbilityProfficient
+            :charId="charId"
             label="Constitution"
             id="con"
             :mod_func="scoreToMod"
@@ -27,6 +30,7 @@
         </v-col>
         <v-col cols="4">
           <AbilityProfficient
+            :charId="charId"
             :number="true"
             label="Intelligence"
             id="intel"
@@ -35,6 +39,7 @@
         </v-col>
         <v-col cols="4">
           <AbilityProfficient
+            :charId="charId"
             :number="true"
             label="Wisdom"
             id="wiz"
@@ -43,6 +48,7 @@
         </v-col>
         <v-col cols="4">
           <AbilityProfficient
+            :charId="charId"
             label="Charisma"
             id="cha"
             :mod_func="scoreToMod"
@@ -59,7 +65,7 @@ import { scoreToMod } from "../../funcs.js";
 
 export default {
   components: { AbilityProfficient },
-
+  props: { charId: {} },
   data() {
     return {
       scoreToMod: scoreToMod,

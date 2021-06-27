@@ -30,11 +30,7 @@ export default {
   props: {
     label: {},
     id: {},
-    document_ref: {
-      default: function () {
-        return db.collection("characters").doc(this.$route.params.id);
-      },
-    },
+    document_ref: {},
   },
   data() {
     return {

@@ -6,6 +6,7 @@
       <v-row class="text-center" dense>
         <v-col cols="4">
           <Ability
+            :charId="charId"
             :number="true"
             label="Strength"
             id="str"
@@ -14,6 +15,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :charId="charId"
             :number="true"
             label="Dexterity"
             id="dex"
@@ -22,6 +24,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :charId="charId"
             :number="true"
             label="Constitution"
             id="con"
@@ -30,6 +33,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :charId="charId"
             :number="true"
             label="Intelligence"
             id="intel"
@@ -38,6 +42,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :charId="charId"
             :number="true"
             label="Wisdom"
             id="wiz"
@@ -46,6 +51,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :charId="charId"
             :number="true"
             label="Charisma"
             id="cha"
@@ -62,6 +68,7 @@ import Ability from "./Ability.vue";
 import { scoreToMod } from "../../funcs.js";
 
 export default {
+  props: ["charId"],
   components: { Ability },
   data() {
     return {

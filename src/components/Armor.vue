@@ -16,7 +16,7 @@
       </v-btn>
       <v-icon v-if="drag">mdi-drag</v-icon>
       <!-- ADD NEW ARMOR -->
-      <ArmorPicker ref="new_picker" />
+      <ArmorPicker :charId="charId" ref="new_picker" />
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text
@@ -122,7 +122,7 @@ import ArmorDialog from "./blobs/Armor/ArmorDialog.vue";
 import ArmorPicker from "./blobs/Armor/ArmorPicker.vue";
 
 export default {
-  props: ["drag"],
+  props: ["drag", "charId"],
   components: { ArmorDialog, ArmorPicker },
   data() {
     return {
@@ -134,7 +134,7 @@ export default {
     return {
       myArmor: db
         .collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection("armor")
         .orderBy("equip", "desc"),
     };
@@ -146,7 +146,7 @@ export default {
     del(my_ref, global_ref) {
       // Delete from my list and globally
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection("armor")
         .doc(my_ref)
         .delete();
@@ -155,14 +155,14 @@ export default {
     remove(my_ref) {
       // Remove from my list
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection("armor")
         .doc(my_ref)
         .delete();
     },
     equip(id, equipt) {
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection("armor")
         .doc(id)
         .update({ equip: equipt });

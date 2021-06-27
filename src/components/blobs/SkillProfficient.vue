@@ -22,6 +22,7 @@ import { db } from "../../firebase.js";
 
 export default {
   props: {
+    charId: {},
     label: {
       type: String,
     },
@@ -39,7 +40,7 @@ export default {
   },
   firestore() {
     return {
-      char: db.collection("characters").doc(this.$route.params.id),
+      char: db.collection("characters").doc(this.charId),
     };
   },
   methods: {

@@ -176,6 +176,7 @@ export default {
     level: {
       default: 0,
     },
+    charId: {},
   },
   components: { SpellsDialog },
   data() {
@@ -208,7 +209,7 @@ export default {
     add(id, level) {
       const docRef = db.collection(this.collection).doc(id);
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .add({
           ref: docRef,
@@ -226,7 +227,7 @@ export default {
         .add(newSpell)
         .then((docRef) => {
           db.collection("characters")
-            .doc(this.$route.params.id)
+            .doc(this.charId)
             .collection(this.collection)
             .add({
               ref: docRef,

@@ -5,36 +5,46 @@
     <v-card-text class="pa-1">
       <v-row class="text-center" dense>
         <v-col cols="12" md="6" xl="3">
-          <TextBox label="Name" id="name" />
+          <TextBox :charId="charId" label="Name" id="name" />
         </v-col>
         <v-col cols="6" md="3" xl="2">
-          <TextBox label="Race" id="race" />
+          <TextBox :charId="charId" label="Race" id="race" />
         </v-col>
         <v-col cols="6" md="3" xl="2">
-          <TextBox label="Class" id="class" />
+          <TextBox :charId="charId" label="Class" id="class" />
         </v-col>
         <v-col cols="6" md="3" xl="2">
-          <TextBox label="Background" id="background" />
+          <TextBox :charId="charId" label="Background" id="background" />
         </v-col>
         <v-col cols="6" md="3" xl="1">
-          <Alignment />
+          <Alignment :charId="charId" />
         </v-col>
         <v-col cols="6" md="3" xl="1">
-          <Number label="Level" id="level" />
+          <Number
+            :document_ref="db.collection('characters').doc(charId)"
+            label="Level"
+            id="level"
+          />
         </v-col>
         <v-col cols="6" md="3" xl="1">
-          <NumberManual label="Exp" id="exp" />
+          <NumberManual
+            :document_ref="db.collection('characters').doc(charId)"
+            label="Exp"
+            id="exp"
+          />
         </v-col>
       </v-row>
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions class="py-1">
-      <Personality />
+      <Personality :charId="charId" />
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import { db } from "../firebase.js";
+
 import TextBox from "./blobs/Text-Box.vue";
 import Number from "./blobs/Number.vue";
 import NumberManual from "./blobs/NumberManual.vue";
@@ -42,6 +52,12 @@ import Alignment from "./blobs/Alignment.vue";
 import Personality from "./blobs/Personality.vue";
 
 export default {
+  props: ["charId"],
   components: { TextBox, Number, Alignment, Personality, NumberManual },
+  data: function () {
+    return {
+      db: db,
+    };
+  },
 };
 </script>

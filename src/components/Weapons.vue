@@ -16,7 +16,7 @@
       </v-btn>
       <v-icon v-if="drag">mdi-drag</v-icon>
       <!-- ADD NEW ARMOR -->
-      <WeaponsPicker ref="new_picker" />
+      <WeaponsPicker :charId="charId" ref="new_picker" />
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text
@@ -164,6 +164,7 @@ export default {
     drag: {
       default: false,
     },
+    charId: {},
   },
   components: { WeaponsDialog, WeaponsPicker },
   data() {
@@ -177,10 +178,10 @@ export default {
     return {
       myWeapons: db
         .collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .orderBy("equip", "desc"),
-      char: db.collection("characters").doc(this.$route.params.id),
+      char: db.collection("characters").doc(this.charId),
     };
   },
   computed: {},
@@ -191,7 +192,7 @@ export default {
     del(my_ref, global_ref) {
       // Delete from my list and globally
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .doc(my_ref)
         .delete();
@@ -200,21 +201,21 @@ export default {
     remove(my_ref) {
       // Remove from my list
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .doc(my_ref)
         .delete();
     },
     equip(id, equipt) {
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .doc(id)
         .update({ equip: equipt });
     },
     proficient(id, pro) {
       db.collection("characters")
-        .doc(this.$route.params.id)
+        .doc(this.charId)
         .collection(this.collection)
         .doc(id)
         .update({ proficient: pro });

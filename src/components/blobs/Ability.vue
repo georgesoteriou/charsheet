@@ -57,6 +57,7 @@ export default {
     starting: {
       default: "8",
     },
+    charId: {},
   },
   data() {
     return {
@@ -67,7 +68,7 @@ export default {
   },
   firestore() {
     return {
-      char: db.collection("characters").doc(this.$route.params.id),
+      char: db.collection("characters").doc(this.charId),
     };
   },
   methods: {

@@ -13,8 +13,8 @@
       no-gutters
       :height="$vuetify.breakpoint.lgAndUp && !drag ? '458px' : ''"
     >
-      <v-col cols="12"><AbilityMods /></v-col>
-      <v-col cols="12" class="mt-4"><SavingThrows /></v-col>
+      <v-col cols="12"><AbilityMods :charId="charId" /></v-col>
+      <v-col cols="12" class="mt-4"><SavingThrows :charId="charId" /></v-col>
     </v-row>
   </span>
 </template>
@@ -24,7 +24,7 @@ import AbilityMods from "./blobs/AbilityMods.vue";
 import SavingThrows from "./blobs/SavingThrows.vue";
 
 export default {
-  props: ["drag"],
+  props: ["drag", "charId"],
   components: { AbilityMods, SavingThrows },
 };
 </script>
