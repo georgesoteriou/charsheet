@@ -1,12 +1,8 @@
 <template>
   <v-card>
-    <v-card-title class="text-h5">
-      HP
-      <v-spacer></v-spacer>
-      <v-icon v-if="drag">mdi-drag</v-icon>
-    </v-card-title>
+    <v-card-title class="text-h5"> HP </v-card-title>
     <v-divider></v-divider>
-    <v-card-text v-if="!drag">
+    <v-card-text>
       <v-row class="text-center justify-center">
         <v-col cols="5">
           <Number label="HP" id="hp" />
@@ -16,7 +12,7 @@
           <Number label="Max HP" id="max-hp" />
         </v-col>
       </v-row>
-      <v-row>
+      <v-row class="mt-5">
         <v-col>
           <v-progress-linear color="red" v-model="percent" height="60">
             <strong> {{ Math.ceil(percent) }}% </strong>
@@ -28,11 +24,10 @@
 </template>
 
 <script>
-import Number from "./blobs/Number.vue";
-import { db } from "../firebase.js";
+import Number from "./Number.vue";
+import { db } from "../../firebase.js";
 
 export default {
-  props: ["drag"],
   components: { Number },
   data() {
     return {

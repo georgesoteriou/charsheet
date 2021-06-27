@@ -1,9 +1,9 @@
 <template>
   <span>
-    <v-container fluid>
-      <v-row>
+    <v-container fluid class="pa-0">
+      <v-row no-gutters>
         <v-col cols="12">
-          <Info />
+          <Character />
         </v-col>
       </v-row>
     </v-container>
@@ -13,7 +13,7 @@
       :disabled="!drag"
       class="container container--fluid mb-10"
     >
-      <transition-group class="row">
+      <transition-group class="row dense">
         <v-col
           draggable
           v-for="item in items"
@@ -42,11 +42,9 @@
 </template>
 
 <script>
-import Info from "../components/Info.vue";
-import Health from "../components/Health.vue";
-import Stats from "../components/Stats.vue";
-import AbilityMods from "../components/AbilityMods.vue";
-import SavingThrows from "../components/SavingThrows.vue";
+import Info_Health from "../components/Info_Health.vue";
+import Character from "../components/Character.vue";
+import Ability_Saving from "../components/Ability_Saving.vue";
 import Skills from "../components/Skills.vue";
 import Armor from "../components/Armor.vue";
 import Equipment from "../components/Equipment.vue";
@@ -64,10 +62,8 @@ export default {
     return {
       drag: false,
       items: [
-        { cols: "12", lg: "6", xl: "3", id: "Stats" },
-        { cols: "12", lg: "6", xl: "3", id: "Health" },
-        { cols: "12", lg: "6", xl: "3", id: "AbilityMods" },
-        { cols: "12", lg: "6", xl: "3", id: "SavingThrows" },
+        { cols: "12", lg: "6", xl: "3", id: "Info_Health" },
+        { cols: "12", lg: "6", xl: "3", id: "Ability_Saving" },
         { cols: "12", lg: "6", xl: "3", id: "Skills" },
         { cols: "12", lg: "6", xl: "3", id: "Armor" },
         { cols: "12", lg: "6", xl: "3", id: "Equipment" },
@@ -84,10 +80,8 @@ export default {
         { cols: "12", lg: "6", xl: "3", level: 9, id: "Spells" },
       ],
       idToItem: {
-        Stats: Stats,
-        Health: Health,
-        AbilityMods: AbilityMods,
-        SavingThrows: SavingThrows,
+        Info_Health: Info_Health,
+        Ability_Saving: Ability_Saving,
         Skills: Skills,
         Armor: Armor,
         Equipment: Equipment,
@@ -98,11 +92,9 @@ export default {
   },
   components: {
     draggable,
-    Info,
-    Health,
-    Stats,
-    AbilityMods,
-    SavingThrows,
+    Info_Health,
+    Character,
+    Ability_Saving,
     Skills,
     Armor,
     Equipment,

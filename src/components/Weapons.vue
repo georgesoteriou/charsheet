@@ -21,31 +21,32 @@
     <v-divider></v-divider>
     <v-card-text
       class="pa-0 scroll"
-      :style="$vuetify.breakpoint.lgAndUp ? 'height: 420px' : ''"
+      :style="{ height: $vuetify.breakpoint.lgAndUp ? '410px' : '' }"
       v-if="!drag"
     >
       <v-expansion-panels multiple>
         <v-expansion-panel :key="a.id" v-for="a in myWeapons">
-          <v-expansion-panel-header>
+          <v-expansion-panel-header class="py-2 px-3">
             <v-row no-gutters v-if="a.ref">
               <v-col cols="12" class="text-h6">
                 <v-icon color="green" v-if="a.equip">mdi-fencing</v-icon>
                 {{ a.ref.name }}
               </v-col>
-              <v-col cols="12" class="text-caption">
-                <span v-if="a.equip" class="green--text"> Equipped </span>
-              </v-col>
-              <v-col
-                cols="12"
-                class="text--secondary"
-                :class="a.proficient ? 'orange--text text--darken-1' : ''"
-              >
-                Attack Bonus: +
-                {{
-                  a.proficient
-                    ? a.ref.extra_attack + parseInt(char.proficiency)
-                    : a.ref.extra_attack
-                }}
+              <v-col cols="12">
+                <span v-if="a.equip" class="text-caption green--text">
+                  Equipped,
+                </span>
+                <span
+                  class="text--secondary"
+                  :class="a.proficient ? 'orange--text text--darken-1' : ''"
+                >
+                  Attack Bonus: +
+                  {{
+                    a.proficient
+                      ? a.ref.extra_attack + parseInt(char.proficiency)
+                      : a.ref.extra_attack
+                  }}
+                </span>
               </v-col>
               <v-col cols="12" class="text--secondary">
                 Damage: {{ a.ref.dmg }} + {{ a.ref.extra_dmg }}
@@ -54,8 +55,8 @@
             <span dense v-else>Item deleted. Please remove</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-container>
-              <v-row v-if="a.ref" no-gutters class="pl-4">
+            <v-container class="py-1">
+              <v-row v-if="a.ref" no-gutters>
                 <v-col cols="10">
                   <span v-if="a.ref.tags">
                     <b>Tags:</b> {{ a.ref.tags.join(", ") }}
@@ -76,7 +77,7 @@
                   {{ a.ref.public ? "Public" : "Just You" }}
                 </v-col>
               </v-row>
-              <v-row dense justify="center" v-if="a.ref">
+              <v-row no-gutters justify="center" v-if="a.ref">
                 <v-col cols="6">
                   <v-btn
                     class="px-0"

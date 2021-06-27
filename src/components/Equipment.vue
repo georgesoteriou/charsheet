@@ -21,12 +21,12 @@
     <v-divider></v-divider>
     <v-card-text
       class="pa-0 scroll"
-      :style="$vuetify.breakpoint.lgAndUp ? 'height: 420px' : ''"
+      :style="{ height: $vuetify.breakpoint.lgAndUp ? '410px' : '' }"
       v-if="!drag"
     >
       <v-expansion-panels multiple>
         <v-expansion-panel :key="a.id" v-for="a in myEquipment">
-          <v-expansion-panel-header>
+          <v-expansion-panel-header class="py-2 px-3">
             <v-row no-gutters v-if="a.ref">
               <v-col cols="12" class="text-h6">
                 <v-icon color="green" v-if="a.equip">mdi-fencing</v-icon>
@@ -40,8 +40,8 @@
             <span dense v-else>Item deleted. Please remove</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-container>
-              <v-row v-if="a.ref" no-gutters class="px-4">
+            <v-container class="py-0">
+              <v-row v-if="a.ref" no-gutters>
                 <v-col cols="10">
                   <b>Discription:</b> <span v-html="a.ref.description"> </span
                 ></v-col>
@@ -50,8 +50,8 @@
                   {{ a.ref.public ? "Public" : "Just You" }}
                 </v-col>
               </v-row>
-              <v-row dense class="px-4" justify="start" v-if="a.ref.multiple">
-                <v-col cols="6">
+              <v-row dense justify="start" v-if="a.ref.multiple">
+                <v-col cols="12">
                   <Number
                     label="Ammount"
                     :document_ref="get_id(a.id)"

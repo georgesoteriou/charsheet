@@ -20,16 +20,7 @@
       <SpellsPicker :level="level" ref="new_picker" />
     </v-card-title>
     <v-divider></v-divider>
-    <v-container v-if="level > 0 && !drag">
-      <v-row class="text-center justify-center" no-gutters>
-        <v-col cols="5">
-          <Number ref="slots" label="Slots" :id="`slots_${this.level}`" />
-        </v-col>
-        <v-col cols="1" class="text-h4"> / </v-col>
-        <v-col cols="6">
-          <Number label="Max Slots" :id="`slots_max_${this.level}`" />
-        </v-col>
-      </v-row>
+    <v-container class="py-2" v-if="level > 0 && !drag">
       <v-row dense>
         <v-col>
           <v-progress-linear color="blue" v-model="percent" height="20">
@@ -38,30 +29,41 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-divider></v-divider>
     <v-card-text
-      class="pa-0 scroll"
-      :style="
-        $vuetify.breakpoint.lgAndUp
-          ? level > 0
-            ? 'height: 420px'
-            : 'height: 512px'
-          : ''
-      "
       v-if="!drag"
+      :style="{
+        height: $vuetify.breakpoint.lgAndUp
+          ? level > 0
+            ? '374px'
+            : '410px'
+          : '',
+      }"
+      class="pa-0 scroll"
     >
+      <v-container class="py-1" v-if="level > 0 && !drag">
+        <v-row class="text-center justify-center" no-gutters>
+          <v-col cols="5">
+            <Number ref="slots" label="Slots" :id="`slots_${this.level}`" />
+          </v-col>
+          <v-col cols="1" class="text-h4"> / </v-col>
+          <v-col cols="6">
+            <Number label="Max Slots" :id="`slots_max_${this.level}`" />
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-divider></v-divider>
       <v-expansion-panels multiple>
         <v-expansion-panel :key="a.id" v-for="a in mySpells">
-          <v-expansion-panel-header>
+          <v-expansion-panel-header class="py-2 px-3">
             <v-row no-gutters v-if="a.ref">
               <v-col cols="12" class="text-h6">
                 <v-icon color="green" v-if="a.equip">mdi-fencing</v-icon>
                 {{ a.ref.name }}
               </v-col>
-              <v-col cols="12" class="text-caption">
-                <span v-if="a.equip" class="green--text"> Prepared </span>
-              </v-col>
               <v-col cols="12" class="text--secondary">
+                <span v-if="a.equip" class="green--text text-caption">
+                  Prepared,
+                </span>
                 {{ a.ref.range }}, {{ a.ref.time }}
                 {{ a.ref.ritual ? "(ritual)" : "" }}
               </v-col>
@@ -69,7 +71,7 @@
             <span dense v-else>Item deleted. Please remove</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-container>
+            <v-container class="py-1">
               <v-row v-if="a.ref" no-gutters>
                 <v-col cols="12">
                   <b>Components: </b> <span>{{ a.ref.components }}</span>
@@ -89,7 +91,7 @@
                   <span v-html="a.ref.high_description"> </span
                 ></v-col>
               </v-row>
-              <v-row dense justify="center" v-if="a.ref">
+              <v-row no-gutters justify="center" v-if="a.ref">
                 <v-col cols="6">
                   <v-btn
                     class="px-0"

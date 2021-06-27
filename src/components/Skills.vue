@@ -1,12 +1,12 @@
 <template>
-  <v-card>
+  <v-card :height="$vuetify.breakpoint.lgAndUp && !drag ? '474px' : ''">
     <v-card-title class="text-h5">
       Skills
       <v-spacer></v-spacer>
       <v-icon v-if="drag">mdi-drag</v-icon>
     </v-card-title>
     <v-divider></v-divider>
-    <v-card-text v-if="!drag">
+    <v-card-text v-if="!drag" class="py-2">
       <v-row class="text-center" dense>
         <v-col cols="6" :key="i" v-for="(skill, i) in skills">
           <SkillProfficient
