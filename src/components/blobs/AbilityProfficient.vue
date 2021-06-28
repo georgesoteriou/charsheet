@@ -11,7 +11,7 @@
     >
       <v-row no-gutters>
         <v-col cols="12" class="mod">
-          {{ mod }}
+          {{ value }}
         </v-col>
         <v-col cols="12" class="text-caption" v-html="label"></v-col>
       </v-row>
@@ -67,10 +67,8 @@ export default {
       return this.prof ? parseInt(this.char["proficiency"]) : 0;
     },
     value() {
-      return (parseInt(this.char[this.id]) + this.toAdd).toString();
-    },
-    mod() {
-      return `${this.mod_func(this.value)}`;
+      let value = parseInt(this.mod_func(this.char[this.id])) + this.toAdd;
+      return `${value > 0 ? "+" : ""}${value}`;
     },
   },
 };
