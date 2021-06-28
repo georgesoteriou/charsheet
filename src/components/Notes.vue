@@ -39,9 +39,6 @@
                 {{ a.ref.name }}
                 <span v-if="a.ref.multiple"> x {{ a.ammount }}</span>
               </v-col>
-              <v-col cols="12" class="text--secondary">
-                <span v-if="a.equip" class="green--text">Priority</span>
-              </v-col>
             </v-row>
             <span dense v-else>Item deleted. Please remove</span>
           </v-expansion-panel-header>
