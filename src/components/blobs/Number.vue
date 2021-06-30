@@ -1,29 +1,29 @@
 <template>
   <v-text-field
-    v-model="value"
+    v-model="char[id]"
     :label="label"
     outlined
     :hide-details="true"
     dense
     :success="saved"
-    prepend-inner-icon="mdi-minus"
+    :prepend-inner-icon="edit ? 'mdi-minus' : ''"
     type="number"
     @click:prepend-inner="
-      value--;
+      char[id]--;
       debouncedSave();
     "
     @click:append="
-      value++;
+      char[id]++;
       debouncedSave();
     "
     @input="debouncedSave()"
-    append-icon="mdi-plus"
+    :append-icon="edit ? 'mdi-plus' : ''"
     class="centered-input"
+    :readonly="!edit"
   ></v-text-field>
 </template>
 
 <script>
-import { db } from "../../firebase.js";
 import { debounce } from "debounce";
 
 export default {
@@ -31,11 +31,13 @@ export default {
     label: {},
     id: {},
     document_ref: {},
+    edit: {
+      default: true,
+    },
   },
   data() {
     return {
       char: {},
-      value: 0,
       saved: false,
     };
   },
@@ -47,19 +49,16 @@ export default {
   created: async function () {
     let data = (await this.$firestoreRefs.char.get()).data();
     if (!data[this.id]) {
-      this.value = 0;
       this.$firestoreRefs.char.set({ [this.id]: 0 }, { merge: true });
-    } else {
-      this.value = data[this.id];
     }
   },
   methods: {
     decrease() {
-      this.value--;
+      this.char[this.id]--;
       this.save();
     },
     save() {
-      this.$firestoreRefs.char.update({ [this.id]: this.value });
+      this.$firestoreRefs.char.update({ [this.id]: this.char[this.id] });
       this.saved = true;
       setTimeout(() => {
         this.saved = false;

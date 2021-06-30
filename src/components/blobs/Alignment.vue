@@ -1,14 +1,14 @@
 <template>
   <span>
     <v-text-field
-      v-model="value"
+      v-model="char[id]"
       label="Alignment"
       outlined
       :hide-details="true"
       :success="saved"
       dense
       readonly
-      @click="dialog = true"
+      @click="edit ? (dialog = true) : ''"
     >
     </v-text-field>
     <v-dialog v-model="dialog" width="500">
@@ -45,13 +45,17 @@
 import { db } from "../../firebase.js";
 
 export default {
-  props: ["charId"],
+  props: {
+    charId: {},
+    edit: {
+      default: false,
+    },
+  },
   data() {
     return {
       char: {},
       dialog: false,
       saved: false,
-      value: "",
       id: "alignment",
       starting: "",
       options: [
@@ -74,9 +78,6 @@ export default {
         { [this.id]: this.starting },
         { merge: true }
       );
-      this.value = this.starting;
-    } else {
-      this.value = data[this.id];
     }
   },
   firestore() {
@@ -87,7 +88,6 @@ export default {
   methods: {
     save(id) {
       this.$firestoreRefs.char.update({ [this.id]: id });
-      this.value = id;
       this.dialog = false;
       this.saved = true;
       setTimeout(() => {

@@ -10,7 +10,7 @@
         dark
         color="green"
         icon
-        v-if="!drag"
+        v-if="edit && !drag"
         @click="$refs.new_picker.show()"
       >
         <v-icon>mdi-plus</v-icon>
@@ -44,6 +44,7 @@
         <v-row class="text-center justify-center" no-gutters>
           <v-col cols="5">
             <Number
+              :edit="edit"
               :document_ref="db.collection('characters').doc(charId)"
               ref="slots"
               label="Slots"
@@ -53,6 +54,7 @@
           <v-col cols="1" class="text-h4"> / </v-col>
           <v-col cols="6">
             <Number
+              :edit="edit"
               :document_ref="db.collection('characters').doc(charId)"
               label="Max Slots"
               :id="`slots_max_${this.level}`"
@@ -100,7 +102,7 @@
                   <span v-html="a.ref.high_description"> </span
                 ></v-col>
               </v-row>
-              <v-row no-gutters justify="center" v-if="a.ref">
+              <v-row no-gutters justify="center" v-if="edit && a.ref">
                 <v-col cols="6">
                   <v-btn
                     class="px-0"
@@ -159,7 +161,7 @@
                   />
                 </v-col>
               </v-row>
-              <v-row justify="end" v-else>
+              <v-row justify="end" v-if="!edit && !a.ref">
                 <v-col cols="3">
                   <v-btn color="red" block @click.prevent="remove(a.id)">
                     <v-icon>mdi-close</v-icon>
@@ -194,6 +196,7 @@ export default {
         return this.$route.params.id;
       },
     },
+    edit: { default: false },
   },
   components: { SpellsDialog, SpellsPicker, Number },
   data() {

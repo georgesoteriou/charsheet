@@ -34,6 +34,9 @@ export default {
       type: Function,
     },
     charId: {},
+    edit: {
+      default: false,
+    },
   },
   data() {
     return {
@@ -47,7 +50,9 @@ export default {
   },
   methods: {
     save() {
-      this.$firestoreRefs.char.update({ [this.idProf]: !this.prof });
+      if (this.edit) {
+        this.$firestoreRefs.char.update({ [this.idProf]: !this.prof });
+      }
     },
   },
   created: async function () {

@@ -10,6 +10,7 @@
       <v-row class="text-center" dense>
         <v-col cols="6" :key="i" v-for="(skill, i) in skills">
           <SkillProfficient
+            :edit="edit"
             :charId="charId"
             :label="skill.name"
             :id="skill.ability"
@@ -26,7 +27,7 @@ import SkillProfficient from "./blobs/SkillProfficient.vue";
 import { scoreToMod } from "../funcs.js";
 
 export default {
-  props: ["drag", "charId"],
+  props: { drag: {}, charId: {}, edit: { default: false } },
   components: { SkillProfficient },
   data() {
     return {

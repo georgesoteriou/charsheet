@@ -1,12 +1,13 @@
 <template>
   <v-textarea
-    v-model="value"
+    v-model="char[id]"
     :label="label"
     outlined
     :hide-details="true"
     dense
     @input="debouncedSave"
     :success="saved"
+    :readonly="!edit"
   ></v-textarea>
 </template>
 
@@ -15,11 +16,10 @@ import { db } from "../../firebase.js";
 import { debounce } from "debounce";
 
 export default {
-  props: ["label", "id", "charId"],
+  props: { label: {}, id: {}, charId: {}, edit: { default: false } },
   data() {
     return {
       char: {},
-      value: "",
       saved: false,
     };
   },
@@ -31,15 +31,12 @@ export default {
   created: async function () {
     let data = (await this.$firestoreRefs.char.get()).data();
     if (!data[this.id]) {
-      this.value = "";
       this.$firestoreRefs.char.set({ [this.id]: "" }, { merge: true });
-    } else {
-      this.value = data[this.id];
     }
   },
   methods: {
     save() {
-      this.$firestoreRefs.char.update({ [this.id]: this.value });
+      this.$firestoreRefs.char.update({ [this.id]: this.char[this.id] });
       this.saved = true;
       setTimeout(() => {
         this.saved = false;

@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-    v-model="value"
+    v-model="char[id]"
     :label="label"
     outlined
     :hide-details="true"
@@ -8,6 +8,7 @@
     type="number"
     :success="saved"
     @input="debouncedSave"
+    :readonly="!edit"
   ></v-text-field>
 </template>
 
@@ -15,11 +16,10 @@
 import { debounce } from "debounce";
 
 export default {
-  props: ["label", "id", "document_ref"],
+  props: { label: {}, id: {}, document_ref: {}, edit: { default: false } },
   data() {
     return {
       char: {},
-      value: 0,
       saved: false,
     };
   },
@@ -31,15 +31,12 @@ export default {
   created: async function () {
     let data = (await this.$firestoreRefs.char.get()).data();
     if (!data[this.id]) {
-      this.value = "";
-      this.$firestoreRefs.char.set({ [this.id]: "" }, { merge: true });
-    } else {
-      this.value = data[this.id];
+      this.$firestoreRefs.char.set({ [this.id]: 0 }, { merge: true });
     }
   },
   methods: {
     save() {
-      this.$firestoreRefs.char.update({ [this.id]: this.value });
+      this.$firestoreRefs.char.update({ [this.id]: this.char[this.id] });
       this.saved = true;
       setTimeout(() => {
         this.saved = false;

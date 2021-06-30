@@ -1,10 +1,10 @@
 <template>
   <span>
     <v-btn
-      v-if="!edit"
+      v-if="!edit_internal"
       block
       height="70"
-      @click="edit = true"
+      @click="edit ? (edit_internal = true) : () => {}"
       outlined
       text
       class="px-0"
@@ -20,7 +20,7 @@
       v-else
       height="70"
       :type="number ? 'number' : ''"
-      v-model="value"
+      v-model="char[id]"
       :label="label.substring(0, 3).toUpperCase()"
       :hide-details="true"
       dense
@@ -58,12 +58,14 @@ export default {
       default: "8",
     },
     charId: {},
+    edit: {
+      default: false,
+    },
   },
   data() {
     return {
       char: {},
-      edit: false,
-      value: this.starting,
+      edit_internal: false,
     };
   },
   firestore() {
@@ -73,8 +75,8 @@ export default {
   },
   methods: {
     save() {
-      this.$firestoreRefs.char.update({ [this.id]: this.value });
-      this.edit = false;
+      this.$firestoreRefs.char.update({ [this.id]: this.char[this.id] });
+      this.edit_internal = false;
     },
   },
   created: async function () {
@@ -84,14 +86,11 @@ export default {
         { [this.id]: this.starting },
         { merge: true }
       );
-      this.value = this.starting;
-    } else {
-      this.value = data[this.id];
     }
   },
   computed: {
     mod() {
-      return `${this.mod_func(this.value)}`;
+      return `${this.mod_func(this.char[this.id])}`;
     },
   },
 };

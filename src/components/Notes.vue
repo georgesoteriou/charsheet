@@ -9,7 +9,7 @@
         dark
         color="green"
         icon
-        v-if="!drag"
+        v-if="edit && !drag"
         @click="$refs.new_picker.show()"
       >
         <v-icon>mdi-plus</v-icon>
@@ -53,7 +53,7 @@
                   {{ a.ref.public ? "Public" : "Just You" }}
                 </v-col>
               </v-row>
-              <v-row dense justify="start" v-if="a.ref.multiple">
+              <v-row dense justify="start" v-if="edit && a.ref.multiple">
                 <v-col cols="12">
                   <Number
                     label="Ammount"
@@ -62,7 +62,7 @@
                   />
                 </v-col>
               </v-row>
-              <v-row dense v-if="a.ref">
+              <v-row dense v-if="edit && a.ref">
                 <v-col cols="4">
                   <v-btn
                     class="px-0"
@@ -109,7 +109,7 @@
                   />
                 </v-col>
               </v-row>
-              <v-row justify="end" v-else>
+              <v-row justify="end" v-if="!edit && !a.ref">
                 <v-col cols="3">
                   <v-btn color="red" block @click.prevent="remove(a.id)">
                     <v-icon>mdi-close</v-icon>
@@ -146,6 +146,7 @@ export default {
       default: false,
     },
     charId: {},
+    edit: { default: false },
   },
   components: { NotesDialog, NotesPicker, Number },
   data() {

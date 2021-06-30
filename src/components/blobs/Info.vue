@@ -6,6 +6,7 @@
       <v-row class="text-center" dense>
         <v-col cols="4">
           <Ability
+            :edit="edit"
             :charId="charId"
             starting="3"
             :mod_func="same"
@@ -15,6 +16,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :edit="edit"
             :charId="charId"
             starting="3"
             :mod_func="withPlus"
@@ -24,6 +26,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :edit="edit"
             :charId="charId"
             starting="3"
             :mod_func="same"
@@ -33,6 +36,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :edit="edit"
             :charId="charId"
             starting="3"
             :mod_func="same"
@@ -42,6 +46,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :edit="edit"
             :charId="charId"
             starting="3"
             :mod_func="withPlus"
@@ -51,6 +56,7 @@
         </v-col>
         <v-col cols="4">
           <Ability
+            :edit="edit"
             :charId="charId"
             starting="3"
             :number="false"
@@ -70,7 +76,12 @@ import { withPlus, same } from "../../funcs.js";
 
 export default {
   components: { Ability },
-  props: ["charId"],
+  props: {
+    charId: {},
+    edit: {
+      default: false,
+    },
+  },
   data() {
     return {
       withPlus: withPlus,

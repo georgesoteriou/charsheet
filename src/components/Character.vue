@@ -5,22 +5,28 @@
     <v-card-text class="pa-1">
       <v-row class="text-center" dense>
         <v-col cols="12" md="6" xl="3">
-          <TextBox :charId="charId" label="Name" id="name" />
+          <TextBox :edit="edit" :charId="charId" label="Name" id="name" />
         </v-col>
         <v-col cols="6" md="3" xl="2">
-          <TextBox :charId="charId" label="Race" id="race" />
+          <TextBox :edit="edit" :charId="charId" label="Race" id="race" />
         </v-col>
         <v-col cols="6" md="3" xl="2">
-          <TextBox :charId="charId" label="Class" id="class" />
+          <TextBox :edit="edit" :charId="charId" label="Class" id="class" />
         </v-col>
         <v-col cols="6" md="3" xl="2">
-          <TextBox :charId="charId" label="Background" id="background" />
+          <TextBox
+            :edit="edit"
+            :charId="charId"
+            label="Background"
+            id="background"
+          />
         </v-col>
         <v-col cols="6" md="3" xl="1">
-          <Alignment :charId="charId" />
+          <Alignment :edit="edit" :charId="charId" />
         </v-col>
         <v-col cols="6" md="3" xl="1">
           <Number
+            :edit="edit"
             :document_ref="db.collection('characters').doc(charId)"
             label="Level"
             id="level"
@@ -28,6 +34,7 @@
         </v-col>
         <v-col cols="6" md="3" xl="1">
           <NumberManual
+            :edit="edit"
             :document_ref="db.collection('characters').doc(charId)"
             label="Exp"
             id="exp"
@@ -52,7 +59,12 @@ import Alignment from "./blobs/Alignment.vue";
 import Personality from "./blobs/Personality.vue";
 
 export default {
-  props: ["charId"],
+  props: {
+    charId: {},
+    edit: {
+      default: false,
+    },
+  },
   components: { TextBox, Number, Alignment, Personality, NumberManual },
   data: function () {
     return {

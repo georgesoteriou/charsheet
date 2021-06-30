@@ -6,6 +6,7 @@
       <v-row class="text-center justify-center">
         <v-col cols="5">
           <Number
+            :edit="edit"
             :document_ref="db.collection('characters').doc(charId)"
             label="HP"
             id="hp"
@@ -14,6 +15,7 @@
         <v-col cols="1" class="text-h4"> / </v-col>
         <v-col cols="6">
           <Number
+            :edit="edit"
             :document_ref="db.collection('characters').doc(charId)"
             label="Max HP"
             id="max-hp"
@@ -37,7 +39,12 @@ import { db } from "../../firebase.js";
 
 export default {
   components: { Number },
-  props: ["charId"],
+  props: {
+    charId: {},
+    edit: {
+      default: false,
+    },
+  },
   data() {
     return {
       db: db,

@@ -3,7 +3,7 @@
     <v-container fluid class="pa-0">
       <v-row no-gutters>
         <v-col cols="12">
-          <Character :charId="charId" />
+          <Character :charId="charId" :edit="edit" />
         </v-col>
       </v-row>
     </v-container>
@@ -30,11 +30,13 @@
             :collection="item.collection"
             :no_public="item.no_public"
             :charId="charId"
+            :edit="edit"
           />
         </v-col>
       </transition-group>
     </draggable>
     <v-btn
+      v-if="edit"
       :x-large="$vuetify.breakpoint.mdAndUp"
       :small="$vuetify.breakpoint.xs"
       fab
@@ -66,9 +68,18 @@ import { debounce } from "debounce";
 
 export default {
   name: "Char",
+  props: {
+    charId: {
+      default: function () {
+        return this.$route.params.id;
+      },
+    },
+    edit: {
+      default: true,
+    },
+  },
   data: function () {
     return {
-      charId: this.$route.params.id,
       drag: false,
       items: [
         { id: "Info_Health" },
