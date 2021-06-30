@@ -14,7 +14,11 @@
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
+      <v-btn v-if="drag" icon class="mr-3" @click="$emit('hideToggleFunc')">
+        <v-icon>{{ hide ? "mdi-eye-off" : "mdi-eye" }}</v-icon>
+      </v-btn>
       <v-icon v-if="drag">mdi-drag</v-icon>
+
       <!-- ADD NEW ARMOR -->
       <ArmorPicker :charId="charId" ref="new_picker" />
     </v-card-title>
@@ -122,7 +126,12 @@ import ArmorDialog from "./blobs/Armor/ArmorDialog.vue";
 import ArmorPicker from "./blobs/Armor/ArmorPicker.vue";
 
 export default {
-  props: { drag: {}, charId: {}, edit: { default: false } },
+  props: {
+    drag: {},
+    charId: {},
+    edit: { default: false },
+    hide: { type: Boolean },
+  },
   components: { ArmorDialog, ArmorPicker },
   data() {
     return {

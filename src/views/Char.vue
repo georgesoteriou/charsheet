@@ -16,7 +16,7 @@
       <transition-group class="row dense">
         <v-col
           draggable
-          v-for="item in items"
+          v-for="item in filteredItems"
           :key="`${item.id}${item.level}${item.collection}`"
           cols="12"
           lg="6"
@@ -24,6 +24,8 @@
         >
           <div
             :is="idToItem[item.id]"
+            @hideToggleFunc="toggleHide(item)"
+            :hide="item.hide"
             :drag="drag"
             :level="item.level"
             :name="item.name"
@@ -82,24 +84,40 @@ export default {
     return {
       drag: false,
       items: [
-        { id: "Info_Health" },
-        { id: "Ability_Saving" },
-        { id: "Skills" },
-        { id: "Notes", name: "Features & Traits", collection: "featsTraits" },
-        { id: "Notes", name: "Notes", collection: "notes", no_public: true },
-        { id: "Notes", name: "Equipment", collection: "equipment" },
-        { id: "Armor" },
-        { id: "Weapons" },
-        { level: 0, id: "Spells" },
-        { level: 1, id: "Spells" },
-        { level: 2, id: "Spells" },
-        { level: 3, id: "Spells" },
-        { level: 4, id: "Spells" },
-        { level: 5, id: "Spells" },
-        { level: 6, id: "Spells" },
-        { level: 7, id: "Spells" },
-        { level: 8, id: "Spells" },
-        { level: 9, id: "Spells" },
+        { hide: false, id: "Info_Health" },
+        { hide: false, id: "Ability_Saving" },
+        { hide: false, id: "Skills" },
+        {
+          hide: false,
+          id: "Notes",
+          name: "Features & Traits",
+          collection: "featsTraits",
+        },
+        {
+          hide: false,
+          id: "Notes",
+          name: "Notes",
+          collection: "notes",
+          no_public: true,
+        },
+        {
+          hide: false,
+          id: "Notes",
+          name: "Equipment",
+          collection: "equipment",
+        },
+        { hide: false, id: "Armor" },
+        { hide: false, id: "Weapons" },
+        { hide: false, level: 0, id: "Spells" },
+        { hide: false, level: 1, id: "Spells" },
+        { hide: false, level: 2, id: "Spells" },
+        { hide: false, level: 3, id: "Spells" },
+        { hide: false, level: 4, id: "Spells" },
+        { hide: false, level: 5, id: "Spells" },
+        { hide: false, level: 6, id: "Spells" },
+        { hide: false, level: 7, id: "Spells" },
+        { hide: false, level: 8, id: "Spells" },
+        { hide: false, level: 9, id: "Spells" },
       ],
       idToItem: {
         Info_Health: Info_Health,
@@ -146,6 +164,19 @@ export default {
     }, 1000),
     toggleDrag() {
       this.drag = !this.drag;
+    },
+    toggleHide(item) {
+      item.hide = !item.hide;
+      this.save();
+    },
+  },
+  computed: {
+    filteredItems() {
+      if (this.drag) {
+        return this.items;
+      } else {
+        return this.items.filter((item) => !item.hide);
+      }
     },
   },
 };

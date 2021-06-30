@@ -15,6 +15,9 @@
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
+      <v-btn v-if="drag" icon class="mr-3" @click="$emit('hideToggleFunc')">
+        <v-icon>{{ hide ? "mdi-eye-off" : "mdi-eye" }}</v-icon>
+      </v-btn>
       <v-icon v-if="drag">mdi-drag</v-icon>
       <!-- ADD NEW SPELLS -->
       <SpellsPicker :charId="charId" :level="level" ref="new_picker" />
@@ -197,6 +200,7 @@ export default {
       },
     },
     edit: { default: false },
+    hide: { type: Boolean },
   },
   components: { SpellsDialog, SpellsPicker, Number },
   data() {
