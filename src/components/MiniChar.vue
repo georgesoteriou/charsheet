@@ -21,6 +21,10 @@
             </div>
           </v-col>
         </v-row>
+        <v-spacer></v-spacer>
+        <v-btn v-if="del" icon @click.stop="$emit('delPartyMember')">
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
       </v-card-title>
       <v-card-text class="mt-1 py-0 px-1">
         <v-row no-gutters>
@@ -58,7 +62,7 @@
 
 <script>
 export default {
-  props: { char: {} },
+  props: { char: {}, del: { default: false } },
   data() {
     return {};
   },

@@ -1,6 +1,9 @@
 <template>
   <v-main>
-    <v-sheet :class="$vuetify.breakpoint.mdAndUp && edit ? 'ml-15' : ''">
+    <v-sheet
+      style="background-color: black"
+      :class="$vuetify.breakpoint.mdAndUp && edit ? 'ml-15' : ''"
+    >
       <v-container fluid class="pa-0">
         <v-row no-gutters>
           <v-col cols="12">
@@ -12,7 +15,7 @@
         :list="char.items"
         :move="debouncedSave"
         :disabled="!drag"
-        class="container container--fluid mb-10"
+        class="container container--fluid pb-10"
       >
         <transition-group class="row dense">
           <v-col

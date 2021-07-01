@@ -33,7 +33,7 @@
 
     <v-list nav dense class="px-0">
       <v-list-item
-        class="px-0"
+        class="px-0 py-2 mb-3"
         link
         @click="
           partyMemberId = player.ref.id;
@@ -42,7 +42,11 @@
         :key="player.ref.id"
         v-for="player in party"
       >
-        <MiniChar :char="player.ref" />
+        <MiniChar
+          :char="player.ref"
+          :del="true"
+          @delPartyMember="() => delPartyMember(player.id)"
+        />
       </v-list-item>
     </v-list>
     <template v-slot:append>
@@ -177,6 +181,13 @@ export default {
           this.error = "This Character ID does not exist";
         }
       });
+    },
+    delPartyMember(id) {
+      db.collection("characters")
+        .doc(this.charId)
+        .collection("party")
+        .doc(id)
+        .delete();
     },
   },
   computed: {
