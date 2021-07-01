@@ -39,7 +39,7 @@
           partyMemberId = player.ref.id;
           partyMemberShow = true;
         "
-        :key="player.ref.id"
+        :key="player.id"
         v-for="player in party"
       >
         <MiniChar
@@ -65,7 +65,7 @@
           <v-card-text class="text-center text-h4">
             <v-text-field
               v-model="newFriendId"
-              label="New Friend ID"
+              label="New Party Member ID"
               outlined
               dense
               :error-messages="error"
@@ -179,6 +179,7 @@ export default {
           this.AddDialog = false;
         } else {
           this.error = "This Character ID does not exist";
+          this.adding = false;
         }
       });
     },

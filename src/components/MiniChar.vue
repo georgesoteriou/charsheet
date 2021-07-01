@@ -4,10 +4,10 @@
       ref="parentCard"
       color="transparent"
       class="ma-0 pa-0"
-      width="300px"
+      :width="width"
       style="overflow: hidden"
     >
-      <v-card-title class="ma-0 py-0 px-1" style="width: 300px">
+      <v-card-title class="ma-0 py-0 px-1" :style="{ width: width }">
         <v-row dense>
           <v-col cols="3">
             <v-avatar color="blue">
@@ -62,7 +62,7 @@
 
 <script>
 export default {
-  props: { char: {}, del: { default: false } },
+  props: { char: {}, del: { default: false }, width: { default: "300px" } },
   data() {
     return {};
   },

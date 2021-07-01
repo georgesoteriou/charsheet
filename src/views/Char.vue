@@ -1,12 +1,12 @@
 <template>
   <v-main>
-    <Party :charId="fixedId" />
+    <PartySidebar :charId="fixedId" />
     <CharSheet :charId="fixedId" :edit="true" />
   </v-main>
 </template>
 
 <script>
-import Party from "../components/Party.vue";
+import PartySidebar from "../components/PartySidebar.vue";
 import CharSheet from "../components/CharSheet.vue";
 
 export default {
@@ -18,7 +18,7 @@ export default {
     };
   },
   components: {
-    Party,
+    PartySidebar,
     CharSheet,
   },
   methods: {},
