@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import SkillProfficient from "./blobs/SkillProfficient.vue";
-import { scoreToMod } from "../funcs.js";
+import SkillProfficient from "../blobs/SkillProfficient.vue";
+import { scoreToMod } from "../../funcs.js";
 
 export default {
   props: {

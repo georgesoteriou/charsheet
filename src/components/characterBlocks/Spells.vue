@@ -185,10 +185,10 @@
 </template>
 
 <script>
-import { db } from "../firebase.js";
-import SpellsDialog from "./blobs/Spells/SpellsDialog.vue";
-import SpellsPicker from "./blobs/Spells/SpellsPicker.vue";
-import Number from "./blobs/Number.vue";
+import { db } from "../../firebase.js";
+import SpellsDialog from "../blobs/Spells/SpellsDialog.vue";
+import SpellsPicker from "../blobs/Spells/SpellsPicker.vue";
+import Number from "../blobs/Number.vue";
 
 export default {
   props: {

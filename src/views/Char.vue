@@ -1,67 +1,72 @@
 <template>
-  <span>
-    <v-container fluid class="pa-0">
-      <v-row no-gutters>
-        <v-col cols="12">
-          <Character :charId="charId" :edit="edit" />
-        </v-col>
-      </v-row>
-    </v-container>
-    <draggable
-      :list="items"
-      :move="debouncedSave"
-      :disabled="!drag"
-      class="container container--fluid mb-10"
-    >
-      <transition-group class="row dense">
-        <v-col
-          draggable
-          v-for="item in filteredItems"
-          :key="`${item.id}${item.level}${item.collection}`"
-          cols="12"
-          lg="6"
-          xl="3"
-        >
-          <div
-            :is="idToItem[item.id]"
-            @hideToggleFunc="toggleHide(item)"
-            :hide="item.hide"
-            :drag="drag"
-            :level="item.level"
-            :name="item.name"
-            :collection="item.collection"
-            :no_public="item.no_public"
-            :charId="charId"
-            :edit="edit"
-          />
-        </v-col>
-      </transition-group>
-    </draggable>
-    <v-btn
-      v-if="edit"
-      :x-large="$vuetify.breakpoint.mdAndUp"
-      :small="$vuetify.breakpoint.xs"
-      fab
-      bottom
-      right
-      fixed
-      @click="toggleDrag()"
-      :color="drag ? 'success' : ''"
-    >
-      <v-icon>mdi-drag-variant</v-icon>
-    </v-btn>
-  </span>
+  <v-main>
+    <Party :charId="charId" />
+    <v-sheet :class="$vuetify.breakpoint.mdAndUp ? 'ml-15' : ''">
+      <v-container fluid class="pa-0">
+        <v-row no-gutters>
+          <v-col cols="12">
+            <Character :charId="charId" :edit="edit" />
+          </v-col>
+        </v-row>
+      </v-container>
+      <draggable
+        :list="items"
+        :move="debouncedSave"
+        :disabled="!drag"
+        class="container container--fluid mb-10"
+      >
+        <transition-group class="row dense">
+          <v-col
+            draggable
+            v-for="item in filteredItems"
+            :key="`${item.id}${item.level}${item.collection}`"
+            cols="12"
+            lg="6"
+            xl="3"
+          >
+            <div
+              :is="idToItem[item.id]"
+              @hideToggleFunc="toggleHide(item)"
+              :hide="item.hide"
+              :drag="drag"
+              :level="item.level"
+              :name="item.name"
+              :collection="item.collection"
+              :no_public="item.no_public"
+              :charId="charId"
+              :edit="edit"
+            />
+          </v-col>
+        </transition-group>
+      </draggable>
+      <v-btn
+        v-if="edit"
+        :x-large="$vuetify.breakpoint.mdAndUp"
+        :small="$vuetify.breakpoint.xs"
+        fab
+        bottom
+        right
+        fixed
+        @click="toggleDrag()"
+        :color="drag ? 'success' : ''"
+      >
+        <v-icon>mdi-drag-variant</v-icon>
+      </v-btn>
+    </v-sheet>
+  </v-main>
 </template>
 
 <script>
-import Info_Health from "../components/Info_Health.vue";
-import Character from "../components/Character.vue";
-import Ability_Saving from "../components/Ability_Saving.vue";
-import Skills from "../components/Skills.vue";
-import Armor from "../components/Armor.vue";
-import Notes from "../components/Notes.vue";
-import Weapons from "../components/Weapons.vue";
-import Spells from "../components/Spells.vue";
+import Info_Health from "../components/characterBlocks/Info_Health.vue";
+import Character from "../components/characterBlocks/Character.vue";
+import Ability_Saving from "../components/characterBlocks/Ability_Saving.vue";
+import Skills from "../components/characterBlocks/Skills.vue";
+import Armor from "../components/characterBlocks/Armor.vue";
+import Notes from "../components/characterBlocks/Notes.vue";
+import Weapons from "../components/characterBlocks/Weapons.vue";
+import Spells from "../components/characterBlocks/Spells.vue";
+
+import Party from "../components/Party.vue";
 
 import draggable from "vuedraggable";
 
@@ -140,6 +145,7 @@ export default {
     Notes,
     Weapons,
     Spells,
+    Party,
   },
   created: async function () {
     let data = (

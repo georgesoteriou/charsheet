@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="text-h5">
-      {{ name }}
+      Weapons
       <v-spacer></v-spacer>
       <v-btn
         fab
@@ -9,7 +9,7 @@
         dark
         color="green"
         icon
-        v-if="edit && !drag"
+        v-if="!drag && edit"
         @click="$refs.new_picker.show()"
       >
         <v-icon>mdi-plus</v-icon>
@@ -19,13 +19,7 @@
       </v-btn>
       <v-icon v-if="drag">mdi-drag</v-icon>
       <!-- ADD NEW ARMOR -->
-      <NotesPicker
-        :charId="charId"
-        :name="name"
-        :no_public="no_public"
-        :collection="collection"
-        ref="new_picker"
-      />
+      <WeaponsPicker :charId="charId" ref="new_picker" />
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text
@@ -34,39 +28,72 @@
       v-if="!drag"
     >
       <v-expansion-panels multiple>
-        <v-expansion-panel :key="a.id" v-for="a in myNotes">
+        <v-expansion-panel :key="a.id" v-for="a in myWeapons">
           <v-expansion-panel-header class="py-2 px-3">
             <v-row no-gutters v-if="a.ref">
               <v-col cols="12" class="text-h6">
-                <v-icon color="green" v-if="a.equip">mdi-priority-high</v-icon>
+                <v-icon color="green" v-if="a.equip">mdi-fencing</v-icon>
                 {{ a.ref.name }}
-                <span v-if="a.ref.multiple"> x {{ a.ammount }}</span>
+              </v-col>
+              <v-col cols="12">
+                <span v-if="a.equip" class="text-caption green--text">
+                  Equipped,
+                </span>
+                <span
+                  class="text--secondary"
+                  :class="a.proficient ? 'orange--text text--darken-1' : ''"
+                >
+                  Attack Bonus: +
+                  {{
+                    a.proficient
+                      ? a.ref.extra_attack + parseInt(char.proficiency)
+                      : a.ref.extra_attack
+                  }}
+                </span>
+              </v-col>
+              <v-col cols="12" class="text--secondary">
+                Damage: {{ a.ref.dmg }} + {{ a.ref.extra_dmg }}
               </v-col>
             </v-row>
             <span dense v-else>Item deleted. Please remove</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-container fluid class="py-0">
+            <v-container fluid class="py-1">
               <v-row v-if="a.ref" no-gutters>
+                <v-col cols="10">
+                  <span v-if="a.ref.tags">
+                    <b>Tags:</b> {{ a.ref.tags.join(", ") }}
+                  </span>
+                </v-col>
+                <v-col cols="10">
+                  <b>Damage Type:</b> <span>{{ a.ref.dmg_type }}</span>
+                </v-col>
+                <v-col cols="10">
+                  <b>Weapon Type:</b>
+                  <span>{{ a.ref.type }}, {{ a.ref.rarity }}</span>
+                </v-col>
                 <v-col cols="10">
                   <b>Discription:</b> <span v-html="a.ref.description"> </span
                 ></v-col>
-                <v-col cols="10" v-if="!no_public">
+                <v-col cols="10">
                   <b>Item shared with:</b>
                   {{ a.ref.public ? "Public" : "Just You" }}
                 </v-col>
               </v-row>
-              <v-row dense v-if="edit && a.ref.multiple">
-                <v-col cols="12">
-                  <Number
-                    label="Ammount"
-                    :document_ref="get_id(a.id)"
-                    id="ammount"
-                  />
+              <v-row no-gutters justify="center" v-if="a.ref && edit">
+                <v-col cols="6" md="3">
+                  <v-btn
+                    class="px-0"
+                    text
+                    :color="a.proficient ? 'warning' : 'grey'"
+                    block
+                    @click.prevent="proficient(a.id, !a.proficient)"
+                  >
+                    <v-icon>mdi-professional-hexagon</v-icon>
+                    <div>Proficient</div>
+                  </v-btn>
                 </v-col>
-              </v-row>
-              <v-row dense justify="center" v-if="edit && a.ref">
-                <v-col cols="6" md="4">
+                <v-col cols="6" md="3">
                   <v-btn
                     class="px-0"
                     text
@@ -74,11 +101,11 @@
                     block
                     @click.prevent="equip(a.id, !a.equip)"
                   >
-                    <v-icon>mdi-priority-high</v-icon>
-                    <div>Priority</div>
+                    <v-icon>mdi-fencing</v-icon>
+                    <div>Equip</div>
                   </v-btn>
                 </v-col>
-                <v-col cols="6" md="4">
+                <v-col cols="6" md="3">
                   <v-btn
                     class="px-0"
                     text
@@ -93,7 +120,7 @@
                 <!-- Edit Button -->
                 <v-col
                   cols="6"
-                  md="4"
+                  md="3"
                   v-if="a.ref.owner === $store.getters.user.uid"
                 >
                   <v-btn
@@ -106,8 +133,7 @@
                     <v-icon>mdi-pencil</v-icon>
                     <div>Edit</div>
                   </v-btn>
-                  <NotesDialog
-                    :no_public="no_public"
+                  <WeaponsDialog
                     :ref="`item-${a.id}`"
                     :item="{ ...a.ref }"
                     @save="(item) => save_edit_dialog(a.ref.id, item)"
@@ -133,45 +159,43 @@
 </template>
 
 <script>
-import { db } from "../firebase.js";
-import NotesDialog from "./blobs/Notes/NotesDialog.vue";
-import NotesPicker from "./blobs/Notes/NotesPicker.vue";
-import Number from "./blobs/Number.vue";
+import { db } from "../../firebase.js";
+import WeaponsDialog from "../blobs/Weapons/WeaponsDialog.vue";
+import WeaponsPicker from "../blobs/Weapons/WeaponsPicker.vue";
 
 export default {
   props: {
-    name: {
-      default: "Notes",
-    },
     collection: {
-      default: "notes",
+      default: "weapons",
     },
     drag: {
       default: false,
     },
-    no_public: {
+    charId: {},
+    edit: {
       default: false,
     },
-    charId: {},
-    edit: { default: false },
     hide: { type: Boolean },
   },
-  components: { NotesDialog, NotesPicker, Number },
+  components: { WeaponsDialog, WeaponsPicker },
   data() {
     return {
-      myNotes: [],
+      myWeapons: [],
       create_dialog: false,
+      char: {},
     };
   },
   firestore() {
     return {
-      myNotes: db
+      myWeapons: db
         .collection("characters")
         .doc(this.charId)
         .collection(this.collection)
         .orderBy("equip", "desc"),
+      char: db.collection("characters").doc(this.charId),
     };
   },
+  computed: {},
   methods: {
     save_edit_dialog(id, newItem) {
       db.collection(this.collection).doc(id).update(newItem);
@@ -200,12 +224,12 @@ export default {
         .doc(id)
         .update({ equip: equipt });
     },
-    get_id(id) {
-      return db
-        .collection("characters")
+    proficient(id, pro) {
+      db.collection("characters")
         .doc(this.charId)
         .collection(this.collection)
-        .doc(id);
+        .doc(id)
+        .update({ proficient: pro });
     },
   },
 };

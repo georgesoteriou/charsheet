@@ -7,7 +7,7 @@
         <v-col cols="5">
           <Number
             :edit="edit"
-            :document_ref="db.collection('characters').doc(charId)"
+            :document_ref="document_ref"
             label="HP"
             id="hp"
           />
@@ -16,7 +16,7 @@
         <v-col cols="6">
           <Number
             :edit="edit"
-            :document_ref="db.collection('characters').doc(charId)"
+            :document_ref="document_ref"
             label="Max HP"
             id="max-hp"
           />
@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return {
-      db: db,
+      document_ref: db.collection("characters").doc(this.charId),
       char: {},
     };
   },

@@ -50,13 +50,13 @@
 </template>
 
 <script>
-import { db } from "../firebase.js";
+import { db } from "../../firebase.js";
 
-import TextBox from "./blobs/Text-Box.vue";
-import Number from "./blobs/Number.vue";
-import NumberManual from "./blobs/NumberManual.vue";
-import Alignment from "./blobs/Alignment.vue";
-import Personality from "./blobs/Personality.vue";
+import TextBox from "../blobs/Text-Box.vue";
+import Number from "../blobs/Number.vue";
+import NumberManual from "../blobs/NumberManual.vue";
+import Alignment from "../blobs/Alignment.vue";
+import Personality from "../blobs/Personality.vue";
 
 export default {
   props: {
