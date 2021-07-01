@@ -46,7 +46,7 @@
             <span dense v-else>Item deleted. Please remove</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-container class="py-0">
+            <v-container fluid class="py-0">
               <v-row v-if="a.ref" no-gutters>
                 <v-col cols="10">
                   <b>Discription:</b> <span v-html="a.ref.description"> </span
@@ -56,7 +56,7 @@
                   {{ a.ref.public ? "Public" : "Just You" }}
                 </v-col>
               </v-row>
-              <v-row dense justify="start" v-if="edit && a.ref.multiple">
+              <v-row dense v-if="edit && a.ref.multiple">
                 <v-col cols="12">
                   <Number
                     label="Ammount"
@@ -65,8 +65,8 @@
                   />
                 </v-col>
               </v-row>
-              <v-row dense v-if="edit && a.ref">
-                <v-col cols="4">
+              <v-row dense justify="center" v-if="edit && a.ref">
+                <v-col cols="6" md="4">
                   <v-btn
                     class="px-0"
                     text
@@ -78,7 +78,7 @@
                     <div>Priority</div>
                   </v-btn>
                 </v-col>
-                <v-col cols="4">
+                <v-col cols="6" md="4">
                   <v-btn
                     class="px-0"
                     text
@@ -91,7 +91,11 @@
                   </v-btn>
                 </v-col>
                 <!-- Edit Button -->
-                <v-col cols="4" v-if="a.ref.owner === $store.getters.user.uid">
+                <v-col
+                  cols="6"
+                  md="4"
+                  v-if="a.ref.owner === $store.getters.user.uid"
+                >
                   <v-btn
                     text
                     class="px-0"

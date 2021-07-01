@@ -23,7 +23,7 @@
       <SpellsPicker :charId="charId" :level="level" ref="new_picker" />
     </v-card-title>
     <v-divider></v-divider>
-    <v-container class="py-2" v-if="level > 0 && !drag">
+    <v-container fluid class="py-2" v-if="level > 0 && !drag">
       <v-row dense>
         <v-col>
           <v-progress-linear color="blue" v-model="percent" height="20">
@@ -43,7 +43,7 @@
       }"
       class="pa-0 scroll"
     >
-      <v-container class="py-1" v-if="level > 0 && !drag">
+      <v-container fluid class="py-1" v-if="level > 0 && !drag">
         <v-row class="text-center justify-center" no-gutters>
           <v-col cols="5">
             <Number
@@ -85,7 +85,7 @@
             <span dense v-else>Item deleted. Please remove</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-container class="py-1">
+            <v-container fluid class="py-1">
               <v-row v-if="a.ref" no-gutters>
                 <v-col cols="12">
                   <b>Components: </b> <span>{{ a.ref.components }}</span>
@@ -106,7 +106,7 @@
                 ></v-col>
               </v-row>
               <v-row no-gutters justify="center" v-if="edit && a.ref">
-                <v-col cols="6">
+                <v-col cols="6" md="3">
                   <v-btn
                     class="px-0"
                     text
@@ -118,7 +118,7 @@
                     <div>Cast</div>
                   </v-btn>
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="6" md="3">
                   <v-btn
                     class="px-0"
                     text
@@ -130,7 +130,7 @@
                     <div>Prepare</div>
                   </v-btn>
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="6" md="3">
                   <v-btn
                     class="px-0"
                     text
@@ -143,7 +143,11 @@
                   </v-btn>
                 </v-col>
                 <!-- Edit Button -->
-                <v-col cols="6" v-if="a.ref.owner === $store.getters.user.uid">
+                <v-col
+                  cols="6"
+                  md="3"
+                  v-if="a.ref.owner === $store.getters.user.uid"
+                >
                   <v-btn
                     text
                     class="px-0"

@@ -58,7 +58,7 @@
             <span dense v-else>Item deleted. Please remove</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-container class="py-1">
+            <v-container fluid class="py-1">
               <v-row v-if="a.ref" no-gutters>
                 <v-col cols="10">
                   <span v-if="a.ref.tags">
@@ -81,7 +81,7 @@
                 </v-col>
               </v-row>
               <v-row no-gutters justify="center" v-if="a.ref && edit">
-                <v-col cols="6">
+                <v-col cols="6" md="3">
                   <v-btn
                     class="px-0"
                     text
@@ -93,7 +93,7 @@
                     <div>Proficient</div>
                   </v-btn>
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="6" md="3">
                   <v-btn
                     class="px-0"
                     text
@@ -105,7 +105,7 @@
                     <div>Equip</div>
                   </v-btn>
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="6" md="3">
                   <v-btn
                     class="px-0"
                     text
@@ -118,7 +118,11 @@
                   </v-btn>
                 </v-col>
                 <!-- Edit Button -->
-                <v-col cols="6" v-if="a.ref.owner === $store.getters.user.uid">
+                <v-col
+                  cols="6"
+                  md="3"
+                  v-if="a.ref.owner === $store.getters.user.uid"
+                >
                   <v-btn
                     text
                     class="px-0"

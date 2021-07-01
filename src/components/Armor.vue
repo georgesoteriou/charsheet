@@ -47,7 +47,7 @@
             <span dense v-else>Item deleted. Please remove</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-container class="py-1">
+            <v-container fluid class="py-1">
               <v-row v-if="a.ref" no-gutters>
                 <v-col cols="10"><b>Type:</b> {{ a.ref.type }}</v-col>
                 <v-col cols="10">
