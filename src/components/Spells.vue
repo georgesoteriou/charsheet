@@ -48,7 +48,7 @@
           <v-col cols="5">
             <Number
               :edit="edit"
-              :document_ref="db.collection('characters').doc(charId)"
+              :document_ref="char_ref"
               ref="slots"
               label="Slots"
               :id="`slots_${this.level}`"
@@ -58,7 +58,7 @@
           <v-col cols="6">
             <Number
               :edit="edit"
-              :document_ref="db.collection('characters').doc(charId)"
+              :document_ref="char_ref"
               label="Max Slots"
               :id="`slots_max_${this.level}`"
             />
@@ -205,7 +205,7 @@ export default {
   components: { SpellsDialog, SpellsPicker, Number },
   data() {
     return {
-      db: db,
+      char_ref: db.collection("characters").doc(this.charId),
       mySpells: [],
       create_dialog: false,
       char: {},

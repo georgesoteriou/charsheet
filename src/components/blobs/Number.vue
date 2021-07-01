@@ -47,9 +47,9 @@ export default {
     };
   },
   created: async function () {
-    let data = (await this.$firestoreRefs.char.get()).data();
+    let data = (await this.document_ref.get()).data();
     if (!data[this.id]) {
-      this.$firestoreRefs.char.set({ [this.id]: 0 }, { merge: true });
+      this.document_ref.set({ [this.id]: 0 }, { merge: true });
     }
   },
   methods: {
@@ -58,7 +58,7 @@ export default {
       this.save();
     },
     save() {
-      this.$firestoreRefs.char.update({ [this.id]: this.char[this.id] });
+      this.document_ref.update({ [this.id]: this.char[this.id] });
       this.saved = true;
       setTimeout(() => {
         this.saved = false;
