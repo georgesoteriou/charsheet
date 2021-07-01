@@ -17,6 +17,7 @@
           </v-col>
           <v-col cols="2">
             <v-btn
+              class="pa-0"
               block
               color="red"
               x-large

@@ -13,8 +13,24 @@ var firebaseConfig = {
     measurementId: "G-C7LK58RYGK"
   };
 
-// Get a Firestore instance
 const app = firebase.initializeApp(firebaseConfig);
+
+firebase.firestore().enablePersistence()
+.catch((err) => {
+    if (err.code == 'failed-precondition') {
+      console.log("Failed to setup firestore Persistence:", err)
+        // Multiple tabs open, persistence can only be enabled
+        // in one tab at a a time.
+        // ...
+    } else if (err.code == 'unimplemented') {
+      console.log("Failed to setup firestore Persistence because its not implemented in your browser:", err)
+        // The current browser does not support all of the
+        // features required to enable persistence
+        // ...
+    }
+});
+
+// Get a Firestore instance
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 export const db = firebase.firestore(app);
 export const auth = firebase.auth(app);

@@ -1,5 +1,9 @@
 {
  "name": "5e Character Sheet",
+ "start_url": "./index.html",
+ "display": "standalone",
+ "background_color": "#000000",
+ "theme_color": "#FF5050",
  "icons": [
   {
    "src": "\/img\/icons\/android-icon-36x36.png",
