@@ -22,6 +22,12 @@ const routes = [
     // $route.params.id
     name: 'Character Sheet',
     component: () => import('../views/Char.vue')
+  },
+  {
+    path: '/party/:id',
+    // $route.params.id
+    name: 'Party',
+    component: () => import('../views/Party.vue')
   }
 ]
 
@@ -34,7 +40,7 @@ const router = new VueRouter({
 export default router
 
 router.beforeEach((to, from, next) => {
-  if (store.state.loggedIn && to.name != "Character Sheet" && to.name != "User") {
+  if (store.state.loggedIn && to.name != "Character Sheet" && to.name != "User" && to.name != "Party") {
     // Logged in and not at User and not at Character Sheet
     next("/user");
   } else if (!store.state.loggedIn && to.name != "Login") {

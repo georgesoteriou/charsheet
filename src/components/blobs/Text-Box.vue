@@ -20,6 +20,7 @@ export default {
     label: {},
     id: {},
     charId: {},
+    collId: { default: "characters" },
     edit: {
       default: false,
     },
@@ -32,7 +33,7 @@ export default {
   },
   firestore() {
     return {
-      char: db.collection("characters").doc(this.charId),
+      char: db.collection(this.collId).doc(this.charId),
     };
   },
   created: async function () {

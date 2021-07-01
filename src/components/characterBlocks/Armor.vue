@@ -121,9 +121,9 @@
 </template>
 
 <script>
-import { db } from "../firebase.js";
-import ArmorDialog from "./blobs/Armor/ArmorDialog.vue";
-import ArmorPicker from "./blobs/Armor/ArmorPicker.vue";
+import { db } from "../../firebase.js";
+import ArmorDialog from "../blobs/Armor/ArmorDialog.vue";
+import ArmorPicker from "../blobs/Armor/ArmorPicker.vue";
 
 export default {
   props: {

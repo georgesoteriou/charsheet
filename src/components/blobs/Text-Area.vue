@@ -16,7 +16,13 @@ import { db } from "../../firebase.js";
 import { debounce } from "debounce";
 
 export default {
-  props: { label: {}, id: {}, charId: {}, edit: { default: false } },
+  props: {
+    label: {},
+    id: {},
+    charId: {},
+    edit: { default: false },
+    collId: { default: "characters" },
+  },
   data() {
     return {
       char: {},
@@ -25,7 +31,7 @@ export default {
   },
   firestore() {
     return {
-      char: db.collection("characters").doc(this.charId),
+      char: db.collection(this.collId).doc(this.charId),
     };
   },
   created: async function () {

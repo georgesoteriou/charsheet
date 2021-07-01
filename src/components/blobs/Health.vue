@@ -7,7 +7,7 @@
         <v-col cols="5">
           <Number
             :edit="edit"
-            :document_ref="db.collection('characters').doc(charId)"
+            :document_ref="document_ref"
             label="HP"
             id="hp"
           />
@@ -16,7 +16,7 @@
         <v-col cols="6">
           <Number
             :edit="edit"
-            :document_ref="db.collection('characters').doc(charId)"
+            :document_ref="document_ref"
             label="Max HP"
             id="max-hp"
           />
@@ -24,7 +24,7 @@
       </v-row>
       <v-row class="mt-5">
         <v-col>
-          <v-progress-linear color="red" v-model="percent" height="60">
+          <v-progress-linear color="red" :value="percent" height="60">
             <strong> {{ Math.ceil(percent) }}% </strong>
           </v-progress-linear>
         </v-col>
@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return {
-      db: db,
+      document_ref: db.collection("characters").doc(this.charId),
       char: {},
     };
   },

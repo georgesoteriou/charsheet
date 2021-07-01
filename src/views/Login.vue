@@ -1,112 +1,121 @@
 <template>
-  <v-card flat height="100%">
-    <v-img
-      height="100%"
-      max-height="100vh"
-      gradient="to top right, rgba(34,85,144,.9), rgba(34,85,144,.7)"
-      src="https://cdn.pixabay.com/photo/2014/12/14/17/47/cube-568059_1280.jpg"
-      alt="bg"
-    >
-      <v-container style="height: 100%" mt-n12>
-        <v-layout justify-center align-center style="height: 100%">
-          <v-flex xs12 xl6 md8>
-            <v-card class="my-2" elevation="3">
-              <div style="font-size: 1.8em" class="pa-3 text-center">
-                Login Page
-              </div>
-            </v-card>
-            <v-card :loading="loading" elevation="3">
-              <v-form ref="form" @keyup.native.enter="submit">
-                <v-card-text v-if="login_with_pass">
-                  <v-text-field
-                    ref="user"
-                    v-model="user"
-                    :rules="[() => !!user || 'This field is required']"
-                    :error-messages="errorMessages"
-                    label="Email"
-                    placeholder="ab123@domain.com"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    ref="pass"
-                    v-model="pass"
-                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    :type="show ? 'text' : 'password'"
-                    :rules="[() => !!pass || 'This field is required']"
-                    label="Password"
-                    placeholder="Password"
-                    @click:append="show = !show"
-                    required
-                  ></v-text-field>
+  <v-main>
+    <v-card flat height="100%">
+      <v-img
+        height="100%"
+        max-height="100vh"
+        gradient="to top right, rgba(34,85,144,.9), rgba(34,85,144,.7)"
+        src="https://cdn.pixabay.com/photo/2014/12/14/17/47/cube-568059_1280.jpg"
+        alt="bg"
+      >
+        <v-container style="height: 100%" mt-n12>
+          <v-layout justify-center align-center style="height: 100%">
+            <v-flex xs12 xl6 md8>
+              <v-card class="my-2" elevation="3">
+                <div style="font-size: 1.8em" class="pa-3 text-center">
+                  Login Page
+                </div>
+              </v-card>
+              <v-card :loading="loading" elevation="3">
+                <v-form ref="form" @keyup.native.enter="submit">
+                  <v-card-text v-if="login_with_pass">
+                    <v-text-field
+                      ref="user"
+                      v-model="user"
+                      :rules="[() => !!user || 'This field is required']"
+                      :error-messages="errorMessages"
+                      label="Email"
+                      placeholder="ab123@domain.com"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      ref="pass"
+                      v-model="pass"
+                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="show ? 'text' : 'password'"
+                      :rules="[() => !!pass || 'This field is required']"
+                      label="Password"
+                      placeholder="Password"
+                      @click:append="show = !show"
+                      required
+                    ></v-text-field>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-container>
+                      <v-row
+                        v-if="login_with_pass"
+                        class="justify-center mt-n8"
+                      >
+                        <v-col>
+                          <v-btn
+                            color="primary"
+                            v-if="reset"
+                            absolute
+                            text
+                            @click="resetPass"
+                          >
+                            Reset<br />password
+                          </v-btn>
+                        </v-col>
+                        <v-col cols="8" xl="5">
+                          <v-btn block color="primary" large @click="submit">
+                            Login with Email
+                          </v-btn>
+                        </v-col>
+                        <v-col>
+                          <v-slide-x-reverse-transition>
+                            <v-tooltip v-if="formHasErrors" left>
+                              <template v-slot:activator="{ on }">
+                                <v-btn
+                                  absolute
+                                  right
+                                  icon
+                                  class="my-0"
+                                  @click="resetForm"
+                                  v-on="on"
+                                >
+                                  <v-icon>mdi-refresh</v-icon>
+                                </v-btn>
+                              </template>
+                              <span>Refresh form</span>
+                            </v-tooltip>
+                          </v-slide-x-reverse-transition>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-actions>
+                </v-form>
+              </v-card>
+              <v-card class="my-2">
+                <v-card-text>
+                  <v-row class="justify-center">
+                    <v-col cols="12" xl="5">
+                      <v-btn
+                        block
+                        color="#0F9D58"
+                        large
+                        dark
+                        @click="submitGoogle"
+                      >
+                        Login with Google
+                      </v-btn>
+                    </v-col>
+                  </v-row>
                 </v-card-text>
-                <v-card-actions>
-                  <v-container>
-                    <v-row v-if="login_with_pass" class="justify-center mt-n8">
-                      <v-col>
-                        <v-btn
-                          color="primary"
-                          v-if="reset"
-                          absolute
-                          text
-                          @click="resetPass"
-                        >
-                          Reset<br />password
-                        </v-btn>
-                      </v-col>
-                      <v-col cols="8" xl="5">
-                        <v-btn block color="primary" large @click="submit">
-                          Login with Email
-                        </v-btn>
-                      </v-col>
-                      <v-col>
-                        <v-slide-x-reverse-transition>
-                          <v-tooltip v-if="formHasErrors" left>
-                            <template v-slot:activator="{ on }">
-                              <v-btn
-                                absolute
-                                right
-                                icon
-                                class="my-0"
-                                @click="resetForm"
-                                v-on="on"
-                              >
-                                <v-icon>mdi-refresh</v-icon>
-                              </v-btn>
-                            </template>
-                            <span>Refresh form</span>
-                          </v-tooltip>
-                        </v-slide-x-reverse-transition>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-actions>
-              </v-form>
-            </v-card>
-            <v-card class="my-2">
-              <v-card-text>
-                <v-row class="justify-center">
-                  <v-col cols="12" xl="5">
-                    <v-btn
-                      block
-                      color="#0F9D58"
-                      large
-                      dark
-                      @click="submitGoogle"
-                    >
-                      Login with Google
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-card-text>
-            </v-card>
-            <v-snackbar v-model="snackbar" :timeout="10000" class="text-center">
-              {{ snackbarText }}
-            </v-snackbar>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-img>
-  </v-card>
+              </v-card>
+              <v-snackbar
+                v-model="snackbar"
+                :timeout="10000"
+                class="text-center"
+              >
+                {{ snackbarText }}
+              </v-snackbar>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-img>
+    </v-card>
+  </v-main>
 </template>
 
 <script>
