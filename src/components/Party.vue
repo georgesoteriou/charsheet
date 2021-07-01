@@ -9,7 +9,7 @@
     <v-list>
       <v-list-item class="px-2">
         <v-list-item-avatar class="my-5" color="#FF5050">
-          {{ initials }}
+          <span class="mx-1 text-h5">{{ initials }}</span>
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ char.name }}</v-list-item-title>
@@ -35,6 +35,10 @@
       <v-list-item
         class="px-0"
         link
+        @click="
+          partyMemberId = player.ref.id;
+          partyMemberShow = true;
+        "
         :key="player.ref.id"
         v-for="player in party"
       >
@@ -49,7 +53,7 @@
         <v-list-item-title> Add New Party Member </v-list-item-title>
       </v-btn>
       <!-- DIALOG TO ADD FRIENDS -->
-      <v-dialog v-model="dialog" width="500">
+      <v-dialog v-model="AddDialog" width="500">
         <v-card class="pa-3">
           <v-card-title class="text-h5 text-center">
             Add Party Member
@@ -80,9 +84,34 @@
                   block
                   color="error"
                   :disabled="adding"
-                  @click="dialog = false"
+                  @click="AddDialog = false"
                 >
                   Cancel
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <!-- PARTY MEMBER -->
+      <v-dialog
+        v-model="partyMemberShow"
+        width="90vw"
+        :fullscreen="$vuetify.breakpoint.xs"
+      >
+        <v-card class="pa-3">
+          <v-card-title class="text-h5 text-center">
+            Party Member
+          </v-card-title>
+
+          <v-card-text class="pa-0">
+            <CharSheet :charId="partyMemberId" :edit="false" />
+          </v-card-text>
+          <v-card-actions>
+            <v-row>
+              <v-col>
+                <v-btn block color="error" @click="partyMemberShow = false">
+                  Close
                 </v-btn>
               </v-col>
             </v-row>
@@ -96,19 +125,22 @@
 <script>
 import { db } from "../firebase.js";
 import MiniChar from "./MiniChar.vue";
+import CharSheet from "./CharSheet.vue";
 
 export default {
   props: { charId: {} },
-  components: { MiniChar },
+  components: { MiniChar, CharSheet },
   data() {
     return {
       char: {},
       party: [],
       copied: false,
-      dialog: false,
+      AddDialog: false,
       newFriendId: "",
       adding: false,
       error: "",
+      partyMemberId: "",
+      partyMemberShow: false,
     };
   },
   firestore() {
@@ -129,7 +161,7 @@ export default {
       this.newFriendId = "";
       this.error = "";
       this.adding = false;
-      this.dialog = true;
+      this.AddDialog = true;
     },
     addFriend() {
       this.adding = true;
@@ -140,7 +172,7 @@ export default {
             .doc(this.charId)
             .collection("party")
             .add({ ref: docRef });
-          this.dialog = false;
+          this.AddDialog = false;
         } else {
           this.error = "This Character ID does not exist";
         }

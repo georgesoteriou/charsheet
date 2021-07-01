@@ -26,7 +26,7 @@
     <v-container fluid class="py-2" v-if="level > 0 && !drag">
       <v-row dense>
         <v-col>
-          <v-progress-linear color="blue" v-model="percent" height="20">
+          <v-progress-linear color="blue" :value="percent" height="20">
             <strong> {{ Math.ceil(percent) }}% </strong>
           </v-progress-linear>
         </v-col>

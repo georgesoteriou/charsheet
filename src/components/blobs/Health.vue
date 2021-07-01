@@ -24,7 +24,7 @@
       </v-row>
       <v-row class="mt-5">
         <v-col>
-          <v-progress-linear color="red" v-model="percent" height="60">
+          <v-progress-linear color="red" :value="percent" height="60">
             <strong> {{ Math.ceil(percent) }}% </strong>
           </v-progress-linear>
         </v-col>

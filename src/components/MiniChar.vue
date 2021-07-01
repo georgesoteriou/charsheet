@@ -7,7 +7,7 @@
       width="300px"
       style="overflow: hidden"
     >
-      <v-card-title class="ma-0 px-1" style="width: 300px">
+      <v-card-title class="ma-0 py-0 px-1" style="width: 300px">
         <v-row dense>
           <v-col cols="3">
             <v-avatar color="blue">
@@ -16,17 +16,38 @@
           </v-col>
           <v-col cols="9">
             <div>{{ char.name }}</div>
-            <div class="text-caption">
+            <div class="text-caption mt-n2">
               Level {{ char.level }}, {{ char.race }}, {{ char.class }}
             </div>
           </v-col>
         </v-row>
       </v-card-title>
-      <v-card-text class="ma-0 px-1">
-        <v-row dense>
+      <v-card-text class="mt-1 py-0 px-1">
+        <v-row no-gutters>
           <v-col cols="12">
-            <v-progress-linear color="red" v-model="percent" height="30">
-              <strong> {{ Math.ceil(percent) }}% </strong>
+            <v-progress-linear
+              rounded
+              color="red"
+              :value="percentHP"
+              height="20"
+            >
+              <strong> {{ char["hp"] }} </strong>
+            </v-progress-linear>
+          </v-col>
+          <v-col
+            class="mt-1"
+            cols="12"
+            v-for="slot in spellSlots"
+            :key="slot.id"
+          >
+            <v-progress-linear
+              disabled
+              rounded
+              color="blue"
+              :value="slot.percent"
+              height="18"
+            >
+              <strong> {{ slot.curr }} </strong>
             </v-progress-linear>
           </v-col>
         </v-row>
@@ -52,12 +73,26 @@ export default {
         return "";
       }
     },
-    percent() {
+    percentHP() {
       return (this.char["hp"] / this.char["max-hp"]) * 100;
     },
-  },
-  mounted() {
-    console.log(this.$refs.parentCard);
+    spellSlots() {
+      let slots = [];
+      for (let i = 1; i <= 9; i++) {
+        let max_slot = this.char[`slots_max_${i}`];
+        if (max_slot > 0) {
+          let curr_slot = this.char[`slots_${i}`];
+          let percent = (curr_slot / max_slot) * 100;
+          slots.push({
+            id: i,
+            percent: percent,
+            curr: curr_slot,
+            max: max_slot,
+          });
+        }
+      }
+      return slots;
+    },
   },
 };
 </script>
