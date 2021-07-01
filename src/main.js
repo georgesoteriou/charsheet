@@ -5,6 +5,7 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import { firestorePlugin } from 'vuefire'
 import store from './store'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.use(firestorePlugin)
 
