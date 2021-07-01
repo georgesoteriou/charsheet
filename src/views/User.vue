@@ -57,12 +57,12 @@
         </v-col>
         <v-col cols="5">
           <v-btn color="success" class="mt-5" block @click="newChar" x-large>
-            <v-icon>mdi-plus</v-icon>Add New Character
+            <v-icon>mdi-plus</v-icon>New Char
           </v-btn>
         </v-col>
         <v-col cols="5">
           <v-btn color="purple" class="mt-5" block @click="newDmParty" x-large>
-            <v-icon>mdi-plus</v-icon>Add New DM Party
+            <v-icon>mdi-plus</v-icon>New Party
           </v-btn>
         </v-col>
       </v-row>
