@@ -39,9 +39,9 @@
               :height="detail ? '30' : '20'"
             >
               <div v-if="detail" class="text-body-1 text-capitalize">
-                Health: {{ char["hp"] }} / {{ char["hp-max"] }}
+                Health: {{ char["hp"] }} / {{ char["max-hp"] }}
               </div>
-              <strong> {{ char["hp"] }} </strong>
+              <strong v-else> {{ char["hp"] }} </strong>
             </v-progress-linear>
           </v-col>
           <v-col
