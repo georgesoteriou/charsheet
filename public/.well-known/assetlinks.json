@@ -1,5 +1,10 @@
 [{
       "relation": ["delegate_permission/common.handle_all_urls"],
-      "target" : { "namespace": "android_app", "package_name": "com.georgesoteriou.dnd.twa",
-                   "sha256_cert_fingerprints": ["68:AE:0D:AE:B6:3D:5E:3F:39:EC:78:39:26:A3:24:14:8D:AC:D6:19:0D:76:88:67:6B:36:B5:51:58:1A:59:82"] }
-    }]
+      "target" : { 
+            "namespace": "android_app", 
+            "package_name": "com.georgesoteriou.dnd.twa",
+            "sha256_cert_fingerprints": [
+                  "E8:FB:77:5B:60:79:80:E7:70:2A:E1:97:E8:E6:27:75:F2:3B:05:AF:66:36:B1:CE:F2:C3:6D:F0:6D:D4:E9:FB"
+                  ] 
+            }
+}]
