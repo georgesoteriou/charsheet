@@ -67,7 +67,7 @@
             <v-col cols="12">
               <v-select
                 v-model="newItem.dmg_type"
-                label="Dammage Type"
+                label="Damage Type"
                 :items="dmg_types"
                 outlined
                 :hide-details="true"
