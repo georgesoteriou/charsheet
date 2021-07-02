@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.georgesoteriou.dnd.twa",
+                   "sha256_cert_fingerprints": ["68:AE:0D:AE:B6:3D:5E:3F:39:EC:78:39:26:A3:24:14:8D:AC:D6:19:0D:76:88:67:6B:36:B5:51:58:1A:59:82"] }
+    }]
