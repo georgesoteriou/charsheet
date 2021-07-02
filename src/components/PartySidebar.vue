@@ -8,8 +8,12 @@
   >
     <v-list>
       <v-list-item class="px-2">
-        <v-list-item-avatar class="my-5" color="#FF5050">
-          <span class="mx-1 text-h5">{{ initials }}</span>
+        <v-list-item-avatar
+          style="display: inline-block"
+          class="text-center my-5 text-h5 pt-1"
+          color="#FF5050"
+        >
+          {{ initials }}
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ char.name }}</v-list-item-title>

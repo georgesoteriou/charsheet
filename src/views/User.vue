@@ -1,9 +1,9 @@
 <template>
   <v-main>
-    <v-container>
+    <v-container fluid>
       <v-row class="text-center text-h2" justify="center">
         <v-col cols="12"> Character Sellection </v-col>
-        <v-col cols="10" :key="char.id" v-for="char in chars">
+        <v-col cols="12" md="10" :key="char.id" v-for="char in chars">
           <v-row dense>
             <v-col cols="10">
               <v-btn
@@ -29,7 +29,7 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="10" :key="party.id" v-for="party in parties">
+        <v-col cols="12" md="10" :key="party.id" v-for="party in parties">
           <v-row dense>
             <v-col cols="10">
               <v-btn
@@ -55,13 +55,25 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="5">
-          <v-btn color="success" class="mt-5" block @click="newChar" x-large>
+        <v-col cols="6" md="5">
+          <v-btn
+            color="success"
+            class="pa-0 mt-5"
+            block
+            @click="newChar"
+            x-large
+          >
             <v-icon>mdi-plus</v-icon>New Char
           </v-btn>
         </v-col>
-        <v-col cols="5">
-          <v-btn color="purple" class="mt-5" block @click="newDmParty" x-large>
+        <v-col cols="6" md="5">
+          <v-btn
+            color="purple"
+            class="pa-0 mt-5"
+            block
+            @click="newDmParty"
+            x-large
+          >
             <v-icon>mdi-plus</v-icon>New Party
           </v-btn>
         </v-col>
@@ -100,8 +112,8 @@ export default {
   data() {
     return {
       dialog: false,
-      chars: [],
-      parties: [],
+      chars: null,
+      parties: null,
       prepForDel: {},
     };
   },

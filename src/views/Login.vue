@@ -5,7 +5,7 @@
         height="100%"
         max-height="100vh"
         gradient="to top right, rgba(34,85,144,.9), rgba(34,85,144,.7)"
-        src="https://cdn.pixabay.com/photo/2014/12/14/17/47/cube-568059_1280.jpg"
+        :src="require('../assets/loginBG.jpg')"
         alt="bg"
       >
         <v-container style="height: 100%" mt-n12>

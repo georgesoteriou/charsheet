@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <v-main class="fill-height" style="background-color: black">
     <v-sheet
       style="background-color: black"
       :class="$vuetify.breakpoint.mdAndUp && edit ? 'ml-15' : ''"
@@ -11,11 +11,20 @@
           </v-col>
         </v-row>
       </v-container>
+      <v-container class="pa-0 mt-3" v-if="!isEqualItems">
+        <v-row justify="center">
+          <v-col cols="6" class="text-h4">
+            Something went wrong with aranging your charsheet. To reset the
+            positions
+            <v-btn @click="reset" color="red" class="pa-3">click here</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
       <draggable
         :list="char.items"
         :move="debouncedSave"
         :disabled="!drag"
-        class="container container--fluid pb-10"
+        class="container container--fluid fill-height"
       >
         <transition-group class="row dense">
           <v-col
@@ -41,19 +50,25 @@
           </v-col>
         </transition-group>
       </draggable>
-      <v-btn
-        v-if="edit"
-        :x-large="$vuetify.breakpoint.mdAndUp"
-        :small="$vuetify.breakpoint.xs"
-        fab
+      <v-speed-dial
+        v-if="edit && $vuetify.breakpoint.mdAndUp"
+        v-model="drag"
         bottom
         right
         fixed
-        @click="toggleDrag()"
-        :color="drag ? 'success' : ''"
+        x-large
+        direction="top"
+        transition="slide-y-reverse-transition"
       >
-        <v-icon>mdi-drag-variant</v-icon>
-      </v-btn>
+        <template v-slot:activator>
+          <v-btn v-model="drag" x-large fab :color="drag ? 'success' : ''">
+            <v-icon>mdi-drag-variant</v-icon>
+          </v-btn>
+        </template>
+        <v-btn fab small @click="reset" :color="drag ? 'error' : ''">
+          <v-icon>mdi-restart</v-icon>
+        </v-btn>
+      </v-speed-dial>
     </v-sheet>
   </v-main>
 </template>
@@ -72,6 +87,7 @@ import draggable from "vuedraggable";
 
 import { db } from "../firebase.js";
 import { debounce } from "debounce";
+import { isEqualWith } from "lodash";
 
 export default {
   name: "Char",
@@ -152,6 +168,11 @@ export default {
     }
   },
   methods: {
+    reset() {
+      db.collection("characters")
+        .doc(this.charId)
+        .set({ items: this.initialItems }, { merge: true });
+    },
     save() {
       db.collection("characters")
         .doc(this.charId)
@@ -160,9 +181,6 @@ export default {
     debouncedSave: debounce(function () {
       this.save();
     }, 1000),
-    toggleDrag() {
-      this.drag = !this.drag;
-    },
     toggleHide(item) {
       item.hide = !item.hide;
       this.save();
@@ -178,6 +196,22 @@ export default {
         }
       } else {
         return [];
+      }
+    },
+    isEqualItems() {
+      if (this.char && this.char.items) {
+        const online = [...this.char.items];
+        online.sort((a, b) => a.id.localeCompare(b.id));
+        const initial = [...this.initialItems];
+        initial.sort((a, b) => a.id.localeCompare(b.id));
+        return isEqualWith(online, initial, (objValue, othValue, key) => {
+          if (key === "hide") {
+            return true;
+          }
+          return undefined;
+        });
+      } else {
+        return true;
       }
     },
   },
