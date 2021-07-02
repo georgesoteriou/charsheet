@@ -9,12 +9,12 @@
     >
       <v-card-title class="ma-0 py-0 px-1" :style="{ width: width }">
         <v-row dense>
-          <v-col cols="3">
+          <v-col cols="2">
             <v-avatar color="blue">
               {{ initials }}
             </v-avatar>
           </v-col>
-          <v-col cols="9">
+          <v-col cols="8" class="pl-3">
             <v-row no-gutters justify="start">
               <v-col cols="12">{{ char.name }}</v-col>
               <v-col cols="12" class="text-caption mt-n2">
@@ -22,11 +22,12 @@
               </v-col>
             </v-row>
           </v-col>
+          <v-col>
+            <v-btn v-if="del" icon @click.stop="$emit('delPartyMember')">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-col>
         </v-row>
-        <v-spacer></v-spacer>
-        <v-btn v-if="del" icon @click.stop="$emit('delPartyMember')">
-          <v-icon>mdi-delete</v-icon>
-        </v-btn>
       </v-card-title>
       <v-card-text class="mt-1 py-0 px-1">
         <v-row no-gutters>

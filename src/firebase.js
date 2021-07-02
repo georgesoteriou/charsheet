@@ -1,4 +1,5 @@
 import firebase from 'firebase/app'
+import { enableIndexedDbPersistence } from "firebase/firestore"; 
 import 'firebase/firestore'
 import "firebase/auth";
 
@@ -15,6 +16,10 @@ var firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 
+firebase.firestore().settings({
+  cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED
+});
+
 firebase.firestore().enablePersistence()
 .catch((err) => {
     if (err.code == 'failed-precondition') {
@@ -28,10 +33,6 @@ firebase.firestore().enablePersistence()
         // features required to enable persistence
         // ...
     }
-});
-
-firebase.firestore().settings({
-  cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED
 });
 
 // Get a Firestore instance
