@@ -11,7 +11,7 @@
           </v-col>
         </v-row>
       </v-container>
-      <v-container class="pa-0 mt-3" v-if="!isEqualItems">
+      <v-container class="pa-0 mt-2" v-if="!isEqualItems">
         <v-row justify="center">
           <v-col cols="6" class="text-h4">
             Something went wrong with aranging your charsheet. To reset the
@@ -24,7 +24,7 @@
         :list="char.items"
         :move="debouncedSave"
         :disabled="!drag"
-        class="container container--fluid fill-height"
+        class="container container--fluid fill-height mt-2"
       >
         <transition-group class="row dense">
           <v-col

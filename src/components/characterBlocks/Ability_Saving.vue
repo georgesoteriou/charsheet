@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <v-lazy>
     <v-card v-if="drag">
       <v-card-title class="text-h5">
         Ability Mods & Saving Throws
@@ -16,12 +16,14 @@
       no-gutters
       :height="$vuetify.breakpoint.lgAndUp && !drag ? '458px' : ''"
     >
-      <v-col cols="12"><AbilityMods :edit="edit" :charId="charId" /></v-col>
-      <v-col cols="12" class="mt-4">
+      <v-col cols="12" class="pb-3">
+        <AbilityMods :edit="edit" :charId="charId" />
+      </v-col>
+      <v-col cols="12" class="pt-3">
         <SavingThrows :edit="edit" :charId="charId" />
       </v-col>
     </v-row>
-  </span>
+  </v-lazy>
 </template>
 
 <script>

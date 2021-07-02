@@ -1,28 +1,30 @@
 <template>
-  <v-card :height="$vuetify.breakpoint.lgAndUp && !drag ? '474px' : ''">
-    <v-card-title class="text-h5">
-      Skills
-      <v-spacer></v-spacer>
-      <v-btn v-if="drag" icon class="mr-3" @click="$emit('hideToggleFunc')">
-        <v-icon>{{ hide ? "mdi-eye-off" : "mdi-eye" }}</v-icon>
-      </v-btn>
-      <v-icon v-if="drag">mdi-drag</v-icon>
-    </v-card-title>
-    <v-divider></v-divider>
-    <v-card-text v-if="!drag" class="py-2">
-      <v-row class="text-center" dense>
-        <v-col cols="6" :key="i" v-for="(skill, i) in skills">
-          <SkillProfficient
-            :edit="edit"
-            :charId="charId"
-            :label="skill.name"
-            :id="skill.ability"
-            :mod_func="scoreToMod"
-          />
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+  <v-lazy>
+    <v-card :height="$vuetify.breakpoint.lgAndUp && !drag ? '481px' : ''">
+      <v-card-title class="text-h5">
+        Skills
+        <v-spacer></v-spacer>
+        <v-btn v-if="drag" icon class="mr-3" @click="$emit('hideToggleFunc')">
+          <v-icon>{{ hide ? "mdi-eye-off" : "mdi-eye" }}</v-icon>
+        </v-btn>
+        <v-icon v-if="drag">mdi-drag</v-icon>
+      </v-card-title>
+      <v-divider></v-divider>
+      <v-card-text v-if="!drag" class="py-2">
+        <v-row class="text-center" dense>
+          <v-col cols="6" :key="i" v-for="(skill, i) in skills">
+            <SkillProfficient
+              :edit="edit"
+              :charId="charId"
+              :label="skill.name"
+              :id="skill.ability"
+              :mod_func="scoreToMod"
+            />
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+  </v-lazy>
 </template>
 
 <script>
