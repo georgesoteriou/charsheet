@@ -50,7 +50,7 @@ export default {
   created: async function () {
     let data = (await this.document_ref.get()).data();
     if (!data[this.id]) {
-      this.document_ref.set({ [this.id]: 1 }, { merge: true });
+      this.document_ref.set({ [this.id]: 0 }, { merge: true });
     }
   },
   methods: {
@@ -67,7 +67,7 @@ export default {
     },
     debouncedSave: debounce(function () {
       this.save();
-    }, 1000),
+    }, 300),
   },
 };
 </script>

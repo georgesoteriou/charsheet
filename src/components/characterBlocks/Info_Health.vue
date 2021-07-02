@@ -4,7 +4,7 @@
       <v-card-title class="text-h5">
         Quick Info & HP
         <v-spacer></v-spacer>
-        <v-btn icon class="mr-3" @click="$emit('hideToggleFunc')">
+        <v-btn icon class="mr-3" @click.stop="$emit('hideToggleFunc')">
           <v-icon>{{ hide ? "mdi-eye-off" : "mdi-eye" }}</v-icon>
         </v-btn>
         <v-icon>mdi-drag</v-icon>

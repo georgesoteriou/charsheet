@@ -52,7 +52,7 @@
       </draggable>
       <v-speed-dial
         v-if="edit && $vuetify.breakpoint.mdAndUp"
-        v-model="drag"
+        :value="drag"
         bottom
         right
         fixed
@@ -61,7 +61,12 @@
         transition="slide-y-reverse-transition"
       >
         <template v-slot:activator>
-          <v-btn v-model="drag" x-large fab :color="drag ? 'success' : ''">
+          <v-btn
+            @click.stop="drag = !drag"
+            x-large
+            fab
+            :color="drag ? 'success' : ''"
+          >
             <v-icon>mdi-drag-variant</v-icon>
           </v-btn>
         </template>

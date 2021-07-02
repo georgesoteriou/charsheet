@@ -15,7 +15,7 @@
             </v-card-title>
           </v-card>
         </v-col>
-        <v-col cols="6" v-for="char in chars" :key="char.id">
+        <v-col cols="12" md="6" xl="4" v-for="char in chars" :key="char.id">
           <v-btn
             @click="
               partyMemberId = char.ref.id;
@@ -27,6 +27,7 @@
           >
             <MiniChar
               width="100%"
+              :detail="true"
               :char="char.ref"
               :del="true"
               @delPartyMember="() => delPartyMember(char.id)"

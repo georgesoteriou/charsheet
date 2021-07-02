@@ -15,10 +15,12 @@
             </v-avatar>
           </v-col>
           <v-col cols="9">
-            <div>{{ char.name }}</div>
-            <div class="text-caption mt-n2">
-              Level {{ char.level }}, {{ char.race }}, {{ char.class }}
-            </div>
+            <v-row no-gutters justify="start">
+              <v-col cols="12">{{ char.name }}</v-col>
+              <v-col cols="12" class="text-caption mt-n2">
+                Level {{ char.level }}, {{ char.race }}, {{ char.class }}
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
         <v-spacer></v-spacer>
@@ -33,8 +35,11 @@
               rounded
               color="red"
               :value="percentHP"
-              height="20"
+              :height="detail ? '30' : '20'"
             >
+              <div v-if="detail" class="text-body-1 text-capitalize">
+                Health: {{ char["hp"] }} / {{ char["hp-max"] }}
+              </div>
               <strong> {{ char["hp"] }} </strong>
             </v-progress-linear>
           </v-col>
@@ -49,9 +54,13 @@
               rounded
               color="blue"
               :value="slot.percent"
-              height="18"
+              :height="detail ? '25' : '18'"
             >
-              <strong> {{ slot.curr }} </strong>
+              <div v-if="detail" class="text-body-1 text-capitalize">
+                Level {{ slot.id }} spell slots: {{ slot.curr }} /
+                {{ slot.max }}
+              </div>
+              <strong v-else> {{ slot.curr }} </strong>
             </v-progress-linear>
           </v-col>
         </v-row>
@@ -62,7 +71,12 @@
 
 <script>
 export default {
-  props: { char: {}, del: { default: false }, width: { default: "300px" } },
+  props: {
+    char: {},
+    detail: { default: false },
+    del: { default: false },
+    width: { default: "300px" },
+  },
   data() {
     return {};
   },

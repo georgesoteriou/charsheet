@@ -30,6 +30,10 @@ firebase.firestore().enablePersistence()
     }
 });
 
+firebase.firestore().settings({
+  cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED
+});
+
 // Get a Firestore instance
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 export const db = firebase.firestore(app);

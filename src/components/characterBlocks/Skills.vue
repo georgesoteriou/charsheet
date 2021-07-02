@@ -4,7 +4,12 @@
       <v-card-title class="text-h5">
         Skills
         <v-spacer></v-spacer>
-        <v-btn v-if="drag" icon class="mr-3" @click="$emit('hideToggleFunc')">
+        <v-btn
+          v-if="drag"
+          icon
+          class="mr-3"
+          @click.stop="$emit('hideToggleFunc')"
+        >
           <v-icon>{{ hide ? "mdi-eye-off" : "mdi-eye" }}</v-icon>
         </v-btn>
         <v-icon v-if="drag">mdi-drag</v-icon>
