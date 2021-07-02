@@ -9,8 +9,11 @@
       class="px-0"
       :color="prof ? 'warning' : ''"
     >
-      <v-row no-gutters>
-        <v-col cols="12" class="mod">
+      <v-row no-gutters justify="center">
+        <v-col cols="3" class="mod py-1" v-if="!char[id]">
+          <v-skeleton-loader type="text"></v-skeleton-loader>
+        </v-col>
+        <v-col v-else cols="12" class="mod">
           {{ value }}
         </v-col>
         <v-col cols="12" class="text-caption" v-html="label"></v-col>

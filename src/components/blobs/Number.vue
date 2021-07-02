@@ -20,6 +20,7 @@
     :append-icon="edit ? 'mdi-plus' : ''"
     class="centered-input"
     :readonly="!edit"
+    :loading="char[id] === undefined"
   ></v-text-field>
 </template>
 
@@ -49,7 +50,7 @@ export default {
   created: async function () {
     let data = (await this.document_ref.get()).data();
     if (!data[this.id]) {
-      this.document_ref.set({ [this.id]: 0 }, { merge: true });
+      this.document_ref.set({ [this.id]: 1 }, { merge: true });
     }
   },
   methods: {

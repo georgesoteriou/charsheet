@@ -9,6 +9,7 @@
     :success="saved"
     @input="debouncedSave"
     :readonly="!edit"
+    :loading="char[id] === undefined"
   ></v-text-field>
 </template>
 

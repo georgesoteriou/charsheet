@@ -15,19 +15,19 @@ const routes = [
   {
     path: '/user',
     name: 'User',
-    component: () => import('../views/User.vue')
+    component: () => import(/* webpackPrefetch: true */ '../views/User.vue')
   },
   {
     path: '/char/:id',
     // $route.params.id
     name: 'Character Sheet',
-    component: () => import('../views/Char.vue')
+    component: () => import(/* webpackPrefetch: true */ '../views/Char.vue')
   },
   {
     path: '/party/:id',
     // $route.params.id
     name: 'Party',
-    component: () => import('../views/Party.vue')
+    component: () => import(/* webpackPrefetch: true */ '../views/Party.vue')
   }
 ]
 

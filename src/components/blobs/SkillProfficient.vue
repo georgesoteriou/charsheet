@@ -8,7 +8,10 @@
       :color="prof ? 'warning' : ''"
     >
       <v-row no-gutters>
-        <v-col cols="2" class="mod2">
+        <v-col cols="2" class="mod px-2" v-if="!char[id]">
+          <v-skeleton-loader type="text"></v-skeleton-loader>
+        </v-col>
+        <v-col v-else cols="2" class="mod2">
           {{ value }}
         </v-col>
         <v-col cols="10" v-html="label"></v-col>
@@ -69,7 +72,7 @@ export default {
     },
     value() {
       let value = parseInt(this.mod_func(this.char[this.id])) + this.toAdd;
-      return `${value > 0 ? "+" : ""}${value}`;
+      return `${value > -1 ? "+" : ""}${value}`;
     },
   },
 };

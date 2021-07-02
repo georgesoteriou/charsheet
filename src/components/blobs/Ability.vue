@@ -9,8 +9,11 @@
       text
       class="px-0"
     >
-      <v-row no-gutters>
-        <v-col cols="12" class="mod">
+      <v-row no-gutters justify="center">
+        <v-col cols="3" class="mod py-1" v-if="!char[id]">
+          <v-skeleton-loader type="text"></v-skeleton-loader>
+        </v-col>
+        <v-col cols="12" class="mod" v-else>
           {{ mod }}
         </v-col>
         <v-col cols="12" class="text-caption" v-html="label"></v-col>

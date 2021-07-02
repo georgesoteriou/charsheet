@@ -48,10 +48,10 @@ export const scoreToMod = (score) => {
             case "30":
                 return "+10"
             default:
-                return "NA"
+                return undefined
         }
     } catch (error) {
-            return "NA"
+            return undefined
     }
 }
 
