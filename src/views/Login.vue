@@ -16,7 +16,7 @@
                   Login Page
                 </div>
               </v-card>
-              <v-card :loading="loading" elevation="3">
+              <!-- <v-card :loading="loading" elevation="3">
                 <v-form ref="form" @keyup.native.enter="submit">
                   <v-card-text v-if="login_with_pass">
                     <v-text-field
@@ -85,7 +85,7 @@
                     </v-container>
                   </v-card-actions>
                 </v-form>
-              </v-card>
+              </v-card> -->
               <v-card class="my-2">
                 <v-card-text>
                   <v-row class="justify-center">
