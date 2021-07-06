@@ -1,0 +1,88 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuthenticated() {
+			return request.auth != null && request.auth.uid != null;
+    }
+    match /characters/{char} {
+    	
+      function getCharData() {
+          return get(/databases/$(database)/documents/characters/$(char)).data
+      }
+    
+    	allow read;
+      allow create: if isAuthenticated()
+      allow delete: if isAuthenticated() && request.auth.uid == getCharData().owner
+      allow update: if isAuthenticated() && request.auth.uid == getCharData().owner
+      
+      match /{any}/{a} {
+        allow read;
+        allow create: if isAuthenticated() && request.auth.uid == getCharData().owner
+        allow delete: if isAuthenticated() && request.auth.uid == getCharData().owner
+        allow update: if isAuthenticated() && request.auth.uid == getCharData().owner
+      }
+    }
+    
+    match /parties/{party} {
+    	
+      function getPartyData() {
+          return get(/databases/$(database)/documents/parties/$(party)).data
+      }
+    
+    	allow read;
+      allow create: if isAuthenticated()
+      allow delete: if isAuthenticated() && request.auth.uid == getPartyData().owner
+      allow update: if isAuthenticated() && request.auth.uid == getPartyData().owner
+      
+      match /{any}/{a} {
+        allow read;
+        allow create: if isAuthenticated() && request.auth.uid == getPartyData().owner
+        allow delete: if isAuthenticated() && request.auth.uid == getPartyData().owner
+        allow update: if isAuthenticated() && request.auth.uid == getPartyData().owner
+      }
+    }
+    
+    // PRO
+    match /pro/{pro} {
+    	allow read;
+    }
+    
+		// GLOBAL LISTS
+    match /armor/{armor} {
+    	allow read;
+      allow create: if isAuthenticated() 
+      allow delete: if isAuthenticated() && request.auth.uid == resource.data.owner
+      allow update: if isAuthenticated() && request.auth.uid == resource.data.owner
+    }
+    match /equipment/{equipment} {
+    	allow read;
+      allow create: if isAuthenticated() 
+      allow delete: if isAuthenticated() && request.auth.uid == resource.data.owner
+      allow update: if isAuthenticated() && request.auth.uid == resource.data.owner
+    }
+    match /weapons/{wepon} {
+    	allow read;
+      allow create: if isAuthenticated() 
+      allow delete: if isAuthenticated() && request.auth.uid == resource.data.owner
+      allow update: if isAuthenticated() && request.auth.uid == resource.data.owner
+    }
+     match /spells/{spells} {
+    	allow read;
+      allow create: if isAuthenticated() 
+      allow delete: if isAuthenticated() && request.auth.uid == resource.data.owner
+      allow update: if isAuthenticated() && request.auth.uid == resource.data.owner
+    }
+    match /featsTraits/{a} {
+    	allow read;
+      allow create: if isAuthenticated() 
+      allow delete: if isAuthenticated() && request.auth.uid == resource.data.owner
+      allow update: if isAuthenticated() && request.auth.uid == resource.data.owner
+    }
+    match /notes/{a} {
+    	allow read;
+      allow create: if isAuthenticated() 
+      allow delete: if isAuthenticated() && request.auth.uid == resource.data.owner
+      allow update: if isAuthenticated() && request.auth.uid == resource.data.owner
+    }
+  }
+}
