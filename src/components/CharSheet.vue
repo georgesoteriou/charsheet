@@ -13,12 +13,12 @@
       </v-container>
       <v-container class="pa-0 mt-2" v-if="!isEqualItems">
         <v-row justify="center">
-          <v-col cols="6" class="text-h4" v-if="edit">
-            Something went wrong with arranging your charsheet. To reset the
-            positions and fix the issue
+          <v-col cols="12" class="text-h4" v-if="edit">
+            Something went wrong with arranging your charsheet, or there was an
+            update with new features. To reset the positions and fix the issue
             <v-btn @click="reset" color="red" class="pa-3">click here</v-btn>
           </v-col>
-          <v-col cols="6" class="text-h4" v-else>
+          <v-col cols="12" class="text-h4" v-else>
             Something went wrong with arranging this charcheet. Please wait for
             the owner to fix it.
           </v-col>
@@ -137,16 +137,16 @@ export default {
         },
         { hide: false, id: "Armor", allowPublic: true },
         { hide: false, id: "Weapons", allowPublic: true },
-        { hide: false, level: 0, id: "Spells" },
-        { hide: false, level: 1, id: "Spells" },
-        { hide: false, level: 2, id: "Spells" },
-        { hide: false, level: 3, id: "Spells" },
-        { hide: false, level: 4, id: "Spells" },
-        { hide: false, level: 5, id: "Spells" },
-        { hide: false, level: 6, id: "Spells" },
-        { hide: false, level: 7, id: "Spells" },
-        { hide: false, level: 8, id: "Spells" },
-        { hide: false, level: 9, id: "Spells" },
+        { hide: false, level: 0, id: "Spells", allowPublic: true },
+        { hide: false, level: 1, id: "Spells", allowPublic: true },
+        { hide: false, level: 2, id: "Spells", allowPublic: true },
+        { hide: false, level: 3, id: "Spells", allowPublic: true },
+        { hide: false, level: 4, id: "Spells", allowPublic: true },
+        { hide: false, level: 5, id: "Spells", allowPublic: true },
+        { hide: false, level: 6, id: "Spells", allowPublic: true },
+        { hide: false, level: 7, id: "Spells", allowPublic: true },
+        { hide: false, level: 8, id: "Spells", allowPublic: true },
+        { hide: false, level: 9, id: "Spells", allowPublic: true },
       ],
       idToItem: {
         Info_Health: Info_Health,
