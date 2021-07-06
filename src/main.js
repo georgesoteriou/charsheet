@@ -7,6 +7,11 @@ import { firestorePlugin } from 'vuefire'
 import store from './store'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
+// Ads
+import Ads from 'vue-google-adsense'
+Vue.use(require('vue-script2'))
+Vue.use(Ads.Adsense)
+
 Vue.use(firestorePlugin)
 
 Vue.config.productionTip = false

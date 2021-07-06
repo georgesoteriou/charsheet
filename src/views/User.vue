@@ -143,7 +143,6 @@ export default {
       this.dialog = true;
     },
     deleteChar() {
-      // TODO: Recursive Delete
       db.collection(this.prepForDel.col).doc(this.prepForDel.id).delete();
       this.dialog = false;
     },

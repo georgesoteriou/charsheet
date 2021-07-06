@@ -55,6 +55,16 @@
           </v-col>
         </transition-group>
       </draggable>
+      <!-- Add -->
+      <div class="ad-container" v-if="edit">
+        <Adsense
+          data-ad-client="ca-pub-7552803612952968"
+          data-ad-slot="8910209664"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        >
+        </Adsense>
+      </div>
       <v-speed-dial
         v-if="edit && $vuetify.breakpoint.mdAndUp"
         :value="drag"
