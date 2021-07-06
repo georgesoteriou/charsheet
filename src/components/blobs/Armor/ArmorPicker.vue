@@ -13,6 +13,7 @@
           <v-icon>mdi-plus</v-icon>
         </v-btn>
         <ArmorDialog
+          :allowPublic="allowPublic"
           ref="new_armor"
           @save="(a) => save_create_dialog(null, a)"
         />
@@ -137,6 +138,9 @@ export default {
     return {
       dialog: false,
       chosen: 0,
+      allowPublic: {
+        default: false,
+      },
       publicArmor: [],
       privateArmor: [],
     };

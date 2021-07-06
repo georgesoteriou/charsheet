@@ -13,7 +13,7 @@
           <v-icon>mdi-plus</v-icon>
         </v-btn>
         <NotesDialog
-          :no_public="no_public"
+          :allowPublic="allowPublic"
           ref="new_item"
           @save="(a) => save_create_dialog(null, a)"
         />
@@ -55,7 +55,7 @@
             </v-expansion-panels>
           </v-card-text>
         </v-card>
-        <v-card v-if="!no_public">
+        <v-card v-if="publicArmor.length > 0">
           <v-card-title class="text-h6"> Public {{ name }} </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="pa-0">
@@ -125,7 +125,7 @@ export default {
     name: {
       default: "Notes",
     },
-    no_public: {
+    allowPublic: {
       default: false,
     },
     charId: {},

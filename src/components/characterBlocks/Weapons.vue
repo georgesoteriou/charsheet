@@ -25,7 +25,11 @@
         </v-btn>
         <v-icon v-if="drag">mdi-drag</v-icon>
         <!-- ADD NEW ARMOR -->
-        <WeaponsPicker :charId="charId" ref="new_picker" />
+        <WeaponsPicker
+          :allowPublic="allowPublic"
+          :charId="charId"
+          ref="new_picker"
+        />
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text
@@ -140,6 +144,7 @@
                       <div>Edit</div>
                     </v-btn>
                     <WeaponsDialog
+                      :allowPublic="allowPublic"
                       :ref="`item-${a.id}`"
                       :item="{ ...a.ref }"
                       @save="(item) => save_edit_dialog(a.ref.id, item)"
@@ -179,6 +184,9 @@ export default {
       default: false,
     },
     charId: {},
+    allowPublic: {
+      default: false,
+    },
     edit: {
       default: false,
     },

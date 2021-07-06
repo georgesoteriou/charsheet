@@ -14,6 +14,7 @@
           <v-icon>mdi-plus</v-icon>
         </v-btn>
         <SpellsDialog
+          :allowPublic="allowPublic"
           ref="new_item"
           :level="level"
           @save="(a) => save_create_dialog(null, a)"
@@ -172,6 +173,9 @@ export default {
   props: {
     collection: {
       default: "spells",
+    },
+    allowPublic: {
+      default: false,
     },
     level: {
       default: 0,

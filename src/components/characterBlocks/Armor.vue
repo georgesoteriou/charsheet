@@ -26,7 +26,11 @@
         <v-icon v-if="drag">mdi-drag</v-icon>
 
         <!-- ADD NEW ARMOR -->
-        <ArmorPicker :charId="charId" ref="new_picker" />
+        <ArmorPicker
+          :allowPublic="allowPublic"
+          :charId="charId"
+          ref="new_picker"
+        />
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text
@@ -105,6 +109,7 @@
                       <div>Edit</div>
                     </v-btn>
                     <ArmorDialog
+                      :allowPublic="allowPublic"
                       :ref="`armor-${a.id}`"
                       :armor="{ ...a.ref }"
                       @save="(armor) => save_edit_dialog(a.ref.id, armor)"
@@ -139,6 +144,9 @@ export default {
   props: {
     drag: {},
     charId: {},
+    allowPublic: {
+      default: false,
+    },
     edit: { default: false },
     hide: { type: Boolean },
   },

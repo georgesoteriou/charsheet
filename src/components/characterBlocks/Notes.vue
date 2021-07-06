@@ -28,7 +28,7 @@
         <NotesPicker
           :charId="charId"
           :name="name"
-          :no_public="no_public"
+          :allowPublic="allowPublic"
           :collection="collection"
           ref="new_picker"
         />
@@ -59,7 +59,7 @@
                   <v-col cols="10">
                     <b>Discription:</b> <span v-html="a.ref.description"> </span
                   ></v-col>
-                  <v-col cols="10" v-if="!no_public">
+                  <v-col cols="10" v-if="!allowPublic">
                     <b>Item shared with:</b>
                     {{ a.ref.public ? "Public" : "Just You" }}
                   </v-col>
@@ -115,7 +115,7 @@
                       <div>Edit</div>
                     </v-btn>
                     <NotesDialog
-                      :no_public="no_public"
+                      :allowPublic="allowPublic"
                       :ref="`item-${a.id}`"
                       :item="{ ...a.ref }"
                       @save="(item) => save_edit_dialog(a.ref.id, item)"
@@ -158,7 +158,7 @@ export default {
     drag: {
       default: false,
     },
-    no_public: {
+    allowPublic: {
       default: false,
     },
     charId: {},

@@ -13,6 +13,7 @@
           <v-icon>mdi-plus</v-icon>
         </v-btn>
         <WeaponsDialog
+          :allowPublic="allowPublic"
           ref="new_item"
           @save="(a) => save_create_dialog(null, a)"
         />
@@ -168,6 +169,9 @@ export default {
   props: {
     collection: {
       default: "weapons",
+    },
+    allowPublic: {
+      default: false,
     },
     charId: {},
   },

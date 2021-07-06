@@ -3,9 +3,9 @@
     <v-container fluid>
       <v-row class="text-center text-h2" justify="center">
         <v-col cols="12"> Character Sellection </v-col>
-        <v-col cols="12" md="10" :key="char.id" v-for="char in chars">
-          <v-row dense>
-            <v-col cols="10">
+        <v-col cols="12" :key="char.id" v-for="char in chars">
+          <v-row dense justify="center">
+            <v-col cols="10" md="7" xl="6">
               <v-btn
                 color="green darken-3"
                 block
@@ -16,7 +16,7 @@
                 {{ char.name }}
               </v-btn>
             </v-col>
-            <v-col cols="2">
+            <v-col cols="2" md="1">
               <v-btn
                 class="pa-0"
                 block
@@ -29,9 +29,9 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="12" md="10" :key="party.id" v-for="party in parties">
-          <v-row dense>
-            <v-col cols="10">
+        <v-col cols="12" :key="party.id" v-for="party in parties">
+          <v-row dense justify="center">
+            <v-col cols="10" md="7" xl="6">
               <v-btn
                 color="purple darken-3"
                 block
@@ -42,7 +42,7 @@
                 {{ party.name }}
               </v-btn>
             </v-col>
-            <v-col cols="2">
+            <v-col cols="2" md="1">
               <v-btn
                 class="pa-0"
                 block
@@ -55,7 +55,7 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="6" md="5">
+        <v-col cols="6" md="4" xl="3">
           <v-btn
             color="success"
             class="pa-0 mt-5"
@@ -66,7 +66,7 @@
             <v-icon>mdi-plus</v-icon>New Char
           </v-btn>
         </v-col>
-        <v-col cols="6" md="5">
+        <v-col cols="6" md="4" xl="3">
           <v-btn
             color="purple"
             class="pa-0 mt-5"

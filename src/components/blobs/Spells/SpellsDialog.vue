@@ -13,18 +13,20 @@
           <span v-else> Add New Cantrip </span>
         </span>
         <v-spacer></v-spacer>
-        <v-btn
-          v-if="newItem.public"
-          fab
-          dark
-          :icon="true"
-          @click="newItem.public = false"
-        >
-          <v-icon>mdi-earth</v-icon>
-        </v-btn>
-        <v-btn v-else fab dark :icon="true" @click="newItem.public = true">
-          <v-icon>mdi-eye-off</v-icon>
-        </v-btn>
+        <span v-if="allowPublic">
+          <v-btn
+            v-if="newItem.public"
+            fab
+            dark
+            :icon="true"
+            @click="newItem.public = false"
+          >
+            <v-icon>mdi-earth</v-icon>
+          </v-btn>
+          <v-btn v-else fab dark :icon="true" @click="newItem.public = true">
+            <v-icon>mdi-eye-off</v-icon>
+          </v-btn>
+        </span>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="pa-1">
@@ -155,6 +157,9 @@
 <script>
 export default {
   props: {
+    allowPublic: {
+      default: false,
+    },
     show_del: {
       type: Boolean,
       default: false,

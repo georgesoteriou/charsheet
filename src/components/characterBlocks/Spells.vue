@@ -26,7 +26,12 @@
         </v-btn>
         <v-icon v-if="drag">mdi-drag</v-icon>
         <!-- ADD NEW SPELLS -->
-        <SpellsPicker :charId="charId" :level="level" ref="new_picker" />
+        <SpellsPicker
+          :allowPublic="allowPublic"
+          :charId="charId"
+          :level="level"
+          ref="new_picker"
+        />
       </v-card-title>
       <v-divider></v-divider>
       <v-container fluid class="py-2" v-if="level > 0 && !drag">
@@ -165,6 +170,7 @@
                       <div>Edit</div>
                     </v-btn>
                     <SpellsDialog
+                      :allowPublic="allowPublic"
                       :ref="`item-${a.id}`"
                       :item="{ ...a.ref }"
                       :level="level"
@@ -211,6 +217,9 @@ export default {
       },
     },
     edit: { default: false },
+    allowPublic: {
+      default: false,
+    },
     hide: { type: Boolean },
   },
   components: { SpellsDialog, SpellsPicker, Number },

@@ -10,7 +10,7 @@
         <span v-if="show_del"> Edit </span>
         <span v-else> Add New </span>
         <v-spacer></v-spacer>
-        <span v-if="!no_public">
+        <span v-if="allowPublic">
           <v-btn
             v-if="newItem.public"
             fab
@@ -87,7 +87,7 @@
 <script>
 export default {
   props: {
-    no_public: {
+    allowPublic: {
       default: false,
     },
     show_del: {
