@@ -45,7 +45,7 @@
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions class="py-1">
-        <Personality :charId="charId" />
+        <Personality :charId="charId" :edit="edit" />
       </v-card-actions>
     </v-card>
   </v-lazy>
