@@ -129,6 +129,7 @@ export default {
           hide: false,
           name: "Features & Traits",
           key: "featsTraits",
+          collection: "featsTraits",
           allowPublic: true,
         },
         {
@@ -136,6 +137,7 @@ export default {
           hide: false,
           name: "Notes",
           key: "notes",
+          collection: "notes",
           allowPublic: false,
         },
         {
@@ -143,6 +145,7 @@ export default {
           hide: false,
           name: "Equipment",
           key: "equipment",
+          collection: "equipment",
           allowPublic: true,
         },
         { hide: false, id: "Armor", key: "Armor", allowPublic: true },
