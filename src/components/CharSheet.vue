@@ -35,7 +35,7 @@
           <v-col
             draggable
             v-for="item in filteredItems"
-            :key="`${item.id}${item.level}${item.collection}`"
+            :key="`${item.key}`"
             cols="12"
             lg="6"
             xl="3"
@@ -121,42 +121,102 @@ export default {
       char: {},
       pro: [],
       initialItems: [
-        { hide: false, id: "Info_Health" },
-        { hide: false, id: "Ability_Saving" },
-        { hide: false, id: "Skills" },
+        { hide: false, id: "Info_Health", key: "Info_Health" },
+        { hide: false, id: "Ability_Saving", key: "Ability_Saving" },
+        { hide: false, id: "Skills", key: "Skills" },
         {
           id: "Notes",
           hide: false,
           name: "Features & Traits",
-          collection: "featsTraits",
+          key: "featsTraits",
           allowPublic: true,
         },
         {
           id: "Notes",
           hide: false,
           name: "Notes",
-          collection: "notes",
+          key: "notes",
           allowPublic: false,
         },
         {
           id: "Notes",
           hide: false,
           name: "Equipment",
-          collection: "equipment",
+          key: "equipment",
           allowPublic: true,
         },
-        { hide: false, id: "Armor", allowPublic: true },
-        { hide: false, id: "Weapons", allowPublic: true },
-        { hide: false, level: 0, id: "Spells", allowPublic: true },
-        { hide: false, level: 1, id: "Spells", allowPublic: true },
-        { hide: false, level: 2, id: "Spells", allowPublic: true },
-        { hide: false, level: 3, id: "Spells", allowPublic: true },
-        { hide: false, level: 4, id: "Spells", allowPublic: true },
-        { hide: false, level: 5, id: "Spells", allowPublic: true },
-        { hide: false, level: 6, id: "Spells", allowPublic: true },
-        { hide: false, level: 7, id: "Spells", allowPublic: true },
-        { hide: false, level: 8, id: "Spells", allowPublic: true },
-        { hide: false, level: 9, id: "Spells", allowPublic: true },
+        { hide: false, id: "Armor", key: "Armor", allowPublic: true },
+        { hide: false, id: "Weapons", key: "Weapons", allowPublic: true },
+        {
+          hide: false,
+          level: 0,
+          id: "Spells",
+          key: "spells0",
+          allowPublic: true,
+        },
+        {
+          hide: false,
+          level: 1,
+          id: "Spells",
+          key: "spells1",
+          allowPublic: true,
+        },
+        {
+          hide: false,
+          level: 2,
+          id: "Spells",
+          key: "spells2",
+          allowPublic: true,
+        },
+        {
+          hide: false,
+          level: 3,
+          id: "Spells",
+          key: "spells3",
+          allowPublic: true,
+        },
+        {
+          hide: false,
+          level: 4,
+          id: "Spells",
+          key: "spells4",
+          allowPublic: true,
+        },
+        {
+          hide: false,
+          level: 5,
+          id: "Spells",
+          key: "spells5",
+          allowPublic: true,
+        },
+        {
+          hide: false,
+          level: 6,
+          id: "Spells",
+          key: "spells6",
+          allowPublic: true,
+        },
+        {
+          hide: false,
+          level: 7,
+          id: "Spells",
+          key: "spells7",
+          allowPublic: true,
+        },
+        {
+          hide: false,
+          level: 8,
+          id: "Spells",
+          key: "spells8",
+          allowPublic: true,
+        },
+        {
+          hide: false,
+          level: 9,
+          id: "Spells",
+          key: "spells9",
+          allowPublic: true,
+        },
       ],
       idToItem: {
         Info_Health: Info_Health,
@@ -225,19 +285,23 @@ export default {
       }
     },
     isEqualItems() {
-      if (this.char && this.char.items) {
-        const online = [...this.char.items];
-        online.sort((a, b) => a.id.localeCompare(b.id));
-        const initial = [...this.initialItems];
-        initial.sort((a, b) => a.id.localeCompare(b.id));
-        return isEqualWith(online, initial, (objValue, othValue, key) => {
-          if (key === "hide") {
-            return true;
-          }
-          return undefined;
-        });
-      } else {
-        return true;
+      try {
+        if (this.char && this.char.items) {
+          const online = [...this.char.items];
+          online.sort((a, b) => a.key.localeCompare(b.key));
+          const initial = [...this.initialItems];
+          initial.sort((a, b) => a.key.localeCompare(b.key));
+          return isEqualWith(online, initial, (objValue, othValue, key) => {
+            if (key === "hide") {
+              return true;
+            }
+            return undefined;
+          });
+        } else {
+          return true;
+        }
+      } catch (e) {
+        return false;
       }
     },
   },
